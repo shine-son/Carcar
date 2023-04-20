@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+const { Schema } = require('mongoose');
 
 /** 주소를 검색해서 구하는 방법을 2주차에 고민하면 좋을 듯 합니다. */
 const UserAddressSchema = new Schema(
@@ -53,8 +53,4 @@ const UserSchema = new Schema(
   }
 );
 
-
-/**
- * module.exports와 exports의 차이?
-*/
 module.exports = { UserSchema, UserAddressSchema };
