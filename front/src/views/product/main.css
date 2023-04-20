@@ -1,0 +1,122 @@
+/*---fonts_pretendard---*/
+@font-face {
+    font-family: 'pre_thin';
+    src: url(../fonts/Pretendard/Pretendard-Thin.ttf);
+}
+@font-face {
+    font-family: 'pre_light';
+    src: url(../fonts/Pretendard/Pretendard-Light.ttf);
+}
+@font-face {
+    font-family: 'pre_regular';
+    src: url(../fonts/Pretendard/Pretendard-Regular.otf);
+}
+@font-face {
+    font-family: 'pre_medium';
+    src: url(../fonts/Pretendard/Pretendard-Medium.otf);
+}
+@font-face {
+    font-family: 'pre_semibold';
+    src: url(../fonts/Pretendard/Pretendard-SemiBold.ttf);
+}
+@font-face {
+    font-family: 'pre_bold';
+    src: url(../fonts/Pretendard/Pretendard-Bold.ttf);
+}
+
+/*---fonts_helvetica---*/
+@font-face {
+    font-family: 'helvetica';
+    src: url(../fonts/HelveticaNeueLTPro/Helvetica.ttf);
+}
+@font-face {
+    font-family: 'hel_exlight';
+    src: url(../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-LtEx.otf);
+}
+@font-face {
+    font-family: 'hel_exmedium';
+    src: url(../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-MdEx.otf);
+}
+@font-face {
+    font-family: 'hel_exheavy';
+    src: url(../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-BlkEx.otf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 2100px;
+    overflow-x: hidden;
+}
+
+/*---carouesl---*/
+.carousel {
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 114px;
+    overflow-x: hidden;
+}
+.banner {
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    background-color: #EEEEEE;
+}
+
+/*---new_area---*/
+#new_area {
+    margin: 0 auto;
+    width: 100%;
+    height: fit-content;
+}
+#new_area .wrap {
+    height: 740px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.new_product {
+    width: 354px;
+    height: 309px;
+    padding: 25px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    box-shadow: 0px 5px 30px 1px rgba(150, 150, 150, 0.24);
+}
+.new_product .new_img {
+    width: 100%;
+    height: 188px;
+    border: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.new_product .new_img img {
+    width: 100%;
+    height: 100%;
+}
+.new_product .new_product_info {
+    text-align: center;   
+    margin-top: 20px;
+}
+
+/*---noti_area---*/
+#noti_area #noti_text_area {
+    width: 1212px;
+    height: 110px;
+    padding: 33px 30px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    box-shadow: 0px 5px 30px 1px rgba(150, 150, 150, 0.24);
+    display: flex;
+    justify-content: space-between;
+}
+#noti_area #noti_text_area .notification {
+    width: 363px;
+    height: 110px;
+}

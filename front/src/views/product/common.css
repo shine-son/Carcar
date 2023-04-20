@@ -1,3 +1,4 @@
+/*---reset---*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -19,10 +20,55 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-.border_test {
+/*---border---*/
+.border_red {
 	border: solid 1px red;
 }
+.border_bottom {
+    width: 70px;
+    height: 1.5px;
+    border-bottom: solid 1.5px black;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+.border_right {
+    width: 1px;
+    height: 110px;
+    border-right: solid 1px black;
+}
 
+/*---wrap---*/
 .wrap {
     width: 1270px;
+	margin: 0 auto;
+
+}
+
+/*---carouesl---*/
+
+/*---title---*/
+.sub_title {
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    margin-top: 70px;
+    margin-bottom: 25px;
+    font-family: 'hel_exlight';
+    font-size: 32px;
+}
+
+.list_name {
+    font-family: 'hel_exmedium';
+    font-size: 22px;
+}
+.list_sub {
+    font-family: 'pre_light';
+    font-size: 14px;
+    color: #3C3C3C;
+    margin: 10px 0 10px 0;
+}
+.list_price {
+    font-family: 'pre_medium';
+    font-size: 16px;
+    color: #3C3C3C;
 }
