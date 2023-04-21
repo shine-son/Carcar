@@ -1,4 +1,4 @@
-const { Order, OrderProduct } = require("..schemas/order-schema");
+const { Order, OrderedProduct } = require("../schemas/order-schema");
 
 class OrderModel {}
 

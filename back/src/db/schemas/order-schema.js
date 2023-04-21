@@ -67,10 +67,11 @@ const OrderSchema = new Schema(
     },
     {
         timestamps: true,
+        collection: "Order",
     }
 );
 
-const Order = model("orders", OrderSchema);
-const OrderedProduct = model("ordered_product", OrderedProductSchema);
+const Order = model("Order", OrderSchema);
+const OrderedProduct = model("OrderedProduct", OrderedProductSchema);
 
 module.exports = { Order, OrderedProduct };
