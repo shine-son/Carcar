@@ -55,7 +55,7 @@ const OrderSchema = new Schema(
             required: true,
             default: "배송준비중",
         },
-        user_address: {
+        address: {
             type: String,
             required: true,
         },
@@ -70,7 +70,7 @@ const OrderSchema = new Schema(
     }
 );
 
-const Order = model("order", OrderSchema);
+const Order = model("orders", OrderSchema);
 const OrderedProduct = model("ordered_product", OrderedProductSchema);
 
 module.exports = { Order, OrderedProduct };
