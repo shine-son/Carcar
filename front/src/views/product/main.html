@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+
+
     <link rel="stylesheet" href="common.css">
     <link rel="stylesheet" href="main.css">
 </head>
@@ -14,6 +16,7 @@
 <body>
 
     <section class="carousel">
+
         <div class="banner1 banner border_red">
             <article class="banner_title wrap">
                 <p class="title">
@@ -24,6 +27,7 @@
                 </p>
             </article>
         </div>
+
         <div class="banner2 banner border_red">
             <article class="banner_title wrap">
                 <p class="title">
@@ -34,6 +38,7 @@
                 </p>
             </article>
         </div>
+
         <div class="banner3 banner border_red">
             <article class="banner_title wrap">
                 <p class="title">
@@ -44,126 +49,18 @@
                 </p>
             </article>
         </div>
+
     </section>
 
     <div class="wrap">
-        <section id="new_area" >
+        <section id="new_area">
 
             <div class="sub_title ">
                 <p>NEW ARRIVAL</p>
                 <div class="border_bottom"></div>
             </div>
 
-            <div class="wrap">
-
-                <div class="new_product">
-                    <div class="new_img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="new_product_info">
-                        <p class="list_name">
-                            BENZ
-                        </p>
-                        <p class="list_sub">
-                            나도 자동차 사고 싶다<br>
-                            예쁘다 나도 자동차 사고 싶다
-                        </p>
-                        <p class="list_price">
-                            KRW 60,000
-                        </p>
-                    </div>
-                </div>
-
-                <div class="new_product">
-                    <div class="new_img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="new_product_info">
-                        <p class="list_name">
-                            BENZ
-                        </p>
-                        <p class="list_sub">
-                            나도 자동차 사고 싶다<br>
-                            예쁘다 나도 자동차 사고 싶다
-                        </p>
-                        <p class="list_price">
-                            KRW 60,000
-                        </p>
-                    </div>
-                </div>
-
-                <div class="new_product">
-                    <div class="new_img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="new_product_info">
-                        <p class="list_name">
-                            BENZ
-                        </p>
-                        <p class="list_sub">
-                            나도 자동차 사고 싶다<br>
-                            예쁘다 나도 자동차 사고 싶다
-                        </p>
-                        <p class="list_price">
-                            KRW 60,000
-                        </p>
-                    </div>
-                </div>
-
-                <div class="new_product">
-                    <div class="new_img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="new_product_info">
-                        <p class="list_name">
-                            BENZ
-                        </p>
-                        <p class="list_sub">
-                            나도 자동차 사고 싶다<br>
-                            예쁘다 나도 자동차 사고 싶다
-                        </p>
-                        <p class="list_price">
-                            KRW 60,000
-                        </p>
-                    </div>
-                </div>
-
-                <div class="new_product">
-                    <div class="new_img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="new_product_info">
-                        <p class="list_name">
-                            BENZ
-                        </p>
-                        <p class="list_sub">
-                            나도 자동차 사고 싶다<br>
-                            예쁘다 나도 자동차 사고 싶다
-                        </p>
-                        <p class="list_price">
-                            KRW 60,000
-                        </p>
-                    </div>
-                </div>
-
-                <div class="new_product">
-                    <div class="new_img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="new_product_info">
-                        <p class="list_name">
-                            BENZ
-                        </p>
-                        <p class="list_sub">
-                            나도 자동차 사고 싶다<br>
-                            예쁘다 나도 자동차 사고 싶다
-                        </p>
-                        <p class="list_price">
-                            KRW 60,000
-                        </p>
-                    </div>
-                </div>
-                
+            <div id="new_product_area">
             </div>
         </section>
 
@@ -172,7 +69,7 @@
                 <p>NOTIFICATION</p>
                 <div class="border_bottom"></div>
             </div>
-            
+
             <div id="noti_text_area">
                 <div class="notification">
                     <p class="noti_title">공지 타이틀</p>
@@ -190,9 +87,65 @@
                 </div>
             </div>
         </section>
-        
+
     </div>
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
+    <script>
+        const productList = document.getElementById("new_product_area");
+        let i = 0;
+        let 상품데이터 = [i];  // 상품데이터 배열로 받아오기
+
+        fetch("http://localhost:8080/product", { credential: false })
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                console.log("response: ", json);
+                상품데이터 = json;
+                console.log(상품데이터);
+                //  html 동적생성
+                상품데이터.forEach((상품) => {
+                    // 상품데이터 html과 연결하기
+                    const productElement = document.createElement("div");
+                    //productElement.id = 'new_product_data';
+                    productElement.className = 'new_product';
+
+                    const productImage = document.createElement('img');
+                    //productImage.id = 'product_img_data';
+                    productImage.className = 'new_img';
+
+                    const productTextArea = document.createElement('div');
+                    //productTextArea.id = 'product_text_area_data';
+                    productTextArea.className = 'new_product_info';
+
+                    const productName = document.createElement('p');
+                    //productName.id = 'list_name_data';
+                    productName.className = 'list_name';
+
+                    const productDescription = document.createElement('p');
+                    //productDescription.id = 'list_sub_data';
+                    productDescription.className = 'list_sub';
+
+                    const productPrice = document.createElement('p');
+                    //productPrice.id = 'list_price_data';
+                    productPrice.className = 'list_price';
+
+                    productImage.src += 상품.image;
+                    productName.innerHTML += 상품.name;
+                    productDescription.innerHTML += 상품.description;
+                    productPrice.innerHTML += 상품.price;
+
+                    productList.appendChild(productElement);
+                    productElement.appendChild(productImage);
+                    productElement.append(productName, productDescription, productPrice);
+                });
+
+            })
+            .catch((error) => console.error("error: ", error));
+    </script>
 </body>
 
 </html>
