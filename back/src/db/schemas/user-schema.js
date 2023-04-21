@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 /** 주소를 검색해서 구하는 방법을 2주차에 고민하면 좋을 듯 합니다. */
 const UserAddressSchema = new Schema(
@@ -16,6 +16,9 @@ const UserAddressSchema = new Schema(
       /** 주택인 경우 상세주소가 필요치 않아서 옵션값으로 설정했습니다.(동, 호수) */
       required: false,
     }
+  }, {
+    collection: "UserAddress",
+    timestamps: true,
   }
 );
 
@@ -48,9 +51,12 @@ const UserSchema = new Schema(
       default: "basic-user",
     },
   }, {
-    collection: "users",
+    collection: "User",
     timestamps: true,
   }
 );
 
-module.exports = { UserSchema, UserAddressSchema };
+
+const User = model("User", UserSchema);
+const UserAddress = model("UserAddress", UserAddressSchema);
+module.exports = { User, UserAddress };
