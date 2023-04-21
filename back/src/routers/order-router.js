@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { asyncHandler } = require("../middlewares/async-handler");
+const { asyncHandler } = require("../utils/async-handler");
 const { orderService } = require("../services/order-service");
 
 const orderRouter = Router();
