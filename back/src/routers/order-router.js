@@ -46,7 +46,6 @@ orderRouter.put(
     asyncHandler(async (req, res, next) => {
         const order_id = req.params.id;
         const { address } = req.body;
-        console.log(or);
 
         const order = await orderService.updateOrder(order_id, address);
 

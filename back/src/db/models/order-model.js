@@ -47,11 +47,14 @@ class OrderModel {
     }
 
     // 유저 정보 업데이트
-    async updateOrderById(address) {
-        // const order = await Order.updateOne({ order_id }, { address });
-        this.address = address;
+    async updateOrderById(order_id, address) {
+        const order = await Order.findOneAndUpdate(
+            { order_id },
+            { address },
+            { new: true }
+        ); // new: true를 적용하면 업데이트된 객체를 반환한다.
 
-        return;
+        return order;
     }
 
     // 유저 정보 삭제
