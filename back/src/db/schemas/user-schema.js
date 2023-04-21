@@ -16,6 +16,9 @@ const UserAddressSchema = new Schema(
       /** 주택인 경우 상세주소가 필요치 않아서 옵션값으로 설정했습니다.(동, 호수) */
       required: false,
     }
+  }, {
+    collection: "UserAddress",
+    timestamps: true,
   }
 );
 
@@ -48,12 +51,12 @@ const UserSchema = new Schema(
       default: "basic-user",
     },
   }, {
-    collection: "users",
+    collection: "User",
     timestamps: true,
   }
 );
 
 
-const User = model("users", UserSchema);
-const UserAddress = model("user_address", UserAddressSchema);
+const User = model("User", UserSchema);
+const UserAddress = model("UserAddress", UserAddressSchema);
 module.exports = { User, UserAddress };
