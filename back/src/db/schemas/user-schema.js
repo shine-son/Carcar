@@ -53,4 +53,7 @@ const UserSchema = new Schema(
   }
 );
 
-module.exports = { UserSchema, UserAddressSchema };
+/**
+ *  user-model을 user-schema로 병합하여 한번에 exports
+ */
+exports.User = mongoose.model('users', UserSchema);
