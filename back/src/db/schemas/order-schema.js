@@ -7,30 +7,35 @@ const shortId = require("../../utils/short-id");
  * product_id는 Product의 Object_id를 가져 어떤 상품이 주문에 들어가는지 찾을 때 사용합니다.
  * amount, price, image, total_price는 사용자에게 정보를 제공하기 위해 데이터가 각 정보를 모두 가지고 있을 수 있도록 구현합니다.
  */
-const OrderedProductSchema = new Schema({
-    product_id: {
-        type: String,
-        required: true,
+const OrderedProductSchema = new Schema(
+    {
+        product_id: {
+            type: String,
+            required: true,
+        },
+        amount: {
+            type: Number,
+            required: true,
+            min: 1,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        image: {
+            type: String,
+            require: true,
+        },
+        total_price: {
+            type: Number,
+            require: true,
+            min: 0,
+        },
     },
-    amount: {
-        type: Number,
-        required: true,
-        min: 1,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    image: {
-        type: String,
-        require: true,
-    },
-    total_price: {
-        type: Number,
-        require: true,
-        min: 0,
-    },
-});
+    {
+        collection: "OrderedProduct",
+    }
+);
 
 /**
  * 주문 관련된 정보를 저장합니다.
