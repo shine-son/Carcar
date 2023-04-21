@@ -1,11 +1,50 @@
-* {
-    font-family: 'Pretendard';
-    font-style: normal;
-    font-weight: 200;
-    font-size: 20px;
+/*---fonts_pretendard---*/
+@font-face {
+    font-family: 'pre_thin';
+    src: url(../fonts/Pretendard/Pretendard-Thin.ttf);
 }
-.logo_form_container {
+@font-face {
+    font-family: 'pre_light';
+    src: url(../fonts/Pretendard/Pretendard-Light.ttf);
+}
+@font-face {
+    font-family: 'pre_regular';
+    src: url(../fonts/Pretendard/Pretendard-Regular.otf);
+}
+@font-face {
+    font-family: 'pre_medium';
+    src: url(../fonts/Pretendard/Pretendard-Medium.otf);
+}
+@font-face {
+    font-family: 'pre_semibold';
+    src: url(../fonts/Pretendard/Pretendard-SemiBold.ttf);
+}
+@font-face {
+    font-family: 'pre_bold';
+    src: url(../fonts/Pretendard/Pretendard-Bold.ttf);
+}
+
+/*---fonts_helvetica---*/
+@font-face {
+    font-family: 'helvetica';
+    src: url(../fonts/HelveticaNeueLTPro/Helvetica.ttf);
+}
+@font-face {
+    font-family: 'hel_exlight';
+    src: url(../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-LtEx.otf);
+}
+@font-face {
+    font-family: 'hel_exmedium';
+    src: url(../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-MdEx.otf);
+}
+@font-face {
+    font-family: 'hel_exheavy';
+    src: url(../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-BlkEx.otf);
+}
+
+.join_form_container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -32,16 +71,19 @@
 
 a {
     text-decoration: none;
-    font-family: 'Helvetica83-ExtendedHeavy';
-    color: #000000;
-    font-style: normal;
+    font-family: 'hel_exheavy';
     font-weight: 900;
+    font-size: 70px;
+    color: #000000;
     font-size: 70px;
 }
 
 .main_desc {
     width: 633px;
     height: 48px;
+    font-family: 'pre_thin';
+    font-weight: 200;
+    font-size: 20px;
 }
 
 .join_user_form_container {
@@ -51,6 +93,10 @@ a {
 .input {
     width: 460px;
     height: 60px;
+    font-family: 'pre_light';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
     border: solid 1px;
@@ -65,4 +111,11 @@ a {
     color: #ffffff;
     border: none;
     border-radius: 2px;
+}
+
+.copyRight_desc {
+    font-family: 'hel_exlight';
+    color: #969696;
+    font-size: 14px;
+    margin-top: 235px;
 }
