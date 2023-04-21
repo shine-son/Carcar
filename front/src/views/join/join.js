@@ -5,7 +5,9 @@
 const fullNameInput = document.querySelector('#fullNameInput');
 const emailInput = document.querySelector('#emailInput');
 const phoneNumberInput = document.querySelector('#phoneNumberInput');
-const addressInput = document.querySelector('#addressInput');
+const postalCodeInput = document.querySelector('#postalCodeInput');
+const mainAddressInput = document.querySelector('#mainAdressInput');
+const detailAddressInput = document.querySelector('#detailAddressInput');
 const passwordInput = document.querySelector('#passwordInput');
 const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
 const submitButton = document.querySelector('#submitButton');
@@ -28,6 +30,9 @@ async function handleSubmit(e) {
     const fullName = fullNameInput.value;
     const email = emailInput.value;
     const phoneNumber = phoneNumberInput.value;
+    const postalCode = postalCodeInput.value;
+    const addressMain = mainAddressInput.value;
+    const addressDetail = detailAddressInput.value;
     const password = passwordInput.value;
     const passwordConfirm = passwordConfirmInput.value;
 
@@ -71,6 +76,9 @@ async function handleSubmit(e) {
         fullName,
         email,
         phoneNumber,
+        postalCode,
+        addressMain,
+        addressDetail,
         password,
         passwordConfirm,
     };
