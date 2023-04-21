@@ -45,6 +45,22 @@ userRouter.post('/api/users/:id', async (req, res, next) => {
 
 
 // 로그인(login)
+userRouter.post('/api/login', async (req, res, next) => {
+  try {
+    /** request에서 요청값 받아오기 */
+    const { email, password } = req.body;
+
+    /** [스켈레톤 코드] 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내줌) */
+    const userToken = await userService.getUserToken({ email, password });
+
+    /** [스켈레톤 코드] 로그인 성공 시 jwt 토큰을 프론트에 보냄(jwt 토큰은 문자열이므로 json으로 변환필요) */
+    res.status(200).json(userToken);
+  } catch(error) {
+    next(error);
+  }
+});
+
+
   // 이메일 형식 검증
 
   // 비밀번호 minlength(11) 검증
