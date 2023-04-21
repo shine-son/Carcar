@@ -53,9 +53,15 @@ orderRouter.put(
     })
 );
 
-orderRouter.put(
+orderRouter.delete(
     "/:id",
-    asyncHandler((req, res, next) => {})
+    asyncHandler(async (req, res, next) => {
+        const order_id = req.params.id;
+
+        const order = await orderService.deleteOrder(order_id);
+
+        res.json(order);
+    })
 );
 
 module.exports = orderRouter;

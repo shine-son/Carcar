@@ -86,7 +86,11 @@ class OrderService {
         return update_order;
     }
 
-    // 배송 상태
+    async deleteOrder(order_id) {
+        const order = await orderModel.deleteOrderById(order_id);
+
+        return order;
+    }
 }
 
 const orderService = new OrderService();
