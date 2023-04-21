@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 /** 주소를 검색해서 구하는 방법을 2주차에 고민하면 좋을 듯 합니다. */
 const UserAddressSchema = new Schema(
@@ -53,7 +53,7 @@ const UserSchema = new Schema(
   }
 );
 
-/**
- *  user-model을 user-schema로 병합하여 한번에 exports
- */
-exports.userModel = mongoose.model('users', UserSchema);
+
+const User = model("users", UserSchema);
+const UserAddress = model("user_address", UserAddressSchema);
+module.exports = { User, UserAddress };
