@@ -54,9 +54,19 @@ async function handleSubmit(e) {
         return alert('비밀번호가 일치하지 않습니다.');
     }
 
-    // // 회원가입 api 요청
+    // 회원가입 api 요청
     // try {
-    //     const data = { fullName, email, password };
+    //     // const data = { fullName, email, password };
+    //     const data = {
+    //         fullName,
+    //         email,
+    //         phoneNumber,
+    //         postalCode,
+    //         addressMain,
+    //         addressDetail,
+    //         password,
+    //         passwordConfirm,
+    //     };
 
     //     await Api.post('/api/join', data);
 

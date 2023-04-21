@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+
 const viewsRouter = express.Router();
 //페이지별로 html, css, js 파일들 라우팅
 viewsRouter.use('/join', serveStatic('join'));
