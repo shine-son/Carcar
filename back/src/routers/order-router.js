@@ -19,10 +19,10 @@ orderRouter.post(
 
 orderRouter.get(
     "/",
-    asyncHandler((req, res, next) => {
-        const user_id = req.current_user;
+    asyncHandler(async (req, res, next) => {
+        const user_id = "6440131acd26489b4a21893e";
 
-        const order = orderService.getOrderOfUser(user_id);
+        const order = await orderService.getOrderOfUser(user_id);
 
         res.json(order);
     })
@@ -30,11 +30,11 @@ orderRouter.get(
 
 orderRouter.get(
     "/:id",
-    asyncHandler((req, res, next) => {
-        const user_id = req.current_user; // 로그인 여부만 확인하고 유저 정보는 필요없다? 아니면 더블체크를 해야한다...?
+    asyncHandler(async (req, res, next) => {
+        // const user_id = "6440131acd26489b4a21893e"; // 로그인 여부만 확인하고 유저 정보는 필요없다? 아니면 더블체크를 해야한다...?
         const order_id = req.params.id;
 
-        const order = orderService.getOrder(order_id);
+        const order = await orderService.getOrder(order_id);
 
         res.json(order);
     })
@@ -43,11 +43,12 @@ orderRouter.get(
 //
 orderRouter.put(
     "/:id",
-    asyncHandler((req, res, next) => {
+    asyncHandler(async (req, res, next) => {
         const order_id = req.params.id;
         const { address } = req.body;
+        console.log(or);
 
-        const order = orderService.updateOrder(order_id, address);
+        const order = await orderService.updateOrder(order_id, address);
 
         res.json(order);
     })

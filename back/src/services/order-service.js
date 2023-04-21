@@ -68,15 +68,16 @@ class OrderService {
 
     // 배송상태가 "배송준비중"일 때 수정 가능
     async updateOrder(order_id, address) {
-        const order = orderModel.getOrderById(order_id);
+        const order = await orderModel.getOrderById(order_id);
+        console.log(order);
 
         if (order.shipping_status !== "배송준비중") {
             throw new Error();
         }
 
-        const update_order = order.updateOrderById(address);
+        const update_order = await order.updateOrderById(address);
 
-        return order;
+        return update_order;
     }
 
     // 배송 상태
