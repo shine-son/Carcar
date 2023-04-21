@@ -40,7 +40,7 @@ const OrderedProductSchema = new Schema({
  */
 const OrderSchema = new Schema(
     {
-        shortId,
+        order_id: shortId,
         user_id: {
             type: String,
             required: true,
