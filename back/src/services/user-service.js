@@ -38,5 +38,48 @@ class UserService {
 }
 
 // 로그인
+async getUserToken(loginInfo) {
+  const { email, password } = loginInfo;
+
+  /** 우선 해당 이메일의 사용자 정보가 db에 있는지 확인 */
+  const user = await this.userModel.findByEmail(email);
+  /** 사용자 정보가 db에 없다면 */
+  if (!user) {
+    throw new Error(
+      "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+    );
+  }
+
+  /** 이메일은 확인되었으므로 비밀번호 확인차례 */
+
+  /** db에 해쉬화된 비밀번호 */
+  const correctHashedPassword = user.password;
+  /** 입력된 비밀번호와 db에 저장된 암호화된 비밀번호 비교 */
+  const isPasswordCorrect = bcrypt.compare(
+    password,
+    correctHashedPassword
+  );
+
+  /** 비밀번호가 일치하지 않으면 */
+  if (!isPasswordCorrect) {
+    throw new Error(
+      '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+    );
+  }
+
+  /** 
+   * 스켈레톤 코드를 따왔지만 이해가 안 되어서 jwt 토큰을 공부후 다시 확인하겠습니다.
+   * [스켈레톤 코드]로그인 성공 -> JWT 웹 토큰 생성   
+  */ 
+  const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+
+  /** [스켈레톤] 2개의 프로퍼티를 jwt 토큰에 담음 */
+  const token = jwt.token({ userId: user._id, role: user.role }, secretKey);
+
+  /** 왜 중괄호로 감싸서 리턴하는가? */
+  return { token };
+}
+
+
 
 // 관리자
