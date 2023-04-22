@@ -1,6 +1,3 @@
-// import * as Api from '/api.js';
-// import { validateEmail } from '/useful-functions.js';
-
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector('#fullNameInput');
 const emailInput = document.querySelector('#emailInput');
@@ -53,33 +50,6 @@ async function handleSubmit(e) {
     if (!isPasswordSame) {
         return alert('비밀번호가 일치하지 않습니다.');
     }
-
-    // 회원가입 api 요청
-    // try {
-    //     // const data = { fullName, email, password };
-    //     const data = {
-    //         fullName,
-    //         email,
-    //         phoneNumber,
-    //         postalCode,
-    //         addressMain,
-    //         addressDetail,
-    //         password,
-    //         passwordConfirm,
-    //     };
-
-    //     await Api.post('/api/join', data);
-
-    //     alert(`정상적으로 회원가입되었습니다.`);
-
-    //     // 로그인 페이지 이동
-    //     window.location.href = '/login';
-    // } catch (err) {
-    //     console.error(err.stack);
-    //     alert(
-    //         `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
-    //     );
-    // }
 
     //객체 만들기
     const data = {
