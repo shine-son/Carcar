@@ -97,4 +97,4 @@ async getUserToken(loginInfo) {
 
 const userService = new UserService(userModel);
 
-export { userService };
+module.exports { userService };
