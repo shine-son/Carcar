@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { userService } = require('../services/user-service');
-
+const { loginRequired } = require('../middlewares/login-required');
 const userRouter = Router();
 
 // 회원가입(join, /api/users)
