@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const { errorHandler } = require("./middlewares/error-handler");
 const orderRouter = require("./routers/order-router");
 
+const { errorHandler } = require("./middlewares/error-handler");
+
 const app = express();
 
 // database 연결
