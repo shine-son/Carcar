@@ -19,7 +19,6 @@ const UserAddressSchema = new Schema(
   },
   {
     collection: "UserAddress",
-    timestamps: true,
   }
 );
 

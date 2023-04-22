@@ -23,7 +23,7 @@ class OrderService {
   }
 
   // 배송상태가 "배송준비중"일 때 수정 가능
-  async updateOrder(order_id, address) {
+  async updateOrder(user_id, order_id, address) {
     const order = await orderModel.getOrderById(order_id);
 
     if (!order) {
@@ -31,7 +31,11 @@ class OrderService {
     }
 
     if (order.shipping_status !== "배송준비중") {
-      throw new Error("배송 준비 중인 주문만 수정할 수 있습니다.");
+      throw new Error("주문을 수정할 수 없습니다.");
+    }
+
+    if (order.user_id !== user_id) {
+      throw new Error("권한이 없습니다.");
     }
 
     const update_order = await orderModel.updateOrderById(order_id, address);
@@ -39,10 +43,24 @@ class OrderService {
     return update_order;
   }
 
-  async deleteOrder(order_id) {
-    const order = await orderModel.deleteOrderById(order_id);
+  async deleteOrder(user_id, order_id) {
+    const order = await orderModel.getOrderById(order_id);
 
-    return order;
+    if (!order) {
+      throw new Error("주문을 찾을 수 없습니다.");
+    }
+
+    if (order.shipping_status !== "배송준비중") {
+      throw new Error("주문을 취소할 수 없습니다.");
+    }
+
+    if (order.user_id !== user_id) {
+      throw new Error("권한이 없습니다.");
+    }
+
+    await orderModel.deleteOrderById(order_id);
+
+    return;
   }
 }
 

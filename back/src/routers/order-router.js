@@ -3,7 +3,7 @@ const { Router } = require("express");
 const asyncHandler = require("../utils/async-handler");
 const orderService = require("../services/order-service");
 const loginRequired = require("../middlewares/login-required");
-// const { checkAdmin } = require("../middlewares/check-admin");
+// const { isAdmin } = require("../middlewares/check-admin");
 
 const orderRouter = Router();
 
@@ -22,6 +22,7 @@ orderRouter.post(
 
 orderRouter.get(
   "/",
+  loginRequired,
   asyncHandler(async (req, res, next) => {
     const user_id = req.currentUserId;
 
@@ -33,6 +34,7 @@ orderRouter.get(
 
 orderRouter.get(
   "/:id",
+  loginRequired,
   asyncHandler(async (req, res, next) => {
     const order_id = req.params.id;
 
@@ -45,11 +47,14 @@ orderRouter.get(
 //
 orderRouter.put(
   "/:id",
+  loginRequired,
   asyncHandler(async (req, res, next) => {
+    const user_id = req.currentUserId;
     const order_id = req.params.id;
-    const { address } = req.body;
+    const address = req.body.address;
+    console.log(address);
 
-    const order = await orderService.updateOrder(order_id, address);
+    const order = await orderService.updateOrder(user_id, order_id, address);
 
     res.json(order);
   })
@@ -57,12 +62,16 @@ orderRouter.put(
 
 orderRouter.delete(
   "/:id",
+  loginRequired,
   asyncHandler(async (req, res, next) => {
+    const user_id = req.currentUserId;
     const order_id = req.params.id;
 
-    const order = await orderService.deleteOrder(order_id);
+    const order = await orderService.deleteOrder(user_id, order_id);
 
-    res.json(order);
+    res
+      .status(204)
+      .json({ status: "delete success", message: "delete success" });
   })
 );
 

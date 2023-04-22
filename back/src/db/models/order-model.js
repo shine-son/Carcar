@@ -77,13 +77,27 @@ class OrderModel {
     return order;
   }
 
-  // 유저 정보 업데이트
   async updateOrderById(order_id, address) {
+    const updateAddress = {
+      address: JSON.stringify(address),
+      updatedAt: new Date(), // 업데이트 시간을 갱신
+    };
+
+    const options = {
+      new: true, // 새로운 문서 반환
+      // setDefaultsOnInsert: true, // 업데이트 후 문서가 존재하지 않을 때, 기본값 설정
+      // upsert: true, // 문서가 존재하지 않을 때, 새로운 문서 생성
+      fields: { _id: 0 }, // _id 필드를 반환하지 않고, createdAt 필드를 반환
+    };
+
     const order = await Order.findOneAndUpdate(
       { order_id },
-      { address },
-      { new: true }
-    ); // new: true를 적용하면 업데이트된 객체를 반환한다.
+      {
+        $set: updateAddress, // 기존 필드를 업데이트
+        // $setOnInsert: { createdAt: new Date() }, // 새로운 문서 생성 시, createdAt 필드를 추가
+      },
+      options
+    );
 
     return order;
   }
