@@ -8,6 +8,7 @@ const detailAddressInput = document.querySelector('#detailAddressInput');
 const passwordInput = document.querySelector('#passwordInput');
 const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
 const submitButton = document.querySelector('#submitButton');
+// const log = document.getElementById('log');
 
 addAllElements();
 addAllEvents();
@@ -19,6 +20,30 @@ async function addAllElements() {}
 function addAllEvents() {
     submitButton.addEventListener('click', handleSubmit);
 }
+
+fullNameInput.addEventListener('change', function () {
+    const value = fullNameInput.value;
+
+    // 입력값이 3자 이하인 경우 error 클래스를 가진 p 태그를 생성하여 추가
+    if (value.length < 3) {
+        let error = fullNameInput.nextElementSibling;
+
+        if (!error || !error.classList.contains('error')) {
+            error = document.createElement('p');
+            error.classList.add('error');
+            fullNameInput.insertAdjacentElement('afterend', error);
+        }
+
+        error.textContent = '입력값이 너무 짧습니다.';
+    } else {
+        // 입력값이 4자 이상인 경우 error 클래스를 가진 p 태그를 삭제
+        const error = fullNameInput.nextElementSibling;
+
+        if (error && error.classList.contains('error')) {
+            error.remove();
+        }
+    }
+});
 
 // 회원가입 진행
 async function handleSubmit(e) {
