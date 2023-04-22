@@ -113,16 +113,14 @@ class UserService {
      * 비밀번호 일치 여부 확인
     */
     const correctHashedPassword = user.password;
-    cosnt isPasswordCorrect = await bcrypt.compare(
+    const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
       correctHashedPassword
     );
     
     /** 입력한 비밀번호가 db내의 비밀번호와 일치하지 않는다면 */
     if (!isPasswordCorrect) {
-      throw new Error("
-      현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
+      throw new Error("현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
     }
 
     /** 
