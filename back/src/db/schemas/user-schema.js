@@ -39,7 +39,6 @@ const UserSchema = new Schema(
       required: true,
     },
     phoneNumber: {
-      /** 스켈레톤코드는 String이었는데 String을 써야하는 이유를 모르겠어서 Number로 작성 */
       type: String,
       required: true,
     },
@@ -59,4 +58,5 @@ const UserSchema = new Schema(
 
 const User = model("User", UserSchema);
 const UserAddress = model("UserAddress", UserAddressSchema);
+
 module.exports = { User, UserAddress };

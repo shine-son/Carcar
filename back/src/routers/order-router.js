@@ -23,7 +23,7 @@ orderRouter.post(
 orderRouter.get(
   "/",
   asyncHandler(async (req, res, next) => {
-    const user_id = "6440131acd26489b4a21893e";
+    const user_id = req.currentUserId;
 
     const order = await orderService.getOrderOfUser(user_id);
 
@@ -34,7 +34,6 @@ orderRouter.get(
 orderRouter.get(
   "/:id",
   asyncHandler(async (req, res, next) => {
-    // const user_id = "6440131acd26489b4a21893e"; // 로그인 여부만 확인하고 유저 정보는 필요없다? 아니면 더블체크를 해야한다...?
     const order_id = req.params.id;
 
     const order = await orderService.getOrder(order_id);
