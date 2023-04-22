@@ -1,5 +1,5 @@
 const { Router } = require('express');
-
+const { userService } = require('../services/user-service');
 
 const userRouter = Router();
 
@@ -69,6 +69,16 @@ userRouter.post('/api/login', async (req, res, next) => {
 
 
 // 사용자 정보 조회(get)
+/** 
+ * [스켈레톤] 전체 유저 목록을 가져옴 (배열 형태임) 
+ * [스켈레톤] 미들웨어로 loginRequired 를 썼음, (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨 )
+ * 관리자가 전체 유저 목록을 보는 기능으로 보여서 admin을 path에 넣음
+*/
+userRouter.get('/api/admin/userlist', loginRequired, async (req, res, next) => {
+  /** 전체 사용자 목록을 얻음 */
+  const users = await userService.getUsers();
+})
+
   // 비밀번호 검증
 
 

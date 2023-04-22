@@ -3,7 +3,10 @@ const userModel = require('../db/models/user-model');
 const bcrypt = require('bcrypt');
 
 class UserService {
-  /** 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됌 */
+  /** 
+   * [스켈레톤] 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됌 
+   * class에 대한 이해가 부족해서 우선 코드 작성 후 class 공부해서 리팩토링 해보겠습니다.
+  */
   constructor(userModel) {
     this.userModel = userModel;
   }
@@ -83,3 +86,15 @@ async getUserToken(loginInfo) {
 
 
 // 관리자
+  /** 사용자 목록을 받음 */
+  async getUsers() {
+    const users = await this.userModel.findAll();
+    return users;
+  }
+
+
+
+
+const userService = new UserService(userModel);
+
+export { userService };
