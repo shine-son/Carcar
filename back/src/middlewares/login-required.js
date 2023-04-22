@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-function loginRequired(req, res, next) {
+const loginRequired = (req, res, next) => {
   /** [스켈레톤] request 헤더로부터 authorization bearer 토큰을 받음.
    * jwt 토큰에 대한 이해가 부족해서 우선 코드 작성 후 공부하여 리팩토링 해보겠습니다.
    */
@@ -32,7 +32,7 @@ function loginRequired(req, res, next) {
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const jwtDecoded = jwt.verify(userToken, secretKey);
 
-    const userId = jwtDecoded.user.Id;
+    const userId = jwtDecoded.userId;
 
     /** [스켈레톤] 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됌 */
     req.currentUserId = userId;
@@ -50,6 +50,6 @@ function loginRequired(req, res, next) {
 
     return;
   }
-}
+};
 
 module.exports = loginRequired;

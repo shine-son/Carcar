@@ -1,4 +1,6 @@
 const { Order, OrderedProduct } = require("../schemas/order-schema");
+const { Product } = require("../schemas/product-schema");
+const userModel = require("../models/user-model");
 
 class OrderModel {
   // 주문 추가
@@ -10,7 +12,7 @@ class OrderModel {
     const products = await Promise.all(
       ordered.map(async (product) => {
         const product_id = product.product_id;
-        const ordered_product = await product.findOne({ product_id });
+        const ordered_product = await Product.findOne({ product_id });
         return ordered_product;
       })
     );
@@ -36,12 +38,16 @@ class OrderModel {
     }, 0);
 
     // user_address
+    const user = await userModel.findById(user_id);
+
+    const address = user.address;
+    console.log(address);
 
     // 준비된 데이터들을 가지고 Order 데이터를 작성합니다.
     const order = new Order({
       user_id,
       ordered_product,
-      user_address: "기본주소",
+      address,
       total_price,
     });
 
@@ -88,26 +94,8 @@ class OrderModel {
 
     return order;
   }
-
-  // 유저 정보 업데이트
-  async updateOrderById(order_id, address) {
-    const order = await Order.findOneAndUpdate(
-      { order_id },
-      { address },
-      { new: true }
-    ); // new: true를 적용하면 업데이트된 객체를 반환한다.
-
-    return order;
-  }
-
-  // 유저 정보 삭제
-  async deleteOrderById(order_id) {
-    const order = await Order.deleteOne({ order_id });
-
-    return order;
-  }
 }
 
 const orderModel = new OrderModel();
 
-module.exports = { orderModel };
+module.exports = orderModel;
