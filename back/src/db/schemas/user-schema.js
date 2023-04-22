@@ -4,7 +4,7 @@ const { Schema, model } = require("mongoose");
 const UserAddressSchema = new Schema(
   {
     postalCode: {
-      type: Number,
+      type: String,
       required: true,
     },
     addressMain: {

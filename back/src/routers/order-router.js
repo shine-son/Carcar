@@ -1,14 +1,17 @@
 const { Router } = require("express");
 
-const { asyncHandler } = require("../utils/async-handler");
-const { orderService } = require("../services/order-service");
+const asyncHandler = require("../utils/async-handler");
+const orderService = require("../services/order-service");
+const loginRequired = require("../middlewares/login-required");
+// const { checkAdmin } = require("../middlewares/check-admin");
 
 const orderRouter = Router();
 
 orderRouter.post(
   "/",
+  loginRequired,
   asyncHandler(async (req, res, next) => {
-    const user_id = "6440131acd26489b4a21893e"; // user_id를 JWT 로직을 진행시켜서 찾아오기
+    const user_id = req.currentUserId; // user_id를 JWT 로직을 진행시켜서 찾아오기
     const ordered = req.body; // req.body로 들어온 값 전달받기, 배열
 
     const order = await orderService.addOrder(ordered, user_id);

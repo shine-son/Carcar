@@ -1,9 +1,10 @@
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
-const { errorHandler } = require("./middlewares/error-handler");
+const errorHandler = require("./middlewares/error-handler");
 const orderRouter = require("./routers/order-router");
 const userRouter = require("./routers/user-router");
+const adminRouter = require("./routers/admin-router");
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/auth", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/admin", adminRouter);
 
 app.use(errorHandler);
 

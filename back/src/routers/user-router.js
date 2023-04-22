@@ -2,8 +2,8 @@ const { Router } = require("express");
 const jsonwebtoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const { asyncHandler } = require("../utils/async-handler");
-const { userService } = require("../services/user-service");
+const asyncHandler = require("../utils/async-handler");
+const userService = require("../services/user-service");
 const { User } = require("../db/schemas/user-schema");
 
 const userRouter = Router();

@@ -6,8 +6,10 @@ class UserModel {
 
     return user;
   }
+
+  // async getUserRole()
 }
 
 const userModel = new UserModel();
 
-module.exports = { userModel };
+module.exports = userModel;

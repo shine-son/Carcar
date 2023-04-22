@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 
 const userModel = require("../db/models/user-model");
 
-class UserService {
+class AdminService {
   async getUser(email) {
     const user = await userModel.getUserByEmail(email);
 
@@ -28,6 +28,6 @@ class UserService {
   }
 }
 
-const userService = new UserService();
+const adminService = new AdminService();
 
-module.exports = userService;
+module.exports = adminService;
