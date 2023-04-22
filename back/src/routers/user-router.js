@@ -85,8 +85,51 @@ userRouter.get('/api/admin/userlist', loginRequired, async (req, res, next) => {
 
 
 // 사용자 정보 수정(update)
-  // ??
+userRouter.put('/users/:id', loginRequired, async (req, res, next) => {
+  try {
 
+    /** [스켈레톤] params로부터 id를 가져옴 */
+    const userId = req.params.id;
+
+    /** [스켈레톤] body data 로부터 업데이트할 사용자 정보를 추출함 */
+    const { password, fullName, address, phoneNumber } = req.body;
+
+    /** [스켈레톤] body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함 */
+    const currentPassword = req.body.currentPassword;
+
+    /** [스켈레톤] currentPassword 없을 시, 진행 불가 */
+    if (!currentPassword) {
+      throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+    }
+
+    /** 현재 비밀번호로만 유저정보 조회 자격여부 확인 */
+    const userInfoRequired = { currentPassword };
+
+    /**
+     * [스켈레톤 위 데이터가 undefined가 아니라면,
+     * 즉, 프론트에서 업데잍트를 위해 보내주었다면, 업데이트용 객체를 삽입함
+     */
+    const toUpdate = {
+      ...(fullName && { fullName }),
+      ...(password && { password }),
+      ...(address && { address }),
+      ...(phoneNumber && { phoneNumber }),
+    };
+
+    /** [스켈레톤] 사용자 정보를 업데이트함. */
+    const updatedUserInfo = await userService.setUser(
+      userInfoRequired,
+      toUpdate
+    );
+
+    /** [스켈레톤] 업데이트 이후의 유저 데이터를 프론트에 보내 줌 */
+    res.status(200).json(updatedUserInfo);
+  } catch(error) {
+    next(error);
+  }
+});
+
+module.exports = { userRouter };
 
 // 사용자 정보 삭제(delete)
   // 비밀번호 검증

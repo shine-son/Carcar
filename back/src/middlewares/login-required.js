@@ -50,4 +50,4 @@ function loginRequired(req, res, next) {
   }
 }
 
-module.exports { loginRequired };
+module.exports = { loginRequired };
