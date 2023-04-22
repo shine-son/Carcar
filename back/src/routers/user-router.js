@@ -6,26 +6,36 @@ const userRouter = Router();
 // 회원가입(join, /api/users)
 userRouter.post('/api/users/:id', async (req, res, next) => {
   try {
-  /** 
-   * req.body에서 data 가져오기 
-   * 요청값 { email, password, fullName, phoneNumber, address } 구조할당
-  */
-  const { email, password, fullName, phoneNumber, address } = req.body;
+    // [Q] 아래 코드의 존재 이유를 모르겠습니다.
+    // [스켈레톤] Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
+    // [스켈레톤] application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    //[Q] 여기까지
 
-  /** 위 데이터를 db에 추가하기위해 service로 보내기 */
-  const newUser = await userService.addUser({
-    email,
-    password,
-    fullName,
-    phoneNumber,
-    address,
-  });
+    /** 
+     * req.body에서 data 가져오기 
+     * 요청값 { email, password, fullName, phoneNumber, address } 구조할당
+    */
+    const { email, password, fullName, phoneNumber, address } = req.body;
 
-  /** 
-   * 추가된 db 데이터를 다시 프론트로 보내줌
-   * 201 Created: 요청이 성공적이었으며 그 결과로 새로운 리소스가 생성되었습니다. 이 응답은 일반적으로 POST 요청 또는 일부 PUT 요청 이후에 따라옵니다.
-  */
-  res.status(201).json(newUser);
+    /** 위 데이터를 db에 추가하기위해 service로 보내기 */
+    const newUser = await userService.addUser({
+      email,
+      password,
+      fullName,
+      phoneNumber,
+      address,
+    });
+
+    /** 
+     * 추가된 db 데이터를 다시 프론트로 보내줌
+     * 201 Created: 요청이 성공적이었으며 그 결과로 새로운 리소스가 생성되었습니다. 이 응답은 일반적으로 POST 요청 또는 일부 PUT 요청 이후에 따라옵니다.
+    */
+    res.status(201).json(newUser);
   } catch(error) {
     next(error);
   }
@@ -47,6 +57,15 @@ userRouter.post('/api/users/:id', async (req, res, next) => {
 // 로그인(login)
 userRouter.post('/api/login', async (req, res, next) => {
   try {
+    // [Q] 아래 코드의 존재 이유를 모르겠습니다.
+    // [스켈레톤] application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    // [Q] 여기까지
+
     /** request에서 요청값 받아오기 */
     const { email, password } = req.body;
 
@@ -88,7 +107,17 @@ userRouter.get('/api/admin/userlist', loginRequired, async (req, res, next) => {
 userRouter.put('/users/:id', loginRequired, async (req, res, next) => {
   try {
 
-    /** [스켈레톤] params로부터 id를 가져옴 */
+    //[Q] 아래 코드의 존재 이유를 모르겠습니다.
+    // [스켈레톤] content-type 을 application/json 로 프론트에서
+    // [스켈레톤] 설정 안 하고 요청하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    //[Q] 여기까지
+
+    /** params로부터 id를 가져옴 */
     const userId = req.params.id;
 
     /** [스켈레톤] body data 로부터 업데이트할 사용자 정보를 추출함 */
