@@ -25,7 +25,7 @@ const UserAddressSchema = new Schema(
 
 const UserSchema = new Schema(
   {
-    emial: {
+    email: {
       type: String,
       required: true,
     },
@@ -39,8 +39,7 @@ const UserSchema = new Schema(
       required: true,
     },
     phoneNumber: {
-      /** 스켈레톤코드는 String이었는데 String을 써야하는 이유를 모르겠어서 Number로 작성 */
-      type: Number,
+      type: String,
       required: true,
     },
     address: UserAddressSchema,

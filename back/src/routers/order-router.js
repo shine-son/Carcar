@@ -17,4 +17,50 @@ orderRouter.post(
   })
 );
 
+orderRouter.get(
+  "/",
+  asyncHandler(async (req, res, next) => {
+    const user_id = req.currentUserId;
+
+    const order = await orderService.getOrderOfUser(user_id);
+
+    res.json(order);
+  })
+);
+
+orderRouter.get(
+  "/:id",
+  asyncHandler(async (req, res, next) => {
+    const order_id = req.params.id;
+
+    const order = await orderService.getOrder(order_id);
+
+    res.json(order);
+  })
+);
+
+//
+orderRouter.put(
+  "/:id",
+  asyncHandler(async (req, res, next) => {
+    const order_id = req.params.id;
+    const { address } = req.body;
+
+    const order = await orderService.updateOrder(order_id, address);
+
+    res.json(order);
+  })
+);
+
+orderRouter.delete(
+  "/:id",
+  asyncHandler(async (req, res, next) => {
+    const order_id = req.params.id;
+
+    const order = await orderService.deleteOrder(order_id);
+
+    res.json(order);
+  })
+);
+
 module.exports = orderRouter;
