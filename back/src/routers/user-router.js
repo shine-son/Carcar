@@ -68,7 +68,7 @@ userRouter.post('/api/login', async (req, res, next) => {
   // 이메일, 비밀번호 일치여부 검증 
 
 
-// 사용자 정보 조회(get)
+// 관리자_전체 유저목록 조회(get)
 /** 
  * [스켈레톤] 전체 유저 목록을 가져옴 (배열 형태임) 
  * [스켈레톤] 미들웨어로 loginRequired 를 썼음, (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨 )
@@ -80,6 +80,8 @@ userRouter.get('/api/admin/userlist', loginRequired, async (req, res, next) => {
 })
 
   // 비밀번호 검증
+
+// 사용자 정보 조회(get)
 
 
 // 사용자 정보 수정(update)
