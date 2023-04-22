@@ -6,6 +6,7 @@ const orderRouter = require("./routers/order-router");
 
 const app = express();
 
+//database 연결
 const DB_URL =
   process.env.MONGODB_URL ||
   "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요. \n.env 파일도 필요합니다.\n";
@@ -35,8 +36,10 @@ app.use(express.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
 
+// order 라우팅
 app.use("/api/orders", orderRouter);
 
+// 에러 핸들러
 app.use(errorHandler);
 
 module.exports = { app };
