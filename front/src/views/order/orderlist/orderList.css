@@ -12,7 +12,7 @@
 .orderList {
   width: 1272px;
   height: 829px;
-
+  overflow: auto;
   box-shadow: 0 0 10px gray;
   border-radius: 7px;
 }
@@ -42,8 +42,13 @@
 
 .orderList_product {
   display: flex;
+  flex-direction: column;
 }
 
+.listBox {
+  display: flex;
+  border-bottom: 1px solid;
+}
 .orderList_product_info {
   width: 319px;
   height: 157px;
@@ -59,6 +64,12 @@
 
 .orderList_product_amount_count {
   display: flex;
+  width: 87px;
+}
+
+.orderList_product_amount_count_plus,
+.orderList_product_amount_count_minus {
+  width: 28px;
 }
 .orderList_product_amount_change {
   width: 87px;

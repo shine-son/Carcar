@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>주문조회</title>
-    <link rel="stylesheet" href="nav.css" />
-    <link rel="stylesheet" href="orderList.css" />
+    <!-- <link rel="stylesheet" href="nav.css" /> -->
     <link rel="stylesheet" href="../../common.css" />
+    <link rel="stylesheet" href="orderList.css" />
+    
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
@@ -38,38 +39,13 @@
         </div>
 
         <div class="orderList_product">
-            <div class="orderList_product_order domain">
-                <p class="orderList_category_order_date">2023.4.20</p>
-                <p class="orderList_category_order_number"><a href="#">[주문번호]</a></p>
-            </div>
-            <div class="orderList_product_img domain"></div>
-            <div class="orderList_product_info">
-                <div class="orderList_product_info_brand">Benz</div>
-                <div class="orderList_product_info_name">지바겐</div>
-                <div class="orderList_product_info_desc">비싼차</div>
-            </div>
-            <div class="orderList_product_amount domain">
-                
-                    <div class="orderList_product_amount_count">
-                        <button style="width:28px">+</button>
-                        <div class="product_amount">1</div>
-                        <button style="width:28px">-</button>
-                        
-                    </div>
-                    <button class="orderList_product_amount_change">변경</button>
-                
-               
-            </div>
-            <div class="orderList_product_price domain">60,000원</div>
-            <div class="orderList_product_state domain">결제완료</div>
-            <div class="orderList_product_delete domain">
-                <button class="orderList_product_delete_box">주문취소</button>
-            </div>
-
-      </div>
+        </div>
     </div>
 
   
-    </script>
+    <script src="orderList.js" type="module"></script>
+    <script src="../../api.js" type="module"></script>
+    <script src="../../useful-function.js" type="module"></script>
+
   </body>
 </html>
