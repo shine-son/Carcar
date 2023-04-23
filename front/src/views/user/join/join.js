@@ -140,6 +140,18 @@ function addAllEventListeners() {
 
 addAllEventListeners();
 
+//회원가입 버튼 클릭 후 input값 초기화
+function resetFields() {
+    fullNameInput.value = '';
+    emailInput.value = '';
+    passwordInput.value = '';
+    passwordConfirmInput.value = '';
+    phoneNumberInput.value = '';
+    postalCodeInput.value = '';
+    mainAddressInput.value = '';
+    detailAddressInput.value = '';
+}
+
 // 회원가입 진행
 async function handleSubmit(e) {
     e.preventDefault();
@@ -182,6 +194,8 @@ async function handleSubmit(e) {
     } else {
         alert('회원가입에 실패하였습니다...');
     }
+
+    resetFields();
 
     const result = await res.json();
     console.log(result);
