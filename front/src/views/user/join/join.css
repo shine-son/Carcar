@@ -73,6 +73,10 @@ a {
     border-radius: 2px;
 }
 
+.submit_button:disabled {
+    background-color: #969696;
+}
+
 .copyRight_desc {
     font-family: 'hel_exlight';
     color: #969696;
