@@ -25,7 +25,7 @@ class UserModel {
     // 새로 생성된 user의 모든 정보를 보여주지 않고 제한된 값만 반환하도록 한다.
     return {
       _id: createdNewUser._id,
-      fullName: createdNewUser.full_name,
+      full_name: createdNewUser.full_name,
       email: createdNewUser.email,
     };
   }
@@ -44,12 +44,12 @@ class UserModel {
     return {
       _id: updatedUser._id,
       email: updatedUser.email,
-      fullName: updatedUser.full_name,
-      phoneNumber: updatedUser.phone_number,
+      full_name: updatedUser.full_name,
+      phone_number: updatedUser.phone_number,
       address: {
-        postalCode: updatedUser.address.postal_code,
-        addressMain: updatedUser.address.address_main,
-        addressDetail: updatedUser.address.address_detail,
+        postal_code: updatedUser.address.postal_code,
+        address_main: updatedUser.address.address_main,
+        address_detail: updatedUser.address.address_detail,
       },
       role: updatedUser.role,
     };

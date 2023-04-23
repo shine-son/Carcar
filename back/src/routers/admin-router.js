@@ -12,9 +12,9 @@ adminRouter.get(
   loginRequired,
   isAdmin,
   asyncHandler(async (req, res, next) => {
-    const orders = await orderService.getOrders();
+    const orders = await orderService.getOrdersOfAdmin();
 
-    res.json(orders);
+    res.status(200).json(orders);
   })
 );
 
@@ -23,14 +23,14 @@ adminRouter.put(
   loginRequired,
   isAdmin,
   asyncHandler(async (req, res, next) => {
-    const order_id = req.params.id;
-    const shipping_status = req.body.shippingStatus;
+    const orderId = req.params.id;
+    const shippingStatus = req.body.shippingStatus;
     const order = await orderService.changeShippingStatus(
-      order_id,
-      shipping_status
+      orderId,
+      shippingStatus
     );
 
-    res.json(order);
+    res.status(200).json(order);
   })
 );
 
@@ -39,9 +39,9 @@ adminRouter.delete(
   loginRequired,
   isAdmin,
   asyncHandler(async (req, res, next) => {
-    const order_id = req.params.id;
+    const orderId = req.params.id;
 
-    await orderService.deleteOrderByAdmin(order_id);
+    await orderService.deleteOrderByAdmin(orderId);
 
     res
       .status(204)
