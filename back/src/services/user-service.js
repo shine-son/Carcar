@@ -21,9 +21,12 @@ class UserService {
     // 이메일 중복 확인
     const user = await userModel.findByEmail(email);
     if (user) {
-      throw new Error(
+      const err = new Error(
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
       );
+      err.status = 403;
+
+      throw err;
     }
 
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
@@ -58,9 +61,12 @@ class UserService {
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await userModel.findByEmail(email);
     if (!user) {
-      throw new Error(
+      const err = new Error(
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
       );
+      err.status = 404;
+
+      throw err;
     }
 
     // 비밀번호 일치 여부 확인
@@ -69,9 +75,12 @@ class UserService {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      throw new Error(
+      const err = new Error(
         "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
+      err.status = 401;
+
+      throw err;
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
@@ -107,7 +116,10 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+      const err = new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+      err.status = 404;
+
+      throw err;
     }
 
     // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
@@ -119,9 +131,12 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      throw new Error(
+      const err = new Error(
         "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
+      err.status = 401;
+
+      throw err;
     }
 
     // 이제 드디어 업데이트 시작

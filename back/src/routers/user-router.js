@@ -66,7 +66,10 @@ userRouter.put(
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
-      throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      const err = new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      err.status = 403;
+
+      throw err;
     }
 
     const userInfoRequired = { userId, currentPassword };
