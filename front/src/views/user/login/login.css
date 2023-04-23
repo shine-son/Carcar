@@ -1,3 +1,6 @@
+.error {
+    color: red;
+}
 .login_form_container {
     display: flex;
     flex-direction: column;
@@ -25,7 +28,7 @@
     height: 40px;
 }
 
-a {
+.main_logo a {
     text-decoration: none;
     font-family: 'pre_bold';
     font-weight: 900;
