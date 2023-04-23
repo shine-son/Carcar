@@ -3,7 +3,11 @@ const userModel = require("../db/models/user-model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+/**
+ * user의 비지니스 로직을 담당
+ */
 class UserService {
+  // 왜 써야하는지 모르겠어서 주석처리함
   // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
   // constructor(userModel) {
   //   this.userModel = userModel;
@@ -11,7 +15,7 @@ class UserService {
 
   // 회원가입
   async addUser(userInfo) {
-    // 객체 destructuring
+    // 구조분해 할당으로 값을 전달받는다. or 매개변수를 각각 받는다 뭐가 더 좋을까?
     const { email, fullName, password, phoneNumber, address } = userInfo;
 
     // 이메일 중복 확인
@@ -24,15 +28,20 @@ class UserService {
 
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
 
-    // 우선 비밀번호 해쉬화(암호화)
+    // 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 전달받은 값을 가지고 새로운 user 정보를 생성
     const newUserInfo = {
-      fullName,
+      full_name: fullName,
       email,
       password: hashedPassword,
-      phoneNumber,
-      address,
+      phone_number: phoneNumber,
+      address: {
+        postal_code: address.postalCode,
+        address_main: address.addressMain,
+        address_detail: address.addressDetail,
+      },
     };
 
     // db에 저장
@@ -54,16 +63,10 @@ class UserService {
       );
     }
 
-    // 이제 이메일은 문제 없는 경우이므로, 비밀번호를 확인함
-
     // 비밀번호 일치 여부 확인
-    const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
     // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
       throw new Error(
@@ -72,9 +75,9 @@ class UserService {
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+    const secretKey = process.env.JWT_SECRET_KEY;
 
-    // 2개 프로퍼티를 jwt 토큰에 담음
+    // user_id, role을 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
     return { token };
@@ -83,7 +86,15 @@ class UserService {
   // 사용자 목록을 받음.
   async getUsers() {
     const users = await userModel.findAll();
+
     return users;
+  }
+
+  // userId로 사용자를 찾음.
+  async getUserById(userId) {
+    const user = await userModel.findById(userId);
+
+    return user;
   }
 
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
@@ -102,10 +113,9 @@ class UserService {
     // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
 
     // 비밀번호 일치 여부 확인
-    const correctPasswordHash = user.password;
     const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
-      correctPasswordHash
+      user.password
     );
 
     if (!isPasswordCorrect) {
