@@ -57,7 +57,7 @@ class OrderModel {
   }
 
   // 주문 전체 조회
-  async getAllOrder() {
+  async findAll() {
     const orders = await Order.find({});
 
     return orders;
@@ -105,6 +105,20 @@ class OrderModel {
   // 유저 정보 삭제
   async deleteOrderById(order_id) {
     const order = await Order.deleteOne({ order_id });
+
+    return order;
+  }
+
+  async updateShippingStatus(order_id, shipping_status) {
+    const update_shippgin_status = {
+      shipping_status: shipping_status,
+    };
+
+    const order = await Order.findOneAndUpdate(
+      { order_id },
+      { $set: update_shippgin_status },
+      { new: true, fields: { _id: 0 } }
+    );
 
     return order;
   }

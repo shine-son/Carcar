@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../db/models/user-model");
 
 class AdminService {
-  async getUser(email) {
+  async getUserByEamil(email) {
     const user = await userModel.getUserByEmail(email);
 
     if (!user) {
@@ -11,6 +11,12 @@ class AdminService {
       error.statusCode = 400;
       return error;
     }
+
+    return user;
+  }
+
+  async getUserById(user_id) {
+    const user = await userModel.findById(user_id);
 
     return user;
   }

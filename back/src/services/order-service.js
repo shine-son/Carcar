@@ -62,6 +62,41 @@ class OrderService {
 
     return;
   }
+
+  // 관리자일 경우 모든 주문 확인 가능
+  async getOrders() {
+    const orders = await orderModel.findAll();
+
+    return orders;
+  }
+
+  // 관리자가 배송 상태를 변경할 수 있다.
+  async changeShippingStatus(order_id, shipping_status) {
+    const order = await orderModel.getOrderById(order_id);
+
+    if (!order) {
+      throw new Error("주문을 찾을 수 없습니다.");
+    }
+
+    const update_order = await orderModel.updateShippingStatus(
+      order_id,
+      shipping_status
+    );
+
+    return update_order;
+  }
+
+  async deleteOrderByAdmin(order_id) {
+    const order = await orderModel.getOrderById(order_id);
+
+    if (!order) {
+      throw new Error("주문을 찾을 수 없습니다.");
+    }
+
+    await orderModel.deleteOrderById(order_id);
+
+    return;
+  }
 }
 
 const orderService = new OrderService();

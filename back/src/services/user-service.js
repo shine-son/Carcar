@@ -5,9 +5,9 @@ const jwt = require("jsonwebtoken");
 
 class UserService {
   // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
-  constructor(userModel) {
-    this.userModel = userModel;
-  }
+  // constructor(userModel) {
+  //   this.userModel = userModel;
+  // }
 
   // 회원가입
   async addUser(userInfo) {
@@ -15,7 +15,7 @@ class UserService {
     const { email, fullName, password, phoneNumber, address } = userInfo;
 
     // 이메일 중복 확인
-    const user = await this.userModel.findByEmail(email);
+    const user = await userModel.findByEmail(email);
     if (user) {
       throw new Error(
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
@@ -36,7 +36,7 @@ class UserService {
     };
 
     // db에 저장
-    const createdNewUser = await this.userModel.create(newUserInfo);
+    const createdNewUser = await userModel.create(newUserInfo);
 
     return createdNewUser;
   }
@@ -47,7 +47,7 @@ class UserService {
     const { email, password } = loginInfo;
 
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
-    const user = await this.userModel.findByEmail(email);
+    const user = await userModel.findByEmail(email);
     if (!user) {
       throw new Error(
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
@@ -82,7 +82,7 @@ class UserService {
 
   // 사용자 목록을 받음.
   async getUsers() {
-    const users = await this.userModel.findAll();
+    const users = await userModel.findAll();
     return users;
   }
 
@@ -92,7 +92,7 @@ class UserService {
     const { userId, currentPassword } = userInfoRequired;
 
     // 우선 해당 id의 유저가 db에 있는지 확인
-    let user = await this.userModel.findById(userId);
+    let user = await userModel.findById(userId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -125,7 +125,7 @@ class UserService {
     }
 
     // 업데이트 진행
-    user = await this.userModel.update({
+    user = await userModel.update({
       userId,
       update: toUpdate,
     });

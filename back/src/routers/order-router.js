@@ -1,9 +1,8 @@
 const { Router } = require("express");
 
+const loginRequired = require("../middlewares/login-required");
 const asyncHandler = require("../utils/async-handler");
 const orderService = require("../services/order-service");
-const loginRequired = require("../middlewares/login-required");
-// const { isAdmin } = require("../middlewares/check-admin");
 
 const orderRouter = Router();
 
@@ -67,7 +66,7 @@ orderRouter.delete(
     const user_id = req.currentUserId;
     const order_id = req.params.id;
 
-    const order = await orderService.deleteOrder(user_id, order_id);
+    await orderService.deleteOrder(user_id, order_id);
 
     res
       .status(204)
