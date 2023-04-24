@@ -1,13 +1,13 @@
 const { Router } = require("express");
 
 // 정상적으로 로그인한 유저인지 확인하는 미들웨어
-const loginRequired = require("../middlewares/login-required");
+const { loginRequired } = require("../middlewares/login-required");
 // 에러를 처리하는 try-catch문 역할을 수행하는 미들웨어
-const asyncHandler = require("../utils/async-handler");
+const { asyncHandler } = require("../utils/async-handler");
 // 비지니스 로직은 userService에서 진행
-const userService = require("../services/user-service");
+const { userService } = require("../services/user-service");
 
-const userRouter = Router();
+const { userRouter } = Router();
 
 // 회원가입 api
 userRouter.post(
@@ -138,4 +138,4 @@ userRouter.delete(
   }
 );
 
-module.exports = userRouter;
+module.exports = { userRouter };
