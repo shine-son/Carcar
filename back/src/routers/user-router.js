@@ -13,16 +13,16 @@ const { userRouter } = Router();
 userRouter.post(
   "/register",
   asyncHandler(async (req, res, next) => {
-    // req (request)의 body 에서 데이터 가져오기
+    // req(request)의 body 에서 데이터 가져오기(<- POST, PUT)
     // 구조 분해 할당으로 req.body에 해당하는 값들을 가져와 변수에 할당한다.
-    const { fullName, email, password, phoneNumber, address } = req.body;
+    const { email, password, fullName, phoneNumber, address } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
 
     const newUser = await userService.addUser({
-      fullName,
       email,
       password,
+      fullName,
       phoneNumber,
       address,
     });
