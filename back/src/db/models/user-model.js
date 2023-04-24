@@ -1,18 +1,14 @@
 // user-schema에서 선언한 User 모델을 불러와 DB에 관련된 로직을 진행
 const User = require("../schemas/user-schema");
 
-/**
- * User 모델의
- */
 class UserModel {
-  // [Q] 유저 찾는데 email, userId 2 가지를 사용하는 이유
-  // email로 유저 찾기
+  // email로 유저 찾기(요청값 활용)
   async findByEmail(email) {
     const user = await User.findOne({ email });
     return user;
   }
 
-  // userId로 유저 찾기
+  // userId로 유저 찾기(jwt토큰 활용)
   async findById(userId) {
     const user = await User.findOne({ _id: userId }); 
     return user;
@@ -25,14 +21,12 @@ class UserModel {
 
     // 새로 생성된 user의 모든 정보를 보여주지 않고 제한된 값만 반환하도록 한다.
     return {
-      _id: createdNewUser._id,
       full_name: createdNewUser.full_name,
       email: createdNewUser.email,
     };
   }
 
   // 사용자 정보를 수정
-  // [Q] userId는 무엇인가? 어디에서 왔는가??
   async update({ userId, update }) {
     // 찾을 값의 조건
     const filter = { _id: userId };
@@ -43,8 +37,9 @@ class UserModel {
 
     const updatedUser = await User.findOneAndUpdate(filter, update, option);
 
+    // service에서 처리하길(<- model은 최대한 간단하게!)
     return {
-      _id: updatedUser._id,
+      // _id와 role은 프론트에서 노출시킬 필요가 없다고 판단하여 삭제하였습니다.
       email: updatedUser.email,
       full_name: updatedUser.full_name,
       phone_number: updatedUser.phone_number,
@@ -52,8 +47,7 @@ class UserModel {
         postal_code: updatedUser.address.postal_code,
         address_main: updatedUser.address.address_main,
         address_detail: updatedUser.address.address_detail,
-      },
-      role: updatedUser.role,
+      }
     };
   }
 
@@ -66,6 +60,4 @@ class UserModel {
 
 const userModel = new UserModel();
 
-module.exports = userModel;
-// userModel은 무엇인가?
-// date를 처리하는 것은 3계층 중 router(controller)가 하는 것이 아닌가?
+module.exports = { userModel };
