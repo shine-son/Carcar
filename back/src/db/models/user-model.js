@@ -1,5 +1,5 @@
 // user-schema에서 선언한 User 모델을 불러와 DB에 관련된 로직을 진행
-const User = require("../schemas/user-schema");
+const { User } = require("../schemas/user-schema");
 
 class UserModel {
   // email로 유저 찾기(요청값 활용)
