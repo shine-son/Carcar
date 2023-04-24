@@ -1,6 +1,6 @@
-const orderModel = require("../db/models/order-model");
-const productModel = require("../db/models/product-model");
-const userModel = require("../db/models/user-model");
+const { orderModel } = require("../db/models/order-model");
+const { productModel } = require("../db/models/product-model");
+const { userModel } = require("../db/models/user-model");
 const { OrderedProduct } = require("../db/schemas/order-schema");
 
 class OrderService {
@@ -174,4 +174,4 @@ class OrderService {
 
 const orderService = new OrderService();
 
-module.exports = orderService;
+module.exports = { orderService };

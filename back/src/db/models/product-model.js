@@ -1,4 +1,4 @@
-const Product = require("../schemas/product-schema");
+const { Product } = require("../schemas/product-schema");
 
 class ProductModel {
   async findById(productId) {
@@ -10,4 +10,4 @@ class ProductModel {
 
 const productModel = new ProductModel();
 
-module.exports = productModel;
+module.exports = { productModel };

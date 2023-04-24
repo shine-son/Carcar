@@ -1,7 +1,7 @@
-const userModel = require("../db/models/user-model");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+const { userModel } = require("../db/models/user-model");
 
 class UserService {
   // 회원가입
@@ -137,4 +137,4 @@ class UserService {
 
 const userService = new UserService(userModel);
 
-module.exports = userService;
+module.exports = { userService };

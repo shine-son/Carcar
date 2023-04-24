@@ -6,9 +6,7 @@ const errorHandler = (error, req, res, next) => {
   const status = error.status || 400;
 
   // 에러는 상태 코드의 JSON 형태로 프론트에 전달됨
-  res
-    .status(status)
-    .json({ status: status, result: "error", reason: error.message });
+  res.status(status).json({ result: "error", reason: error.message });
 };
 
-module.exports = errorHandler;
+module.exports = { errorHandler };

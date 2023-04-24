@@ -29,7 +29,7 @@ class OrderModel {
     return order;
   }
 
-  // 유저 정보 업데이트
+  // 유저 정보 업데이트 -> 수정 예정
   async update(orderId, address) {
     const updateAddress = {
       address: JSON.stringify(address),
@@ -77,4 +77,4 @@ class OrderModel {
 
 const orderModel = new OrderModel();
 
-module.exports = orderModel;
+module.exports = { orderModel };

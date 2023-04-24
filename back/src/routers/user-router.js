@@ -1,8 +1,8 @@
 const { Router } = require("express");
 
-const loginRequired = require("../middlewares/login-required");
-const asyncHandler = require("../utils/async-handler");
-const userService = require("../services/user-service");
+const { loginRequired } = require("../middlewares/login-required");
+const { asyncHandler } = require("../utils/async-handler");
+const { userService } = require("../services/user-service");
 
 const userRouter = Router();
 
@@ -74,4 +74,4 @@ userRouter.put(
   })
 );
 
-module.exports = userRouter;
+module.exports = { userRouter };

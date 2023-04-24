@@ -1,9 +1,9 @@
 const { Router } = require("express");
 
-const loginRequired = require("../middlewares/login-required");
-const isAdmin = require("../middlewares/is-admin");
-const asyncHandler = require("../utils/async-handler");
-const orderService = require("../services/order-service");
+const { loginRequired } = require("../middlewares/login-required");
+const { isAdmin } = require("../middlewares/is-admin");
+const { asyncHandler } = require("../utils/async-handler");
+const { orderService } = require("../services/order-service");
 
 const adminRouter = Router();
 
@@ -49,4 +49,4 @@ adminRouter.delete(
   })
 );
 
-module.exports = adminRouter;
+module.exports = { adminRouter };

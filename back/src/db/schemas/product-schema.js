@@ -1,5 +1,5 @@
 const { model, Schema } = require("mongoose");
-const shortId = require("../../utils/short-id");
+const { shortId } = require("../../utils/short-id");
 
 const ProductSchema = new Schema(
   {
@@ -16,4 +16,4 @@ const ProductSchema = new Schema(
 
 const Product = model("Product", ProductSchema);
 
-module.exports = Product;
+module.exports = { Product };

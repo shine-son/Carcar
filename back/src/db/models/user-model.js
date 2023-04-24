@@ -60,4 +60,4 @@ class UserModel {
 
 const userModel = new UserModel();
 
-module.exports = userModel;
+module.exports = { userModel };
