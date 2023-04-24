@@ -7,16 +7,9 @@ const { jwt } = require("jsonwebtoken");
  * user의 비지니스 로직을 담당
  */
 class UserService {
-  // !!!!!!!!!!!!![Q] class 문법에 constructor(){}로 인스턴스 생성 및 초기화하는 것으로 설명되어있어 기계적으로 작성하였음
-  // 어떻게 활용되어야 할 지 모르겠어서 생략해도 되는 지 궁금합니다
-  // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
-  // constructor(userModel) {
-  //   this.userModel = userModel;
-  // }
 
   // 회원가입
   async addUser(userInfo) {
-    // 구조분해 할당으로 값을 전달받는다. or 매개변수를 각각 받는다 뭐가 더 좋을까?
     const { email, fullName, password, phoneNumber, address } = userInfo;
 
     // 이메일 중복 확인
