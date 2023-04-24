@@ -50,6 +50,7 @@ userRouter.post(
 
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
+// 수정수정수정수정수정 필요... 비지니스 로직은 service로 보내야함.
 userRouter.put(
   "/edit",
   loginRequired,
