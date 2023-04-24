@@ -5,7 +5,7 @@ class ProductService {
     return await productModel.getProductsAll()
   }
   async getProductsByCategory(category) {
-    return productModel.getProductsByCategory(category);
+    return await productModel.getProductsByCategory(category);
   }
   async getProductById(product_id) {
     return await productModel.getProductById(product_id)

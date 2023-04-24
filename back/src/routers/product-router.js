@@ -8,14 +8,12 @@ productRouter.get("/",
   asyncHandler(async (req, res, next) => {
     // 상품의 카테고리로 이동
     if (Object.keys(req.query).length > 0) {
-      console.log(req.query)
       const productsByCategory = await productService.getProductsByCategory(req.query.category);
       res.status(200).json(productsByCategory);
-      return;
     }
     // 상품 전체페이지로 이동
     const productList = await productService.getProductsAll();
-    res.json(productList)
+    res.status(200).json(productList)
   })
 );
 
@@ -28,4 +26,4 @@ productRouter.get("/:id",
 );
 
 
-module.exports = productRouter;
+module.exports = { productRouter };

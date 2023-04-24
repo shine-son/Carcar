@@ -11,12 +11,10 @@ class CategoryModel {
   }
   async updateCategory(name, body, option) {
     const updatedCategory = await Category.findOneAndUpdate(name, body, option);
-    console.log(updatedCategory)
     return updatedCategory;
   }
   async deleteCategory(name) {
     const deletedCategory = await Category.findOneAndDelete({ name });
-    console.log(deletedCategory);
     return deletedCategory;
   }
 }
