@@ -1,4 +1,3 @@
-const { categoryModel } = require("../db/models/category-model");
 const { productModel } = require("../db/models/product-model");
 
 class ProductService {
@@ -6,7 +5,7 @@ class ProductService {
     return productModel.getProductsAll()
   }
   async getProductsByCategory(category) {
-    return productModel.getProductsAll(category)
+    return productModel.getProductsByCategory(category);
   }
   async getProductById(product_id) {
     return productModel.getProductById(product_id)

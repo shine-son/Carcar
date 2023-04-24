@@ -6,7 +6,12 @@ class ProductModel {
     return product;
   }
 
-  async getProductsAll(category) {
+  async getProductsAll() {
+    const productList = await Product.find({});
+    return productList;
+  }
+
+  async getProductsByCategory(category) {
     const productList = await Product.find({ category: category });
     return productList;
   }
