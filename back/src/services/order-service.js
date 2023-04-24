@@ -10,7 +10,7 @@ class OrderService {
     const products = await Promise.all(
       orderedProducts.map(async (orderedProduct) => {
         const orderedProductId = orderedProduct.productId;
-        const product = await productModel.findById(orderedProductId);
+        const product = await productModel.getOrderById(orderedProductId);
         if (!product) {
           const err = new Error("상품이 존재하지 않습니다.");
           err.status = 404;
