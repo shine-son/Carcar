@@ -8,7 +8,7 @@ const asyncHandler = require("../utils/async-handler");
 const userService = require("../services/user-service");
 
 const userRouter = Router();
-
+// [todo] DB 변수명 snake 타입으로 변경
 // 회원가입 api
 userRouter.post(
   "/register",
@@ -37,6 +37,7 @@ userRouter.post(
   "/login",
   asyncHandler(async (req, res, next) => {
     // req (request) 에서 데이터 가져오기
+    // [Q] 구조할당으로 한 번에 받으면 안되는가?
     const email = req.body.email;
     const password = req.body.password;
 
@@ -51,7 +52,7 @@ userRouter.post(
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.put(
-  "/edit",
+  "/edit",  // [Q] 정보 수정 api를 /api/users/update로 했었는데 edit으로 한 이유가 있는지?
   loginRequired,
   asyncHandler(async function (req, res, next) {
     // loginRequired 미들웨어에서 저장된 currentUserId 사용

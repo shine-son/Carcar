@@ -2,7 +2,7 @@ const userService = require("../services/user-service");
 
 const isAdmin = async (req, res, next) => {
   // 로그인한 user_id의 정보를 받아온다.
-
+  // [Q] async handler를 활용(try{}catch{} 대체)하면 어떻게 변경될 지?
   try {
     const userId = req.currentUserId;
 

@@ -5,6 +5,7 @@ const User = require("../schemas/user-schema");
  * User 모델의
  */
 class UserModel {
+  // [Q] 유저 찾는데 email, userId 2 가지를 사용하는 이유
   // email로 유저 찾기
   async findByEmail(email) {
     const user = await User.findOne({ email });
@@ -13,7 +14,9 @@ class UserModel {
 
   // userId로 유저 찾기
   async findById(userId) {
-    const user = await User.findOne({ _id: userId });
+    // [Q] _id는 자동으로 mongoose가 받는다고 했는데 맞는지? _id가 정확히 무엇인지?
+    // [Q] { _id: userId } 위 조합이 일치하는 db.document를 찾는다는 것인가? userId는 사용자가 입력하는 값이어서  _id를 활용하는건가? email이 입력값이지 않은가? userId는 무엇인가?
+    const user = await User.findOne({ _id: userId }); 
     return user;
   }
 
@@ -31,6 +34,7 @@ class UserModel {
   }
 
   // 사용자 정보를 수정
+  // [Q] userId는 무엇인가? 어디에서 왔는가??
   async update({ userId, update }) {
     // 찾을 값의 조건
     const filter = { _id: userId };
@@ -65,3 +69,5 @@ class UserModel {
 const userModel = new UserModel();
 
 module.exports = userModel;
+// userModel은 무엇인가?
+// date를 처리하는 것은 3계층 중 router(controller)가 하는 것이 아닌가?
