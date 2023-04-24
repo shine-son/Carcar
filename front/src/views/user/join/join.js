@@ -13,6 +13,7 @@ const submitButton = document.querySelector('#submitButton');
 const errors = {
     nameError: '이름은 3자 이상이어야 합니다.',
     emailError: '올바른 이메일 주소를 입력해주세요.',
+    phoneNumberError: '올바른 전화번호를 입력해주세요.',
     passwordError: '비밀번호는 11자 이상이어야 합니다.',
     confirmPasswordError: '비밀번호가 일치하지 않습니다.',
 };
@@ -40,6 +41,15 @@ function validateEmail() {
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     error.textContent = isValidEmail ? '' : errors.emailError;
     return isValidEmail;
+}
+
+//전화번호 검사 함수
+function validatePhoneNumber() {
+    const phoneNumber = phoneNumberInput.value.trim();
+    const error = document.querySelector('#phoneNumberInput + .error');
+    const isValidPhoneNumber = /^[0-9]{10,11}$/.test(phoneNumber);
+    error.textContent = isValidPhoneNumber ? '' : errors.phoneNumberError;
+    return isValidPhoneNumber;
 }
 
 //비밀번호 검사 함수
@@ -71,11 +81,12 @@ function validatePasswordConfirm() {
 
 //빈값 검사
 function validateOthers() {
-    const phoneNumber = phoneNumberInput.value.trim();
+    // const phoneNumber = phoneNumberInput.value.trim();
     const postalCode = postalCodeInput.value.trim();
     const mainAdress = mainAddressInput.value.trim();
     const detailAddress = detailAddressInput.value.trim();
-    if (!phoneNumber || !postalCode || !mainAdress || !detailAddress) {
+    // if (!phoneNumber || !postalCode || !mainAdress || !detailAddress) {
+    if (!postalCode || !mainAdress || !detailAddress) {
         return false;
     }
     return true;
@@ -89,6 +100,10 @@ function validateAll() {
     }
     const isEmailValid = validateEmail();
     if (!isEmailValid) {
+        return;
+    }
+    const isNumberValid = validatePhoneNumber();
+    if (!isNumberValid) {
         return;
     }
     const isOthersValid = validateOthers();
@@ -107,15 +122,6 @@ function validateAll() {
     submitButton.disabled = false;
 }
 
-// 이벤트 리스너 등록
-// fullNameInput.addEventListener('input', validateAll);
-// emailInput.addEventListener('change', validateAll);
-// passwordInput.addEventListener('change', validateAll);
-// passwordConfirmInput.addEventListener('change', validateAll);
-// phoneNumberInput.addEventListener('input', validateAll);
-// postalCodeInput.addEventListener('input', validateAll);
-// mainAddressInput.addEventListener('input', validateAll);
-// detailAddressInput.addEventListener('input', validateAll);
 function addAllEventListeners() {
     const inputFields = [
         fullNameInput,
@@ -156,14 +162,13 @@ function resetFields() {
 async function handleSubmit(e) {
     e.preventDefault();
 
-    const fullName = fullNameInput.value;
     const email = emailInput.value;
+    const password = passwordInput.value;
     const phoneNumber = phoneNumberInput.value;
+    const fullName = fullNameInput.value;
     const postalCode = postalCodeInput.value;
     const addressMain = mainAddressInput.value;
     const addressDetail = detailAddressInput.value;
-    const password = passwordInput.value;
-    const passwordConfirm = passwordConfirmInput.value;
 
     //객체 만들기
     const data = {
@@ -174,7 +179,11 @@ async function handleSubmit(e) {
         addressMain,
         addressDetail,
         password,
-        passwordConfirm,
+        address: {
+            postalCode,
+            addressMain,
+            addressDetail,
+        },
     };
 
     //JSON 만들기
