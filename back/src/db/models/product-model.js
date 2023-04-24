@@ -1,8 +1,8 @@
 const { Product } = require("../schemas/product-schema");
 
 class ProductModel {
-  async getProductById(product_id) {
-    const product = await Product.findOne({ product_id });
+  async findById(productId) {
+    const product = await Product.findOne({ product_id: productId });
 
     return product;
   }
@@ -10,4 +10,4 @@ class ProductModel {
 
 const productModel = new ProductModel();
 
-module.exports = { productModel };
+module.exports = productModel;
