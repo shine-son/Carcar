@@ -28,5 +28,4 @@ class ProductModel {
 }
 
 const productModel = new ProductModel();
-
 module.exports = { productModel };
