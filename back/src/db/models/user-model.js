@@ -14,8 +14,6 @@ class UserModel {
 
   // userId로 유저 찾기
   async findById(userId) {
-    // [Q] _id는 자동으로 mongoose가 받는다고 했는데 맞는지? _id가 정확히 무엇인지?
-    // [Q] { _id: userId } 위 조합이 일치하는 db.document를 찾는다는 것인가? userId는 사용자가 입력하는 값이어서  _id를 활용하는건가? email이 입력값이지 않은가? userId는 무엇인가?
     const user = await User.findOne({ _id: userId }); 
     return user;
   }

@@ -8,7 +8,7 @@ const asyncHandler = require("../utils/async-handler");
 const userService = require("../services/user-service");
 
 const userRouter = Router();
-// [todo] DB 변수명 snake 타입으로 변경
+
 // 회원가입 api
 userRouter.post(
   "/register",
@@ -18,6 +18,7 @@ userRouter.post(
     const { fullName, email, password, phoneNumber, address } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
+
     const newUser = await userService.addUser({
       fullName,
       email,
@@ -37,9 +38,7 @@ userRouter.post(
   "/login",
   asyncHandler(async (req, res, next) => {
     // req (request) 에서 데이터 가져오기
-    // [Q] 구조할당으로 한 번에 받으면 안되는가?
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = req.body;
 
     // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
     const userToken = await userService.getUserToken({ email, password });
@@ -49,10 +48,27 @@ userRouter.post(
   })
 );
 
+// 사용자 정보 조회
+userRouter.get(
+  "/info",
+  loginRequired,
+  asyncHandler(async (req,res,next) => {
+    // loginRequired에서 찾은 id 활용
+      const userId = req.currentUserId;
+
+      // -----   보여줘야 하는 값
+      const user = await userService.getUserById(userId);
+    res.status(200).json(user);
+    }
+  )
+);
+
+
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.put(
-  "/edit",  // [Q] 정보 수정 api를 /api/users/update로 했었는데 edit으로 한 이유가 있는지?
+  // [Q] REST API 작성방법에서 api에는 동사를 쓰지 않고 HTTP method로 표현한다고 배움. "/info"로 하고 put으로 수정임을 표현하면 되지 않을까?
+  "/info", 
   loginRequired,
   asyncHandler(async function (req, res, next) {
     // loginRequired 미들웨어에서 저장된 currentUserId 사용
@@ -62,7 +78,7 @@ userRouter.put(
     const { fullName, password, address, phoneNumber, role } = req.body;
 
     // 수정 페이지로 들어가기전에 password를 확인하는 방법을 고민??
-    // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
+    // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함. currentPassword라는 속성이 있나?
     const currentPassword = req.body.currentPassword;
 
     // currentPassword 없을 시, 진행 불가
@@ -94,6 +110,32 @@ userRouter.put(
     // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
     res.status(200).json(updatedUserInfo);
   })
+);
+
+// 사용자 정보 삭제
+userRouter.delete(
+  "/info",
+  // 유저임을 확인하는 작엄
+  loginRequired,
+  async (req, res, next) => {
+    // loginRequired 미들웨어에서 찾은 id 받아와서 활용
+    const userId = req.currentUserId;
+
+    // 삭제하려면 비밀번호 입력값을 받을 것임. 이는 body값으로 올터!
+    const { currentPassword } = req.body;
+
+    // --- 비즈니스 로직은?
+    // 사용자 정보 삭제
+    // 확인용으로 현재 비밀번호 확인
+    await userService.deleteUser(userId, currentPassword);
+    // 응답값으로 쓰이질 않는데 변수 선언해줘야하는 지?
+
+    // --- 프론트엔드에서 보여줘야하는 값
+    // delete 요청이 완료되었음을 메시지로 보여줘야 할 듯!?
+    res
+      .status(204)
+      .json({ status: "delete success", message: "delete success" });
+  }
 );
 
 module.exports = userRouter;

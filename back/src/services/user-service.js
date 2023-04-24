@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
  * user의 비지니스 로직을 담당
  */
 class UserService {
-  // 왜 써야하는지 모르겠어서 주석처리함
+  // !!!!!!!!!!!!![Q] class 문법에 constructor(){}로 인스턴스 생성 및 초기화하는 것으로 설명되어있어 기계적으로 작성하였음
+  // 어떻게 활용되어야 할 지 모르겠어서 생략해도 되는 지 궁금합니다
   // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
   // constructor(userModel) {
   //   this.userModel = userModel;
@@ -55,7 +56,6 @@ class UserService {
 
   // 로그인
   async getUserToken(loginInfo) {
-    // 객체 destructuring
     const { email, password } = loginInfo;
 
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
@@ -71,7 +71,7 @@ class UserService {
 
     // 비밀번호 일치 여부 확인
 
-    // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
+    // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있던 암호화된 비밀번호)
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
@@ -83,8 +83,8 @@ class UserService {
       throw err;
     }
 
-    // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY;
+    // 로그인 성공 -> JWT 웹 토큰 생성, 테스트용으로 "secret-key"를 넣어놓음(env파일 작성 안해놓아서)
+    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
 
     // user_id, role을 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
@@ -108,7 +108,6 @@ class UserService {
 
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
   async setUser(userInfoRequired, toUpdate) {
-    // 객체 destructuring
     const { userId, currentPassword } = userInfoRequired;
 
     // 우선 해당 id의 유저가 db에 있는지 확인
@@ -157,6 +156,40 @@ class UserService {
 
     return user;
   }
+
+  // 유저정보 삭제, 현재 비밀번호가 있어야 탈퇴 가능함.
+  async deleteUser(userId, currentPassword) {
+    // 아이디까지 받지 않고 현재 비밀번호 값으로만 진행해보려 함
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      const err = new Error(
+        "해당 유저는 존재하지 않습니다. 다시 한 번 확인해 주세요."
+      );
+      err.status = 404;
+
+      throw err;
+    }
+
+    // 비밀번호 일치 여부 확인
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      const err = new Error(
+        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+      );
+      err.status = 401;
+
+      throw err;
+    }
+
+    // user-model로 옮길 예정입니다.
+    await userModel.findOneAndDelete(user.password);
+
+    return;
 }
 
 const userService = new UserService(userModel);

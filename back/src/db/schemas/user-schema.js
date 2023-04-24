@@ -55,7 +55,4 @@ const UserSchema = new Schema(
 
 const User = model("User", UserSchema);
 
-// USerAddress를 사용할 일이 없는데 내보낼 필요가 있을까?
-// const UserAddress = model("UserAddress", UserAddressSchema);
-
 module.exports = User;

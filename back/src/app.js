@@ -38,7 +38,8 @@ app.use(express.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/auth", userRouter);
+// userRouter 경로는 users가 명확한 것 같아 /api/users로 변경하는 게 어떨까요?
+app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/admin", adminRouter);
 
