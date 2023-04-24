@@ -20,7 +20,6 @@ class OrderService {
         return product;
       })
     );
-    // console.log(products);
 
     // products에 저장된 상품의 정보로 OrderedProdcutSchema의 속성에 일치하도록 작성합니다.
     const newOrderedProduct = products.map((product, idx) => {
@@ -68,7 +67,7 @@ class OrderService {
 
   // 사용자가 주문한 주문 중 order_id와 일치하는 주문 하나만 조회하는 서비스 로직
   async getOrderOneOfUser(userId, orderId) {
-    const order = await orderModel.getOrderById(orderId);
+    const order = await orderModel.findById(orderId);
 
     if (userId !== order.user_id) {
       const err = new Error("권한이 없습니다.");
