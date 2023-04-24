@@ -9,4 +9,4 @@ const shortId = {
   index: true,
 };
 
-module.exports = shortId;
+module.exports = { shortId };
