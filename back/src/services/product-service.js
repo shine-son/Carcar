@@ -3,22 +3,21 @@ const { productModel } = require("../db/models/product-model");
 
 class ProductService {
   async getProductsAll() {
-    return productModel.getProductsAll()
+    return await productModel.getProductsAll()
   }
   async getProductById(product_id) {
-    return productModel.getProductById(product_id)
+    return await productModel.getProductById(product_id)
   }
   async addProduct(product) {
-    return productModel.addProduct(product)
+    return await productModel.addProduct(product)
   }
   async updateProduct(id, body, option) {
-    return productModel.updateProduct(id, body, option)
+    return await productModel.updateProduct(id, body, option)
   }
   async deleteProduct(id) {
-    return productModel.updateProduct(id)
+    return await productModel.deleteProduct(id)
   }
 }
 
 const productService = new ProductService();
-
 module.exports = { productService };
