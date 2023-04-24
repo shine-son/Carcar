@@ -13,19 +13,16 @@ class ProductModel {
 
   async addProduct(product) {
     const newProduct = await Product.create(product);
-    console.log(newProduct);
     return newProduct; // 새로 생성된 상품 정보를 응답으로 전달
   }
 
   async updateProduct(id, body, option) {
     const updatedProduct = await Product.findOneAndUpdate(id, body, option);
-    console.log(updatedProduct)
     return updatedProduct; // 수정된 상품 정보를 응답으로 전달
   }
 
   async deleteProduct(id) {
     const deletedProduct = await Product.findOneAndDelete({ product_id: id });
-    console.log(deletedProduct);
     return deletedProduct; // 삭제된 상품 정보를 응답으로 전달
   }
 }
