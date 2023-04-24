@@ -1,65 +1,79 @@
 const { Router } = require("express");
 
-const { asyncHandler } = require("../utils/async-handler");
-const { orderService } = require("../services/order-service");
+const loginRequired = require("../middlewares/login-required");
+const asyncHandler = require("../utils/async-handler");
+const orderService = require("../services/order-service");
 
 const orderRouter = Router();
 
+// 주문 추가 & 완료
 orderRouter.post(
   "/",
-  asyncHandler(async (req, res, next) => {
-    const user_id = req.currentUserId; // user_id를 JWT 로직을 진행시켜서 찾아오기
-    const ordered = req.body; // req.body로 들어온 값 전달받기, 배열
+  loginRequired,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUserId; // user_id를 JWT 로직을 진행시켜서 찾아오기
+    const orderedProducts = req.body; // 주문한 상품 불러오기
 
-    const order = await orderService.addOrder(ordered, user_id);
+    const order = await orderService.addOrder(orderedProducts, userId);
 
-    res.json(order);
+    res.status(201).json(order);
   })
 );
 
+// 유저가 주문한 모든 주문 조회
 orderRouter.get(
   "/",
-  asyncHandler(async (req, res, next) => {
-    const user_id = req.currentUserId;
+  loginRequired,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUserId;
 
-    const order = await orderService.getOrderOfUser(user_id);
+    const order = await orderService.getOrdersOfUser(userId);
 
-    res.json(order);
+    res.status(200).json(order);
   })
 );
 
+// 유저가 주문한 주문 중 하나 조회
 orderRouter.get(
   "/:id",
-  asyncHandler(async (req, res, next) => {
-    const order_id = req.params.id;
+  loginRequired,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUserId;
+    const orderId = req.params.id;
 
-    const order = await orderService.getOrder(order_id);
+    const order = await orderService.getOrderOneOfUser(userId, orderId);
 
-    res.json(order);
+    res.status(200).json(order);
   })
 );
 
-//
+// 자신의 주문 정보를 수정
 orderRouter.put(
   "/:id",
-  asyncHandler(async (req, res, next) => {
-    const order_id = req.params.id;
-    const { address } = req.body;
+  loginRequired,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUserId;
+    const orderId = req.params.id;
+    const address = req.body.address;
 
-    const order = await orderService.updateOrder(order_id, address);
+    const order = await orderService.updateOrder(userId, orderId, address);
 
-    res.json(order);
+    res.status(200).json(order);
   })
 );
 
 orderRouter.delete(
   "/:id",
-  asyncHandler(async (req, res, next) => {
-    const order_id = req.params.id;
+  loginRequired,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUserId;
+    const orderId = req.params.id;
 
-    const order = await orderService.deleteOrder(order_id);
+    await orderService.deleteOrder(userId, orderId);
 
-    res.json(order);
+    res
+      .status(204)
+      .json({ status: "delete success", message: "delete success" });
   })
 );
 
