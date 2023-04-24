@@ -47,7 +47,7 @@ orderRouter.get(
   })
 );
 
-// 자신의 주문 정보를 수정
+// 주문 수정
 orderRouter.put(
   "/:id",
   loginRequired,
@@ -62,6 +62,7 @@ orderRouter.put(
   })
 );
 
+// 주문 취소
 orderRouter.delete(
   "/:id",
   loginRequired,

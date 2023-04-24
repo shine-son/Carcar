@@ -1,4 +1,4 @@
-const { Product } = require("../schemas/product-schema");
+const Product = require("../schemas/product-schema");
 
 class ProductModel {
   async findById(productId) {

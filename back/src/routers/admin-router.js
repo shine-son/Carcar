@@ -11,7 +11,7 @@ adminRouter.get(
   "/orders",
   loginRequired,
   isAdmin,
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const orders = await orderService.getOrdersOfAdmin();
 
     res.status(200).json(orders);
@@ -22,7 +22,7 @@ adminRouter.put(
   "/orders/:id",
   loginRequired,
   isAdmin,
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const orderId = req.params.id;
     const shippingStatus = req.body.shippingStatus;
     const order = await orderService.changeShippingStatus(
