@@ -1,7 +1,7 @@
-const userModel = require("../db/models/user-model");
+const { userModel } = require("../db/models/user-model");
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { bcrypt } = require("bcrypt");
+const { jwt } = require("jsonwebtoken");
 
 /**
  * user의 비지니스 로직을 담당
@@ -194,4 +194,4 @@ class UserService {
 
 const userService = new UserService(userModel);
 
-module.exports = userService;
+module.exports = { userService };
