@@ -157,6 +157,7 @@ class UserService {
     await userModel.findOneAndDelete(user.password);
 
     return;
+  }
 }
 
 const userService = new UserService(userModel);
