@@ -58,6 +58,7 @@ class UserModel {
   }
 }
 
+/** 유저모델 객체 */
 const userModel = new UserModel();
 
 module.exports = { userModel };
