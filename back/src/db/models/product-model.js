@@ -6,8 +6,8 @@ class ProductModel {
     return product;
   }
 
-  async getProductsAll() {
-    const productList = await Product.find({});
+  async getProductsAll(category) {
+    const productList = await Product.find({ category: category });
     return productList;
   }
 
@@ -19,7 +19,7 @@ class ProductModel {
 
   async updateProduct(id, body, option) {
     const updatedProduct = await Product.findOneAndUpdate(id, body, option);
-    console.log(updatedProduct)
+    console.log(updatedProduct);
     return updatedProduct; // 수정된 상품 정보를 응답으로 전달
   }
 

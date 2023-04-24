@@ -5,6 +5,9 @@ class ProductService {
   async getProductsAll() {
     return productModel.getProductsAll()
   }
+  async getProductsByCategory(category) {
+    return productModel.getProductsAll(category)
+  }
   async getProductById(product_id) {
     return productModel.getProductById(product_id)
   }
