@@ -1,4 +1,4 @@
-const User = require("../schemas/user-schema");
+const { User } = require("../schemas/user-schema");
 
 class UserModel {
   // email로 유저 찾기
