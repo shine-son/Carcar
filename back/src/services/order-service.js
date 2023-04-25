@@ -1,6 +1,6 @@
-const orderModel = require("../db/models/order-model");
-const productModel = require("../db/models/product-model");
-const userModel = require("../db/models/user-model");
+const { orderModel } = require("../db/models/order-model");
+const { productModel } = require("../db/models/product-model");
+const { userModel } = require("../db/models/user-model");
 const { OrderedProduct } = require("../db/schemas/order-schema");
 
 class OrderService {
@@ -10,17 +10,15 @@ class OrderService {
     const products = await Promise.all(
       orderedProducts.map(async (orderedProduct) => {
         const orderedProductId = orderedProduct.productId;
-        const product = await productModel.findById(orderedProductId);
+        const product = await productModel.getOrderById(orderedProductId);
         if (!product) {
           const err = new Error("상품이 존재하지 않습니다.");
           err.status = 404;
-
           throw err;
         }
         return product;
       })
     );
-    // console.log(products);
 
     // products에 저장된 상품의 정보로 OrderedProdcutSchema의 속성에 일치하도록 작성합니다.
     const newOrderedProduct = products.map((product, idx) => {
@@ -39,7 +37,7 @@ class OrderService {
       });
     });
 
-    // 추가될 order의 total_price와 address를 작성합니다.
+    // 추가될 order의 total_price와 address, user_name을 작성합니다.
     const orderTotalPrice = newOrderedProduct.reduce((acc, cur) => {
       return acc + cur.total_price;
     }, 0);
@@ -68,32 +66,37 @@ class OrderService {
 
   // 사용자가 주문한 주문 중 order_id와 일치하는 주문 하나만 조회하는 서비스 로직
   async getOrderOneOfUser(userId, orderId) {
-    const order = await orderModel.getOrderById(orderId);
+    const order = await orderModel.findById(orderId);
 
     if (userId !== order.user_id) {
       const err = new Error("권한이 없습니다.");
       err.status = 403;
-
       throw err;
     }
 
     return order;
   }
 
-  // 배송상태가 "배송준비중"일 때 수정 가능
+  // 주문 수정
   async updateOrder(userId, orderId, address) {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
-      throw new Error("주문을 찾을 수 없습니다.");
+      const err = new Error("주문을 찾을 수 없습니다.");
+      err.status = 404;
+      throw err;
     }
 
     if (order.shipping_status !== "배송준비중") {
-      throw new Error("주문을 수정할 수 없습니다.");
+      const err = new Error("주문을 취소할 수 없습니다.");
+      err.status = 403;
+      throw err;
     }
 
     if (order.user_id !== userId) {
-      throw new Error("권한이 없습니다.");
+      const err = new Error("권한이 없습니다.");
+      err.status = 403;
+      throw err;
     }
 
     const update_order = await orderModel.update(orderId, address);
@@ -101,19 +104,26 @@ class OrderService {
     return update_order;
   }
 
+  // 주문 취소
   async deleteOrder(userId, orderId) {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
-      throw new Error("주문을 찾을 수 없습니다.");
+      const err = new Error("주문을 찾을 수 없습니다.");
+      err.status = 404;
+      throw err;
     }
 
     if (order.shipping_status !== "배송준비중") {
-      throw new Error("주문을 취소할 수 없습니다.");
+      const err = new Error("주문을 취소할 수 없습니다.");
+      err.status = 403;
+      throw err;
     }
 
     if (order.user_id !== userId) {
-      throw new Error("권한이 없습니다.");
+      const err = new Error("권한이 없습니다.");
+      err.status = 403;
+      throw err;
     }
 
     await orderModel.delete(orderId);
@@ -121,21 +131,20 @@ class OrderService {
     return;
   }
 
-  // 관리자일 경우 모든 주문 확인 가능
+  // 관리자: 모든 주문 확인 가능
   async getOrdersOfAdmin() {
     const orders = await orderModel.findAll();
 
     return orders;
   }
 
-  // 관리자가 배송 상태를 변경할 수 있다.
+  // 관리자: 배송 상태를 변경
   async changeShippingStatus(orderId, shippingStatus) {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
       const err = new Error("주문을 찾을 수 없습니다.");
       err.status = 404;
-
       throw err;
     }
 
@@ -147,13 +156,13 @@ class OrderService {
     return updateOrder;
   }
 
+  // 관리자: 주문 삭제
   async deleteOrderByAdmin(orderId) {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
       const err = new Error("주문을 찾을 수 없습니다.");
       err.status = 404;
-
       throw err;
     }
 
@@ -165,4 +174,4 @@ class OrderService {
 
 const orderService = new OrderService();
 
-module.exports = orderService;
+module.exports = { orderService };

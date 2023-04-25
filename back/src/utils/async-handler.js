@@ -11,4 +11,4 @@ const asyncHandler = (requestHandler) => {
   };
 };
 
-module.exports = asyncHandler;
+module.exports = { asyncHandler };

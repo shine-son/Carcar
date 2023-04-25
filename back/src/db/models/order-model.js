@@ -1,9 +1,8 @@
-const { Order, OrderedProduct } = require("../schemas/order-schema");
+const { Order } = require("../schemas/order-schema");
 
 class OrderModel {
   // 주문 추가
   async create(orderInfo) {
-    // console.log(orderInfo);
     const order = await Order.create(orderInfo);
 
     return order;
@@ -30,6 +29,7 @@ class OrderModel {
     return order;
   }
 
+  // 유저 정보 업데이트 -> 수정 예정
   async update(orderId, address) {
     const updateAddress = {
       address: JSON.stringify(address),
@@ -38,8 +38,6 @@ class OrderModel {
 
     const options = {
       new: true, // 새로운 문서 반환
-      // setDefaultsOnInsert: true, // 업데이트 후 문서가 존재하지 않을 때, 기본값 설정
-      // upsert: true, // 문서가 존재하지 않을 때, 새로운 문서 생성
       fields: { _id: 0 }, // _id 필드를 반환하지 않고, createdAt 필드를 반환
     };
 
@@ -47,7 +45,6 @@ class OrderModel {
       { order_id: orderId },
       {
         $set: updateAddress, // 기존 필드를 업데이트
-        // $setOnInsert: { createdAt: new Date() }, // 새로운 문서 생성 시, createdAt 필드를 추가
       },
       options
     );
@@ -62,6 +59,7 @@ class OrderModel {
     return order;
   }
 
+  // 관리자: 주문 배송상태 수정
   async updateShippingStatus(orderId, shippingStatus) {
     const updateShippginStatus = {
       shipping_status: shippingStatus,
@@ -79,4 +77,4 @@ class OrderModel {
 
 const orderModel = new OrderModel();
 
-module.exports = orderModel;
+module.exports = { orderModel };

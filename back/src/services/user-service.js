@@ -1,22 +1,11 @@
-const userModel = require("../db/models/user-model");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-/**
- * user의 비지니스 로직을 담당
- */
-class UserService {
-  // !!!!!!!!!!!!![Q] class 문법에 constructor(){}로 인스턴스 생성 및 초기화하는 것으로 설명되어있어 기계적으로 작성하였음
-  // 어떻게 활용되어야 할 지 모르겠어서 생략해도 되는 지 궁금합니다
-  // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
-  // constructor(userModel) {
-  //   this.userModel = userModel;
-  // }
+const { userModel } = require("../db/models/user-model");
 
+class UserService {
   // 회원가입
   async addUser(userInfo) {
-    // 구조분해 할당으로 값을 전달받는다. or 매개변수를 각각 받는다 뭐가 더 좋을까?
     const { email, fullName, password, phoneNumber, address } = userInfo;
 
     // 이메일 중복 확인
@@ -26,11 +15,8 @@ class UserService {
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
       );
       err.status = 403;
-
       throw err;
     }
-
-    // 이메일 중복은 이제 아니므로, 회원가입을 진행함
 
     // 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -65,7 +51,6 @@ class UserService {
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
       );
       err.status = 404;
-
       throw err;
     }
 
@@ -79,7 +64,6 @@ class UserService {
         "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
       err.status = 401;
-
       throw err;
     }
 
@@ -92,14 +76,14 @@ class UserService {
     return { token };
   }
 
-  // 사용자 목록을 받음.
+  // 모든 유저 목록
   async getUsers() {
     const users = await userModel.findAll();
 
     return users;
   }
 
-  // userId로 사용자를 찾음.
+  // 유저 상세 조회
   async getUserById(userId) {
     const user = await userModel.findById(userId);
 
@@ -110,18 +94,15 @@ class UserService {
   async setUser(userInfoRequired, toUpdate) {
     const { userId, currentPassword } = userInfoRequired;
 
-    // 우선 해당 id의 유저가 db에 있는지 확인
+    // userId값을 가진 유저가 db에 있는지 확인
     let user = await userModel.findById(userId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const err = new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
       err.status = 404;
-
       throw err;
     }
-
-    // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
 
     // 비밀번호 일치 여부 확인
     const isPasswordCorrect = await bcrypt.compare(
@@ -134,11 +115,8 @@ class UserService {
         "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
       err.status = 401;
-
       throw err;
     }
-
-    // 이제 드디어 업데이트 시작
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
     const { password } = toUpdate;
@@ -194,4 +172,4 @@ class UserService {
 
 const userService = new UserService(userModel);
 
-module.exports = userService;
+module.exports = { userService };

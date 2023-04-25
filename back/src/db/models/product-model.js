@@ -1,9 +1,6 @@
 const { Product } = require("../schemas/product-schema");
 
 class ProductModel {
-  async findById(productId) {
-    const product = await Product.findOne({ product_id: productId });
-
   async getProductById(product_id) {
     const product = await Product.findOne({ product_id });
     return product;

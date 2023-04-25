@@ -1,8 +1,8 @@
 const { Router } = require("express");
 
-const loginRequired = require("../middlewares/login-required");
-const asyncHandler = require("../utils/async-handler");
-const orderService = require("../services/order-service");
+const { loginRequired } = require("../middlewares/login-required");
+const { asyncHandler } = require("../utils/async-handler");
+const { orderService } = require("../services/order-service");
 
 const orderRouter = Router();
 
@@ -37,7 +37,7 @@ orderRouter.get(
 orderRouter.get(
   "/:id",
   loginRequired,
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const userId = req.currentUserId;
     const orderId = req.params.id;
 
@@ -47,11 +47,11 @@ orderRouter.get(
   })
 );
 
-// 자신의 주문 정보를 수정
+// 주문 수정
 orderRouter.put(
   "/:id",
   loginRequired,
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const userId = req.currentUserId;
     const orderId = req.params.id;
     const address = req.body.address;
@@ -62,10 +62,11 @@ orderRouter.put(
   })
 );
 
+// 주문 취소
 orderRouter.delete(
   "/:id",
   loginRequired,
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const userId = req.currentUserId;
     const orderId = req.params.id;
 
@@ -77,4 +78,4 @@ orderRouter.delete(
   })
 );
 
-module.exports = orderRouter;
+module.exports = { orderRouter };

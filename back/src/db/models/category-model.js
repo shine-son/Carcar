@@ -2,7 +2,7 @@ const { Category } = require("../schemas/category-schema");
 
 class CategoryModel {
   async getAllCategories() {
-    const categoryList = await Category.find({})
+    const categoryList = await Category.find({});
     return categoryList;
   }
   async addCategory(newOne) {
