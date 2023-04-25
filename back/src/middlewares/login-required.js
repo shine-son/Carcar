@@ -1,4 +1,4 @@
-const { jwt } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const loginRequired = (req, res, next) => {
   // request 헤더로부터 authorization bearer 토큰을 받음.

@@ -55,4 +55,4 @@ const UserSchema = new Schema(
 const User = model("User", UserSchema);
 const UserAddress = model("UserAddress", UserAddressSchema);
 
-module.exports = { User };
+module.exports = { User, UserAddress };
