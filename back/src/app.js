@@ -6,6 +6,7 @@ const errorHandler = require("./middlewares/error-handler");
 const orderRouter = require("./routers/order-router");
 const userRouter = require("./routers/user-router");
 const adminRouter = require("./routers/admin-router");
+const productRouter = require('./routers/product-router');
 
 const app = express();
 
@@ -38,10 +39,21 @@ app.use(express.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
 
-// userRouter 경로는 users가 명확한 것 같아 /api/users로 변경하는 게 어떨까요?
+// 라우팅
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
-app.use("/api/admin", adminRouter);
+app.use('/api/product', productRouter);
+app.use('/api/admin', adminRouter);
+
+// 루트페이지 카테고리 로딩 : 논의 필요
+const { asyncHandler } = require("../utils/async-handler");
+const { categoryService } = require("../services/category-service");
+app.get('/category', asyncHandler(async (req, res, next) => {
+  console.log('요청도착')
+  const categoryList = await categoryService.getAllCategories()
+  res.json(categoryList)
+})
+);
 
 app.use(errorHandler);
 
