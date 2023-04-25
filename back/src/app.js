@@ -2,19 +2,11 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
-<<<<<<< HEAD
-const errorHandler = require("./middlewares/error-handler");
-const orderRouter = require("./routers/order-router");
-const userRouter = require("./routers/user-router");
-const adminRouter = require("./routers/admin-router");
-const productRouter = require('./routers/product-router');
-=======
 const { errorHandler } = require("./middlewares/error-handler");
 const { orderRouter } = require("./routers/order-router");
 const { userRouter } = require("./routers/user-router");
 const { adminRouter } = require("./routers/admin-router");
 const { productRouter } = require("./routers/product-router");
->>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
 
 const app = express();
 
