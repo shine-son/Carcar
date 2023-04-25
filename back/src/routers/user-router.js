@@ -4,7 +4,7 @@ const { loginRequired } = require("../middlewares/login-required");
 const { asyncHandler } = require("../utils/async-handler");
 const { userService } = require("../services/user-service");
 
-const { userRouter } = Router();
+const userRouter = Router();
 
 // 회원가입 api
 userRouter.post(
