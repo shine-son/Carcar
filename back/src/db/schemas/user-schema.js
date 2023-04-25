@@ -1,25 +1,22 @@
 const { Schema, model } = require("mongoose");
 
-/** 주소를 검색해서 구하는 방법을 2주차에 고민하면 좋을 듯 합니다. */
 const UserAddressSchema = new Schema(
   {
-    postalCode: {
-      type: Number,
-      required: true,
-    },
-    addressMain: {
+    postal_code: {
       type: String,
       required: true,
     },
-    addressDetail: {
+    address_main: {
       type: String,
-      /** 주택인 경우 상세주소가 필요치 않아서 옵션값으로 설정했습니다.(동, 호수) */
+      required: true,
+    },
+    address_detail: {
+      type: String,
       required: false,
     },
   },
   {
     collection: "UserAddress",
-    timestamps: true,
   }
 );
 
@@ -34,16 +31,15 @@ const UserSchema = new Schema(
       required: true,
       minLength: 11,
     },
-    fullName: {
+    full_name: {
       type: String,
       required: true,
     },
-    phoneNumber: {
+    phone_number: {
       type: String,
       required: true,
     },
     address: UserAddressSchema,
-    /** role이 user에게 노출되는 것인가 응답값으로 안 주면 노출이 안되는 것인가 */
     role: {
       type: String,
       required: false,

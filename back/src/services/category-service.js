@@ -10,15 +10,18 @@ class CategoryService {
     return newCategory;
   }
   async updateCategory(name, body, option) {
-    const updatedCategory = await categoryModel.updateCategory(name, body, option)
+    const updatedCategory = await categoryModel.updateCategory(
+      name,
+      body,
+      option
+    );
     return updatedCategory;
   }
   async deleteCategory(name) {
     const deletedCategory = await categoryModel.deleteCategory(name);
     return deletedCategory;
   }
-
 }
 
-const categoryService = new CategoryService()
+const categoryService = new CategoryService();
 module.exports = { categoryService };

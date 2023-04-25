@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const shortId = require("../../utils/short-id");
+const { shortId } = require("../../utils/short-id");
 
 /**
  * 여기에 작성된 OrderedProductSchema는 OrderSchema의 속성을 사용하기 위해 작성된 Schema 입니다.
@@ -47,6 +47,10 @@ const OrderSchema = new Schema(
   {
     order_id: shortId,
     user_id: {
+      type: String,
+      required: true,
+    },
+    user_name: {
       type: String,
       required: true,
     },

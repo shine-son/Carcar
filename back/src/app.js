@@ -1,14 +1,15 @@
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
+
 const { errorHandler } = require("./middlewares/error-handler");
-const orderRouter = require("./routers/order-router");
-const productRouter = require('./routers/product-router');
-const adminRouter = require('./routers/admin-router');
+const { orderRouter } = require("./routers/order-router");
+const { userRouter } = require("./routers/user-router");
+const { adminRouter } = require("./routers/admin-router");
+const { productRouter } = require("./routers/product-router");
 
 const app = express();
 
-//database 연결
 const DB_URL =
   process.env.MONGODB_URL ||
   "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요. \n.env 파일도 필요합니다.\n";
@@ -39,21 +40,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 라우팅
+app.use("/api/auth", userRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api/orders", orderRouter);
-app.use('/api/product', productRouter);
-app.use('/api/admin', adminRouter);
+app.use("/api/product", productRouter);
 
 // 루트페이지 카테고리 로딩 : 논의 필요
-const { asyncHandler } = require("../utils/async-handler");
-const { categoryService } = require("../services/category-service");
-app.get('/category', asyncHandler(async (req, res, next) => {
-  console.log('요청도착')
-  const categoryList = await categoryService.getAllCategories()
-  res.json(categoryList)
-})
+const { asyncHandler } = require("./utils/async-handler");
+const { categoryService } = require("./services/category-service");
+app.get(
+  "/category",
+  asyncHandler(async (req, res, next) => {
+    console.log("요청도착");
+    const categoryList = await categoryService.getAllCategories();
+    res.json(categoryList);
+  })
 );
 
-// 에러 핸들러
 app.use(errorHandler);
 
 module.exports = { app };
