@@ -134,7 +134,7 @@ class UserService {
 
   // 유저정보 삭제, 현재 비밀번호가 있어야 탈퇴 가능함.
   async deleteUser(userId, currentPassword) {
-    // 아이디까지 받지 않고 현재 비밀번호 값으로만 진행해보려 함
+    // jwt 토큰에서 검증된 id와 같은 id가 있는지 확인
     const user = await userModel.findById(userId);
 
     if (!user) {
@@ -142,7 +142,7 @@ class UserService {
       throw err;
     }
 
-    // 비밀번호 일치 여부 확인
+    // db에 일치하는 id가 있다면 비밀번호 일치 여부 확인
     const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
       user.password
@@ -153,13 +153,14 @@ class UserService {
       throw err;
     }
 
-    // user-model로 옮길 예정입니다.
+    // id와 비밀번호가 일치하다면 user-model로 옮길 예정입니다.????
     await userModel.findOneAndDelete(user.password);
 
     return;
   }
 }
 
+/** 유저서비스 객체 */
 const userService = new UserService(userModel);
 
 module.exports = { userService };
