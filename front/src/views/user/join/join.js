@@ -189,7 +189,7 @@ async function handleSubmit(e) {
     //JSON 만들기
     const dataJson = JSON.stringify(data);
 
-    const apiUrl = '';
+    const apiUrl = 'http://34.22.74.213:5000/api/users/register';
 
     const res = await fetch(apiUrl, {
         method: 'POST',
@@ -198,6 +198,7 @@ async function handleSubmit(e) {
         },
         body: dataJson,
     });
+    console.log(res);
     if (res.status === 201) {
         alert('회원가입에 성공하였습니다!');
     } else {
