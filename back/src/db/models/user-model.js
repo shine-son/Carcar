@@ -1,4 +1,3 @@
-// user-schema에서 선언한 User 모델을 불러와 DB에 관련된 로직을 진행
 const { User } = require("../schemas/user-schema");
 
 class UserModel {
@@ -10,7 +9,7 @@ class UserModel {
 
   // userId로 유저 찾기(jwt토큰 활용)
   async findById(userId) {
-    const user = await User.findOne({ _id: userId }); 
+    const user = await User.findById(userId); 
     return user;
   }
 
@@ -37,23 +36,24 @@ class UserModel {
 
     const updatedUser = await User.findOneAndUpdate(filter, update, option);
 
+    return updatedUser;
+
     // service에서 처리하길(<- model은 최대한 간단하게!)
-    return {
-      // _id와 role은 프론트에서 노출시킬 필요가 없다고 판단하여 삭제하였습니다.
-      email: updatedUser.email,
-      full_name: updatedUser.full_name,
-      phone_number: updatedUser.phone_number,
-      address: {
-        postal_code: updatedUser.address.postal_code,
-        address_main: updatedUser.address.address_main,
-        address_detail: updatedUser.address.address_detail,
-      }
-    };
+    // return {
+    //   email: updatedUser.email,
+    //   full_name: updatedUser.full_name,
+    //   phone_number: updatedUser.phone_number,
+    //   address: {
+    //     postal_code: updatedUser.address.postal_code,
+    //     address_main: updatedUser.address.address_main,
+    //     address_detail: updatedUser.address.address_detail,
+    //   }
+    // };
   }
 
   // 사용자 정보를 삭제
   async delete(userId) {
-    return await User.findOneAndDelete({ userId })
+    return await User.findByIdAndDelete(userId);
   }
 
   // 관리자 권한을 가진 사용자가 모든 유저를 조회할 때 사용

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { userModel } = require("../db/models/user-model");
 
 const { bcrypt } = require("bcrypt");
@@ -7,7 +8,14 @@ const { jwt } = require("jsonwebtoken");
  * user의 비지니스 로직을 담당
  */
 class UserService {
+=======
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
+const { userModel } = require("../db/models/user-model");
+>>>>>>> dev-BE
+
+class UserService {
   // 회원가입
   async addUser(userInfo) {
     const { email, fullName, password, phoneNumber, address } = userInfo;
@@ -15,11 +23,16 @@ class UserService {
     // 이메일 중복 확인
     const user = await userModel.findByEmail(email);
     if (user) {
+<<<<<<< HEAD
       const err = new Error(403, "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.");
+=======
+      const err = new Error(
+        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
+      );
+      err.status = 403;
+>>>>>>> dev-BE
       throw err;
     }
-
-    // 이메일 중복은 이제 아니므로, 회원가입을 진행함
 
     // 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -51,7 +64,14 @@ class UserService {
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await userModel.findByEmail(email);
     if (!user) {
+<<<<<<< HEAD
       const err = new Error(404, "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+=======
+      const err = new Error(
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+      );
+      err.status = 404;
+>>>>>>> dev-BE
       throw err;
     }
 
@@ -60,7 +80,14 @@ class UserService {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
+<<<<<<< HEAD
       const err = new Error(401, "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
+=======
+      const err = new Error(
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+      );
+      err.status = 401;
+>>>>>>> dev-BE
       throw err;
     }
 
@@ -73,14 +100,14 @@ class UserService {
     return { token };
   }
 
-  // 사용자 목록을 받음.
+  // 모든 유저 목록
   async getUsers() {
     const users = await userModel.findAll();
 
     return users;
   }
 
-  // userId로 사용자를 찾음.
+  // 유저 상세 조회
   async getUserById(userId) {
     const user = await userModel.findById(userId);
 
@@ -91,16 +118,19 @@ class UserService {
   async setUser(userInfoRequired, toUpdate) {
     const { userId, currentPassword } = userInfoRequired;
 
-    // 우선 해당 id의 유저가 db에 있는지 확인
+    // userId값을 가진 유저가 db에 있는지 확인
     let user = await userModel.findById(userId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
+<<<<<<< HEAD
       const err = new Error(404, "가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+=======
+      const err = new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+      err.status = 404;
+>>>>>>> dev-BE
       throw err;
     }
-
-    // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
 
     // 비밀번호 일치 여부 확인
     const isPasswordCorrect = await bcrypt.compare(
@@ -109,11 +139,16 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
+<<<<<<< HEAD
       const err = new Error(401, "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
+=======
+      const err = new Error(
+        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+      );
+      err.status = 401;
+>>>>>>> dev-BE
       throw err;
     }
-
-    // 이제 드디어 업데이트 시작
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
     const { password } = toUpdate;

@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 
+<<<<<<< HEAD
 const UserAddressSchema = new Schema({
   postal_code: {
     type: String,
@@ -15,6 +16,27 @@ const UserAddressSchema = new Schema({
     required: false,
   },
 });
+=======
+const UserAddressSchema = new Schema(
+  {
+    postal_code: {
+      type: String,
+      required: true,
+    },
+    address_main: {
+      type: String,
+      required: true,
+    },
+    address_detail: {
+      type: String,
+      required: false,
+    },
+  },
+  {
+    collection: "UserAddress",
+  }
+);
+>>>>>>> dev-BE
 
 const UserSchema = new Schema(
   {
@@ -49,5 +71,14 @@ const UserSchema = new Schema(
 );
 
 const User = model("User", UserSchema);
+const UserAddress = model("UserAddress", UserAddressSchema);
 
+<<<<<<< HEAD
 module.exports = { User };
+=======
+<<<<<<< HEAD
+module.exports = User;
+=======
+module.exports = { User, UserAddress };
+>>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
+>>>>>>> dev-BE

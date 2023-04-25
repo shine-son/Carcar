@@ -2,11 +2,19 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
+<<<<<<< HEAD
 const errorHandler = require("./middlewares/error-handler");
 const orderRouter = require("./routers/order-router");
 const userRouter = require("./routers/user-router");
 const adminRouter = require("./routers/admin-router");
 const productRouter = require('./routers/product-router');
+=======
+const { errorHandler } = require("./middlewares/error-handler");
+const { orderRouter } = require("./routers/order-router");
+const { userRouter } = require("./routers/user-router");
+const { adminRouter } = require("./routers/admin-router");
+const { productRouter } = require("./routers/product-router");
+>>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
 
 const app = express();
 
@@ -40,19 +48,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 라우팅
+<<<<<<< HEAD
 app.use("/api/users", userRouter);
+=======
+app.use("/api/auth", userRouter);
+app.use("/api/admin", adminRouter);
+>>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
 app.use("/api/orders", orderRouter);
-app.use('/api/product', productRouter);
-app.use('/api/admin', adminRouter);
+app.use("/api/product", productRouter);
 
 // 루트페이지 카테고리 로딩 : 논의 필요
-const { asyncHandler } = require("../utils/async-handler");
-const { categoryService } = require("../services/category-service");
-app.get('/category', asyncHandler(async (req, res, next) => {
-  console.log('요청도착')
-  const categoryList = await categoryService.getAllCategories()
-  res.json(categoryList)
-})
+const { asyncHandler } = require("./utils/async-handler");
+const { categoryService } = require("./services/category-service");
+app.get(
+  "/category",
+  asyncHandler(async (req, res, next) => {
+    console.log("요청도착");
+    const categoryList = await categoryService.getAllCategories();
+    res.json(categoryList);
+  })
 );
 
 app.use(errorHandler);
