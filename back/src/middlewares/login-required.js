@@ -34,12 +34,6 @@ const loginRequired = (req, res, next) => {
   } catch (error) {
     // jwt.verify 함수가 에러를 발생시키는 경우는 토큰이 정상적으로 decode 안되었을 경우임.
     res.status(403).json({ reason: "정상적인 토큰이 아닙니다."});
-    res.status(403).json({
-      result: "forbidden-approach",
-      reason: "정상적인 토큰이 아닙니다.",
-    });
-
-    return;
   }
 };
 
