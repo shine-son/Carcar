@@ -52,7 +52,9 @@ class UserModel {
   }
 
   // 사용자 정보를 삭제
-  findOneAndDelete() {}
+  async delete(userId) {
+    return await User.findOneAndDelete({ userId })
+  }
 
   // 관리자 권한을 가진 사용자가 모든 유저를 조회할 때 사용
   async findAll() {

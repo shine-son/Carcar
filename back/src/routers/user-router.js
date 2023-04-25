@@ -75,6 +75,7 @@ userRouter.put(
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const { fullName, password, address, phoneNumber } = req.body;
 
+    // [Q] currentPas
     // 수정 페이지로 들어가기전에 password를 확인하는 방법을 고민??
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함. currentPassword라는 속성이 있나?
     // const currentPassword = req.body.currentPassword;
