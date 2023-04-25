@@ -11,10 +11,7 @@ class UserService {
     // 이메일 중복 확인
     const user = await userModel.findByEmail(email);
     if (user) {
-      const err = new Error(
-        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
-      );
-      err.status = 403;
+      const err = new Error(403, "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.");
       throw err;
     }
 
@@ -42,32 +39,27 @@ class UserService {
 
   // 로그인
   async getUserToken(loginInfo) {
-    // 객체 destructuring
+    // req.body에서 넘어온 입력값
     const { email, password } = loginInfo;
 
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await userModel.findByEmail(email);
     if (!user) {
-      const err = new Error(
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
-      err.status = 404;
+      const err = new Error(404, "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
       throw err;
     }
 
     // 비밀번호 일치 여부 확인
+    // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있던 암호화된 비밀번호)
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      const err = new Error(
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
-      err.status = 401;
+      const err = new Error(401, "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
       throw err;
     }
 
-    // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || "secret";
+    // 로그인 성공 -> JWT 웹 토큰 생성, 테스트용으로 "secret-key"를 넣어놓음(env파일 작성 안해놓아서)
+    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
 
     // user_id, role을 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
@@ -98,8 +90,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const err = new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
-      err.status = 404;
+      const err = new Error(404, "가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
       throw err;
     }
 
@@ -110,10 +101,7 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      const err = new Error(
-        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
-      err.status = 401;
+      const err = new Error(401, "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
       throw err;
     }
 
@@ -133,8 +121,36 @@ class UserService {
 
     return user;
   }
+
+  // 유저정보 삭제, 현재 비밀번호가 있어야 탈퇴 가능함.
+  async deleteUser(userId, currentPassword) {
+    // jwt 토큰에서 검증된 id와 같은 id가 있는지 확인
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      const err = new Error(404, "해당 유저는 존재하지 않습니다. 다시 한 번 확인해 주세요.");
+      throw err;
+    }
+
+    // db에 일치하는 id가 있다면 비밀번호 일치 여부 확인
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      const err = new Error(401, "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
+      throw err;
+    }
+
+    // id와 비밀번호가 일치하다면 사용자 정보 삭제
+    await userModel.delete(userId);
+
+    return;
+  }
 }
 
+/** 유저서비스 객체 */
 const userService = new UserService(userModel);
 
 module.exports = { userService };
