@@ -40,7 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 라우팅
-app.use("/api/auth", userRouter);
+app.use("/api/users", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/product", productRouter);
