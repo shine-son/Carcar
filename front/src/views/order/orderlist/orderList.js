@@ -5,6 +5,7 @@ const DATA = [
     user_id: '정민규',
     ordered_product: [
       {
+        product_id: 'jR0LeuKBeRi5qSgkamCUo',
         amount: 3,
         price: 60000,
         image: 'http://via.placeholder.com/640x360',
@@ -13,6 +14,7 @@ const DATA = [
         desc: '좋은차',
       },
       {
+        product_id: 'jR0LeuKBeRi5qSgkamCUo',
         amount: 10,
         price: 40000,
         image: 'http://via.placeholder.com/640x360',
@@ -30,6 +32,7 @@ const DATA = [
     user_id: '손찬규',
     ordered_product: [
       {
+        product_id: 'jR0LeuKBeRi5qSgkamCUo',
         amount: 9,
         price: 500,
         image: 'http://via.placeholder.com/640x360',
@@ -38,6 +41,7 @@ const DATA = [
         desc: '좋은차',
       },
       {
+        product_id: '3',
         amount: 1,
         price: 60000,
         image: 'http://via.placeholder.com/640x360',
@@ -94,11 +98,18 @@ fetch('')
       <p class="orderList_category_order_date">${data[item].createdAt}</p>
       <p class="orderList_category_order_number"><a href="#">${data[item].order_id}</a></p>
   </div>
-  <div class="orderList_product_img domain"></div>
+ 
   <div class="orderList_product_info">
-      <div class="orderList_product_info_brand">${data[item].ordered_product[i].brand}</div>
-      <div class="orderList_product_info_name">${data[item].ordered_product[i].name}</div>
-      <div class="orderList_product_info_desc">${data[item].ordered_product[i].desc}</div>
+    <div class="orderList_product_info_image">
+        <img src=${data[item].ordered_product[i].image}/>
+    </div>
+    <div class="orderList_product_info_text">
+        <div class="orderList_product_info_brand">${data[item].ordered_product[i].brand}</div>
+        <div class="orderList_product_info_name">${data[item].ordered_product[i].name}</div>
+        <div class="orderList_product_info_desc">${data[item].ordered_product[i].desc}</div>
+</div>
+
+
   </div>
   <div class="orderList_product_amount domain">
       
@@ -163,4 +174,75 @@ fetch('')
         if (state.innerHTML === '배송 전') cancelTarget.remove();
       }
     }
+
+    const changeBtn = document.querySelectorAll('.orderList_product_amount_change');
+
+    for (let i = 0; i < changeBtn.length; i++) {
+      changeBtn[i].addEventListener('click', changeAmount);
+
+      function changeAmount(e) {
+        const target = e.target.parentElement.parentElement.querySelector('.orderList_product_price');
+        const newAmount = e.target.parentElement.parentElement.querySelector('.product_amount').innerHTML;
+        const name = e.target.parentElement.parentElement.querySelector('.orderList_product_info_name').innerHTML;
+        console.log(name);
+        for (let item = 0; item < data.length; item++) {
+          let list = data[item];
+          for (let i = 0; i < list.ordered_product.length; i++) {
+            if (name === list.ordered_product[i].name) {
+              target.innerHTML = newAmount * list.ordered_product[i].price;
+            }
+          }
+        }
+      }
+    }
   });
+
+// function deleteUser() {
+//   if (answer) {
+//     fetch(`/api/users/${_id}`, {
+//       method: 'DELETE',
+//       body: JSON.stringify({
+//         cart_id: data.cart_id,
+//       }),
+//     })
+//       .then(async res => {
+//         const json = await res.json();
+
+//         if (res.ok) {
+//           return json;
+//         }
+
+//         return Promise.reject(json);
+//       })
+//       .then(data => {
+//         alert('회원 정보가 삭제되었습니다.');
+//         window.location.href = '/';
+//       })
+//       .catch(err => alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`));
+//   }
+// }
+
+// deleteUserBtn.addEventListener('click', deleteUser);
+
+// fetch(`/api/orders`, {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify({
+//
+//   }),
+// })
+//   .then(async (res) => {
+//     const json = await res.json();
+
+//     if (res.ok) {
+//       return json;
+//     }
+
+//     return Promise.reject(json);
+//   })
+
+//   .catch((err) => {
+//     alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
+//   });

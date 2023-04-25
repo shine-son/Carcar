@@ -31,7 +31,7 @@
 }
 
 .orderList_category_product {
-  width: 482px;
+  width: 540px;
 
   margin-right: 25px;
   height: 157px;
@@ -49,14 +49,28 @@
   display: flex;
   border-bottom: 1px solid;
 }
+
 .orderList_product_info {
-  width: 319px;
+  display: flex;
+}
+
+.orderList_product_info_text {
+  padding-left: 25px;
+  width: 374px;
   height: 157px;
   margin-right: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
+
+.orderList_product_info_image {
+  display: flex;
+  align-items: center;
+  width: 115px;
+  height: 157px;
+}
+
 .product_amount {
   width: 31px;
   border: 1px solid;
