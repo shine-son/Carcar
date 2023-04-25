@@ -1,7 +1,9 @@
+import * as Api from '../../api.js';
 // 요소(element), input 혹은 상수
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const loginButton = document.querySelector('#loginButton');
+const joinButton = document.querySelector('#joinButton');
 
 addAllElements();
 addAllEvents();
@@ -12,6 +14,9 @@ async function addAllElements() {}
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
     loginButton.addEventListener('click', handleSubmit);
+    joinButton.addEventListener('click', () => {
+        window.location.href = '/join';
+    });
 }
 
 // 로그인 진행
@@ -36,16 +41,32 @@ async function handleSubmit(e) {
     try {
         const data = { email, password };
 
-        const result = await Api.post('/api/login', data);
+        const result = await Api.post(
+            'http://34.22.74.213:5000/api/users/login',
+            data
+        );
         const token = result.token;
+        //관리자토큰 구분 필요경우
+        // const { token, isAdmin } = result;
 
         // 로그인 성공, 토큰을 세션 스토리지에 저장
-        // 물론 다른 스토리지여도 됨
         sessionStorage.setItem('token', token);
 
         alert(`정상적으로 로그인되었습니다.`);
 
         // 로그인 성공
+        // admin(관리자) 일 경우, sessionStorage에 기록함
+        // if (isAdmin) {
+        //     sessionStorage.setItem('admin', 'admin');
+        // }
+
+        //기존 다른 페이지에서 이 로그인 페이지로 온 경우, 다시 돌아가도록 해줌
+        const { previouspage } = getUrlParams();
+        if (previouspage) {
+            window.location.href = previouspage;
+
+            return;
+        }
 
         // 기본 페이지로 이동
         window.location.href = '/';
@@ -55,10 +76,34 @@ async function handleSubmit(e) {
             `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
         );
     }
+
+    // const data = { email, password };
+    // //JSON 만들기
+    // const dataJson = JSON.stringify(data);
+
+    // const apiUrl = 'http://34.22.74.213:5000/api/users/login';
+
+    // const res = await fetch(apiUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: dataJson,
+    // });
+    // console.log(res);
+    // if (res.status === 200) {
+    //     alert('로그인에 성공하였습니다!');
+    // } else {
+    //     alert('로그인에 실패하였습니다...');
+    // }
+
+    // const result = await res.json();
+
+    // console.log(result.token);
 }
 
 // 이메일 형식인지 확인 (true 혹은 false 반환)
-export const validateEmail = (email) => {
+const validateEmail = (email) => {
     return String(email)
         .toLowerCase()
         .match(
