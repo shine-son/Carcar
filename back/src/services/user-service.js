@@ -143,8 +143,8 @@ class UserService {
       throw err;
     }
 
-    // id와 비밀번호가 일치하다면 user-model로 옮길 예정입니다.????
-    await userModel.findOneAndDelete(user.password);
+    // id와 비밀번호가 일치하다면 사용자 정보 삭제
+    await userModel.delete(userId);
 
     return;
   }
