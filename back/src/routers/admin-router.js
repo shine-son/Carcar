@@ -6,6 +6,7 @@ const { orderService } = require("../services/order-service");
 const { asyncHandler } = require("../utils/async-handler");
 const { categoryService } = require("../services/category-service");
 const { productService } = require("../services/product-service");
+const { userService } = require("../services/user-service");
 
 const adminRouter = Router();
 
@@ -145,6 +146,18 @@ adminRouter.delete(
     res
       .status(204)
       .json({ status: "delete success", message: "delete success" });
+  })
+);
+
+// 전체 사용자 조회
+adminRouter.get(
+  "/users",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    const users = await userService.getUsers();
+
+    res.status(200).json(users);
   })
 );
 

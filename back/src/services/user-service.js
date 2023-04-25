@@ -67,13 +67,6 @@ class UserService {
     return { token };
   }
 
-  // 모든 유저 목록
-  async getUsers() {
-    const users = await userModel.findAll();
-
-    return users;
-  }
-
   // 유저 상세 조회
   async getUserById(userId) {
     const user = await userModel.findById(userId);
@@ -147,6 +140,13 @@ class UserService {
     await userModel.delete(userId);
 
     return;
+  }
+  
+  // 관리자: 모든 유저 목록 조회
+  async getUsers() {
+    const users = await userModel.findAll();
+
+    return users;
   }
 }
 
