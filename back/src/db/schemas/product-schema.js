@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const { model, Schema } = require('mongoose');
-=======
 const { model, Schema } = require("mongoose");
->>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
 const { shortId } = require("../../utils/short-id");
 
 const ProductSchema = new Schema(

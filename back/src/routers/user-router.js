@@ -1,15 +1,7 @@
 const { Router } = require("express");
 
-<<<<<<< HEAD
-// 정상적으로 로그인한 유저인지 확인하는 미들웨어
-const { loginRequired } = require("../middlewares/login-required");
-// 에러를 처리하는 try-catch문 역할을 수행하는 미들웨어
-const { asyncHandler } = require("../utils/async-handler");
-// 비지니스 로직은 userService에서 진행
-=======
 const { loginRequired } = require("../middlewares/login-required");
 const { asyncHandler } = require("../utils/async-handler");
->>>>>>> dev-BE
 const { userService } = require("../services/user-service");
 
 const { userRouter } = Router();
@@ -18,23 +10,9 @@ const { userRouter } = Router();
 userRouter.post(
   "/register",
   asyncHandler(async (req, res, next) => {
-<<<<<<< HEAD
-    // req(request)의 body 에서 데이터 가져오기(<- POST, PUT)
-    // 구조 분해 할당으로 req.body에 해당하는 값들을 가져와 변수에 할당한다.
     const { email, password, fullName, phoneNumber, address } = req.body;
-=======
-    const { fullName, email, password, phoneNumber, address } = req.body;
->>>>>>> dev-BE
 
-<<<<<<< HEAD
-    // 위 데이터를 유저 db에 추가하기
-<<<<<<< HEAD
     /** 신규사용자 정보 */
-=======
-
-=======
->>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
->>>>>>> dev-BE
     const newUser = await userService.addUser({
       email,
       password,
@@ -81,24 +59,17 @@ userRouter.put(
   "/info", 
   loginRequired,
   asyncHandler(async function (req, res, next) {
-<<<<<<< HEAD
     /** loginRequired 미들웨어에서 저장된 currentUserId 사용(jwt토큰으로 검증된 id) */
     const userId = req.currentUserId;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const { fullName, password, address, phoneNumber } = req.body;
 
-    // [Q] currentPas
     // 수정 페이지로 들어가기전에 password를 확인하는 방법을 고민??
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함. currentPassword라는 속성이 있나?
     // const currentPassword = req.body.currentPassword;
     // db에 있는 password가 현재 비밀번호이지 않나??
     const currentPassword = req.body.password;
-=======
-    const userId = req.currentUserId;
-    const { fullName, password, address, phoneNumber, role } = req.body;
-    const currentPassword = req.body.currentPassword;
->>>>>>> dev-BE
 
     if (!currentPassword) {
       const err = new Error(403, "정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
@@ -107,13 +78,10 @@ userRouter.put(
 
     const userInfoRequired = { userId, currentPassword };
 
-<<<<<<< HEAD
     // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
     // 보내주었다면, 업데이트용 객체에 삽입함.
     // role은 사용자가 변경하면 안 되므로 뺐습니다.
-=======
     // 각각의 데이터가 undefined이라면?
->>>>>>> dev-BE
     const toUpdate = {
       ...(fullName && { full_name: fullName }),
       ...(password && { password }),

@@ -48,12 +48,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 라우팅
-<<<<<<< HEAD
 app.use("/api/users", userRouter);
-=======
-app.use("/api/auth", userRouter);
 app.use("/api/admin", adminRouter);
->>>>>>> 400d7346d305dcfdc0f1a151a2a1357e6e2b79c0
 app.use("/api/orders", orderRouter);
 app.use("/api/product", productRouter);
 
