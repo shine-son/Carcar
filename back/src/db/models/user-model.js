@@ -9,7 +9,7 @@ class UserModel {
 
   // userId로 유저 찾기
   async findById(userId) {
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findById(userId);
     return user;
   }
 
