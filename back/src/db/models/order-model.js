@@ -30,17 +30,7 @@ class OrderModel {
   }
 
   // 유저 정보 업데이트 -> 수정 예정
-  async update(orderId, address) {
-    const updateAddress = {
-      address: JSON.stringify(address),
-      updatedAt: new Date(), // 업데이트 시간을 갱신
-    };
-
-    const options = {
-      new: true, // 새로운 문서 반환
-      fields: { _id: 0 }, // _id 필드를 반환하지 않고, createdAt 필드를 반환
-    };
-
+  async update(orderId, updateAddress, options) {
     const order = await Order.findOneAndUpdate(
       { order_id: orderId },
       {
@@ -60,14 +50,10 @@ class OrderModel {
   }
 
   // 관리자: 주문 배송상태 수정
-  async updateShippingStatus(orderId, shippingStatus) {
-    const updateShippginStatus = {
-      shipping_status: shippingStatus,
-    };
-
+  async updateShippingStatus(orderId, updateShippingStatus) {
     const order = await Order.findOneAndUpdate(
       { order_id: orderId },
-      { $set: updateShippginStatus },
+      { $set: updateShippingStatus },
       { new: true, fields: { _id: 0 } }
     );
 
