@@ -100,10 +100,10 @@ class OrderService {
     }
 
     // 업데이트 값
-    const updateAddress = {
-      address: JSON.stringify(address),
-      updatedAt: new Date(), // 업데이트 시간을 갱신
-    };
+    // const updateAddress = {
+    //   address: JSON.stringify(address),
+    //   updatedAt: new Date(), // 업데이트 시간을 갱신
+    // };
 
     // 수정에 사용될 옵션 정의
     const options = {
@@ -111,11 +111,7 @@ class OrderService {
       fields: { _id: 0 }, // _id 필드를 반환하지 않고, createdAt 필드를 반환
     };
 
-    const update_order = await orderModel.update(
-      orderId,
-      updateAddress,
-      options
-    );
+    const update_order = await orderModel.update(orderId, address, options);
 
     return update_order;
   }

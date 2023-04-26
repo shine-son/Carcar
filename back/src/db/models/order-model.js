@@ -30,11 +30,11 @@ class OrderModel {
   }
 
   // 유저 정보 업데이트 -> 수정 예정
-  async update(orderId, updateAddress, options) {
+  async update(orderId, address, options) {
     const order = await Order.findOneAndUpdate(
       { order_id: orderId },
       {
-        $set: updateAddress, // 기존 필드를 업데이트
+        address, // 기존 필드를 업데이트
       },
       options
     );
