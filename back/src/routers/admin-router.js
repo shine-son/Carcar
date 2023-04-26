@@ -46,7 +46,7 @@ adminRouter.post(
   })
 );
 
-// 카테리고 상세 조회
+// 카테고리 상세 조회
 adminRouter.put(
   "/category/:name",
   loginRequired,
