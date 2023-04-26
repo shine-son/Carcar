@@ -116,7 +116,7 @@ userRouter.delete(
 
     res
       .status(204)
-      .json({ message: "delete success" });
+      .json({ message: "탈퇴 완료되었습니다." });
   }
 );
 
