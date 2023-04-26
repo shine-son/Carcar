@@ -75,8 +75,17 @@ class UserService {
   }
 
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
-  async setUser(userInfoRequired, toUpdate) {
-    const { userId, currentPassword } = userInfoRequired;
+  async setUser(userId, infoToUpdate) {
+    // req.body에서 받아온 입력값 
+    const { 
+      fullName, 
+      currentPassword, 
+      passwordToChange, 
+      phoneNumber, 
+      postalCode, 
+      addressMain, 
+      addressDetail 
+    } = infoToUpdate;
 
     // userId값을 가진 유저가 db에 있는지 확인
     let user = await userModel.findById(userId);
@@ -99,17 +108,29 @@ class UserService {
     }
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
-    const { password } = toUpdate;
-
-    if (password) {
-      const newPasswordHash = await bcrypt.hash(password, 10);
-      toUpdate.password = newPasswordHash;
+    if (passwordToChange) {
+      const newPasswordHash = await bcrypt.hash(passwordToChange, 10);
+      infoToUpdate.passwordToChange = newPasswordHash;
     }
 
     // 업데이트 진행
+
+    // 입력값들이 truthy하다면 업데이트용 객체 생성
+    const toUpdateUserAddressModel = {
+      ...(postalCode && {postal_code: postalCode}),
+      ...(addressMain && {address_main: addressMain}),
+      ...(addressDetail && {address_detail: addressDetail}),
+    };
+    const toUpdateUserModel = {
+      ...(fullName && { full_name: fullName }),
+      ...(passwordToChange && { password: passwordToChange }),
+      address: toUpdateUserAddressModel,
+      ...(phoneNumber && { phone_number: phoneNumber }),
+    };
+
     user = await userModel.update({
       userId,
-      update: toUpdate,
+      update: toUpdateUserModel,
     });
 
     return user;
