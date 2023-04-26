@@ -11,7 +11,7 @@
 
 .orderList {
   width: 1272px;
-  height: 829px;
+  height: fit-content;
   overflow: auto;
   box-shadow: 0 0 10px gray;
   border-radius: 7px;
@@ -52,13 +52,14 @@
 
 .orderList_product_info {
   display: flex;
+  width: 540px;
+  margin-right: 25px;
 }
 
 .orderList_product_info_text {
   padding-left: 25px;
   width: 374px;
   height: 157px;
-  margin-right: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

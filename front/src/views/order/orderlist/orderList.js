@@ -26,6 +26,7 @@ const DATA = [
     shipping_status: '배송 완료',
     address: '성수동 성수낙낙',
     order_id: '1번',
+    total_price: '580000',
     createdAt: '2023-04-25',
   },
   {
@@ -55,13 +56,14 @@ const DATA = [
     address: '성수동 성수낙낙',
     order_id: '2번',
     createdAt: '2023-04-19',
+    total_price: '64500',
   },
   {
     user_id: '김민성',
     ordered_product: [
       {
         product_id: 'jR0LeuKBeRi5qSgkamCUo',
-        amount: 3,
+        amount: 2,
         price: 500,
         image: 'http://via.placeholder.com/640x360',
         brand: '기아',
@@ -71,11 +73,20 @@ const DATA = [
       },
       {
         product_id: 'pR9LaaKNeRl1qIgbasEUz',
-        amount: 6,
-        price: 7400,
+        amount: 10,
+        price: 7000,
         image: 'http://via.placeholder.com/640x360',
         brand: '기아',
         name: '쏘렌토',
+        desc: '좋은차',
+      },
+      {
+        product_id: 'pR9LaaKNeRl1qIgbasEUz',
+        amount: 10,
+        price: 1000,
+        image: 'http://via.placeholder.com/640x360',
+        brand: '기아',
+        name: 'K3',
         desc: '좋은차',
       },
     ],
@@ -83,6 +94,7 @@ const DATA = [
     address: '성수동 성수낙낙',
     order_id: '3번',
     createdAt: '2023-04-30',
+    total_price: '71000',
   },
 ];
 
@@ -101,35 +113,21 @@ fetch('')
  
   <div class="orderList_product_info">
     <div class="orderList_product_info_image">
-        <img src=${data[item].ordered_product[i].image}/>
+        <img src=${data[item].ordered_product[0].image}/>
     </div>
     <div class="orderList_product_info_text">
-        <div class="orderList_product_info_brand">${data[item].ordered_product[i].brand}</div>
-        <div class="orderList_product_info_name">${data[item].ordered_product[i].name}</div>
-        <div class="orderList_product_info_desc">${data[item].ordered_product[i].desc}</div>
+        <div class="orderList_product_info_brand">${data[item].ordered_product[0].brand}</div>
+        <div class="orderList_product_info_name">${data[item].ordered_product[0].name} 외 ${
+        Object.keys(data[item].ordered_product).length - 1
+      }종</div>
+        <div class="orderList_product_info_desc">${data[item].ordered_product[0].desc}</div>
 </div>
 
 
   </div>
-  <div class="orderList_product_amount domain">
-      
-          <div class="orderList_product_amount_count">
-              <button class="orderList_product_amount_count_plus">+</button>
-              <div class="product_amount">${data[item].ordered_product[i].amount}</div>
-              <button class="orderList_product_amount_count_minus">-</button>
-              
-          </div>
-          <button class="orderList_product_amount_change">변경</button>
-      
-     
-  </div>
-  <div class="orderList_product_price domain">${addCommas(
-    data[item].ordered_product[i].amount * data[item].ordered_product[i].price,
-  )}</div>
+  <div class="orderList_product_price domain">${addCommas(data[item].total_price)}</div>
   <div class="orderList_product_state domain">${data[item].shipping_status}</div>
-  <div class="orderList_product_delete domain">
-      <button class="orderList_product_delete_box">주문취소</button>
-  </div>
+ 
       </div>
       
     
@@ -139,62 +137,62 @@ fetch('')
     const orderList_product = document.querySelector('.orderList_product');
     for (let item = 0; item < data.length; item++) {
       let list = data[item];
-      for (let i = 0; i < list.ordered_product.length; i++) {
-        orderList_product.insertAdjacentHTML('beforeEnd', orderList(item, i));
-      }
+
+      orderList_product.insertAdjacentHTML('beforeEnd', orderList(item));
     }
-    const plus = orderList_product.querySelectorAll('.orderList_product_amount_count_plus');
+    console.log(Object.keys(data[1].ordered_product).length);
+    // const plus = orderList_product.querySelectorAll('.orderList_product_amount_count_plus');
 
-    for (let i = 0; i < plus.length; i++) {
-      plus[i].addEventListener('click', plusAmount);
+    // for (let i = 0; i < plus.length; i++) {
+    //   plus[i].addEventListener('click', plusAmount);
 
-      function plusAmount() {
-        const amount = plus[i].parentNode.querySelector('.product_amount');
-        amount.innerHTML = Number(amount.innerHTML) + 1;
-      }
+    //   function plusAmount() {
+    //     const amount = plus[i].parentNode.querySelector('.product_amount');
+    //     amount.innerHTML = Number(amount.innerHTML) + 1;
+    //   }
 
-      const minus = document.querySelectorAll('.orderList_product_amount_count_minus');
-      minus[i].addEventListener('click', minusAmount);
+    //   const minus = document.querySelectorAll('.orderList_product_amount_count_minus');
+    //   minus[i].addEventListener('click', minusAmount);
 
-      function minusAmount() {
-        const amount = minus[i].parentNode.querySelector('.product_amount');
-        if (Number(amount.innerHTML) > 1) {
-          amount.innerHTML = Number(amount.innerHTML) - 1;
-        }
-      }
+    //   function minusAmount() {
+    //     const amount = minus[i].parentNode.querySelector('.product_amount');
+    //     if (Number(amount.innerHTML) > 1) {
+    //       amount.innerHTML = Number(amount.innerHTML) - 1;
+    //     }
+    //   }
 
-      const cancel = document.querySelectorAll('.orderList_product_delete_box');
-      const cancelTarget = cancel[i].parentNode.parentNode;
+    //   const cancel = document.querySelectorAll('.orderList_product_delete_box');
+    //   const cancelTarget = cancel[i].parentNode.parentNode;
 
-      const state = cancelTarget.querySelector('.orderList_product_state');
+    //   const state = cancelTarget.querySelector('.orderList_product_state');
 
-      cancel[i].addEventListener('click', cancelExecute);
+    //   cancel[i].addEventListener('click', cancelExecute);
 
-      function cancelExecute(e) {
-        if (state.innerHTML === '배송 전') cancelTarget.remove();
-      }
-    }
+    //   function cancelExecute(e) {
+    //     if (state.innerHTML === '배송 전') cancelTarget.remove();
+    //   }
+    // }
 
-    const changeBtn = document.querySelectorAll('.orderList_product_amount_change');
+    // const changeBtn = document.querySelectorAll('.orderList_product_amount_change');
 
-    for (let i = 0; i < changeBtn.length; i++) {
-      changeBtn[i].addEventListener('click', changeAmount);
+    // for (let i = 0; i < changeBtn.length; i++) {
+    //   changeBtn[i].addEventListener('click', changeAmount);
 
-      function changeAmount(e) {
-        const target = e.target.parentElement.parentElement.querySelector('.orderList_product_price');
-        const newAmount = e.target.parentElement.parentElement.querySelector('.product_amount').innerHTML;
-        const name = e.target.parentElement.parentElement.querySelector('.orderList_product_info_name').innerHTML;
-        console.log(name);
-        for (let item = 0; item < data.length; item++) {
-          let list = data[item];
-          for (let i = 0; i < list.ordered_product.length; i++) {
-            if (name === list.ordered_product[i].name) {
-              target.innerHTML = newAmount * list.ordered_product[i].price;
-            }
-          }
-        }
-      }
-    }
+    //   function changeAmount(e) {
+    //     const target = e.target.parentElement.parentElement.querySelector('.orderList_product_price');
+    //     const newAmount = e.target.parentElement.parentElement.querySelector('.product_amount').innerHTML;
+    //     const name = e.target.parentElement.parentElement.querySelector('.orderList_product_info_name').innerHTML;
+    //     console.log(name);
+    //     for (let item = 0; item < data.length; item++) {
+    //       let list = data[item];
+    //       for (let i = 0; i < list.ordered_product.length; i++) {
+    //         if (name === list.ordered_product[i].name) {
+    //           target.innerHTML = newAmount * list.ordered_product[i].price;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   });
 
 // function deleteUser() {
