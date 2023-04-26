@@ -42,21 +42,19 @@ userRouter.post(
 userRouter.get(
   "/info",
   loginRequired,
-  asyncHandler(async (req,res,next) => {
+  asyncHandler(async (req, res, next) => {
     /** jwt 토큰으로 검증된 id(from loginRequired) */
     const userId = req.currentUserId;
 
     const user = await userService.getUserById(userId);
     res.status(200).json(user);
-    }
-  )
+  })
 );
-
 
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.put(
-  "/info", 
+  "/info",
   loginRequired,
   asyncHandler(async function (req, res, next) {
     /** loginRequired 미들웨어에서 저장된 currentUserId 사용(jwt토큰으로 검증된 id) */
@@ -102,17 +100,14 @@ userRouter.put(
 );
 
 // 사용자 정보 삭제
-userRouter.delete(
-  "/info",
-  loginRequired,
-  async (req, res, next) => {
-    /** loginRequired 미들웨어에서 저장된 currentUserId 사용(jwt토큰으로 검증된 id) */
-    const userId = req.currentUserId;
+userRouter.delete("/info", loginRequired, async (req, res, next) => {
+  /** loginRequired 미들웨어에서 저장된 currentUserId 사용(jwt토큰으로 검증된 id) */
+  const userId = req.currentUserId;
 
-    // 삭제하려면 비밀번호 입력값을 받을 것임. 이는 body값으로 올터!
-    const { currentPassword } = req.body;
+  // 삭제하려면 비밀번호 입력값을 받을 것임. 이는 body값으로 올터!
+  const { currentPassword } = req.body;
 
-    await userService.deleteUser(userId, currentPassword);
+  await userService.deleteUser(userId, currentPassword);
 
     res
       .status(204)

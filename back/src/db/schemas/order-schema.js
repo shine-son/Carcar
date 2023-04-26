@@ -65,7 +65,7 @@ const OrderSchema = new Schema(
       default: "배송준비중",
     },
     address: {
-      type: String,
+      type: Object,
       required: true,
     },
     total_price: {

@@ -10,7 +10,7 @@ class UserModel {
   // userId로 유저 찾기(jwt토큰 활용)
   async findById(userId) {
     // mongoose 공식문서 참고해주세요(https://mongoosejs.com/docs/api/model.html#Model.findById())
-    const user = await User.findById(userId); 
+    const user = await User.findById(userId);
     return user;
   }
 

@@ -1,6 +1,6 @@
 const { orderModel } = require("../db/models/order-model");
-const { productModel } = require("../db/models/product-model");
-const { userModel } = require("../db/models/user-model");
+const { productService } = require("../services/product-service");
+const { userService } = require("../services/user-service");
 const { OrderedProduct } = require("../db/schemas/order-schema");
 
 class OrderService {
@@ -10,7 +10,7 @@ class OrderService {
     const products = await Promise.all(
       orderedProducts.map(async (orderedProduct) => {
         const orderedProductId = orderedProduct.productId;
-        const product = await productModel.getOrderById(orderedProductId);
+        const product = await productService.getProductById(orderedProductId);
         if (!product) {
           const err = new Error("상품이 존재하지 않습니다.");
           err.status = 404;
@@ -42,7 +42,7 @@ class OrderService {
       return acc + cur.total_price;
     }, 0);
 
-    const user = await userModel.findById(userId);
+    const user = await userService.getUserById(userId);
     const userAddress = user.address;
     const userName = user.full_name;
 
@@ -99,7 +99,19 @@ class OrderService {
       throw err;
     }
 
-    const update_order = await orderModel.update(orderId, address);
+    // 업데이트 값
+    // const updateAddress = {
+    //   address: JSON.stringify(address),
+    //   updatedAt: new Date(), // 업데이트 시간을 갱신
+    // };
+
+    // 수정에 사용될 옵션 정의
+    const options = {
+      new: true, // 새로운 문서 반환
+      fields: { _id: 0 }, // _id 필드를 반환하지 않고, createdAt 필드를 반환
+    };
+
+    const update_order = await orderModel.update(orderId, address, options);
 
     return update_order;
   }
@@ -148,9 +160,14 @@ class OrderService {
       throw err;
     }
 
+    // 업데이트 값
+    const updateShippingStatus = {
+      shipping_status: shippingStatus,
+    };
+
     const updateOrder = await orderModel.updateShippingStatus(
       orderId,
-      shippingStatus
+      updateShippingStatus
     );
 
     return updateOrder;
