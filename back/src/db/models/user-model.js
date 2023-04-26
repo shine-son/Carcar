@@ -28,28 +28,8 @@ class UserModel {
 
   // 사용자 정보를 수정
   async update({ userId, update }) {
-    // 찾을 값의 조건
-    const filter = { _id: userId };
-    // 옵션 설정 "returnOriginal" 조건은 findOneAndUpdate에서 수정되기 전 값을 반환할지 아니면 수정된 값을 반환할지를 설정한다.
-    // 기본으로 returnOriginal: true 값을 가지고 true일 경우 수정되기 전 값을 반환한다.
-    // 여기서는 false로 설정했으므로 수정된 값을 반환한다.
-    const option = { returnOriginal: false };
-
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
-
-    return updatedUser;
-
-    // service에서 처리하길(<- model은 최대한 간단하게!)
-    // return {
-    //   email: updatedUser.email,
-    //   full_name: updatedUser.full_name,
-    //   phone_number: updatedUser.phone_number,
-    //   address: {
-    //     postal_code: updatedUser.address.postal_code,
-    //     address_main: updatedUser.address.address_main,
-    //     address_detail: updatedUser.address.address_detail,
-    //   }
-    // };
+    // 'userId'로 찾은 db document를 'update'로 교체
+    return await User.findByIdAndUpdate(userId, update);
   }
 
   // 사용자 정보를 삭제
