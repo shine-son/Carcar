@@ -70,6 +70,7 @@ main .carousel .banner3 {
     transform: scale(1);
     transition: all .1s linear;
     cursor: pointer;
+    text-align: center;
 }
 .new_product:hover {
     transform: scale(0.985);
