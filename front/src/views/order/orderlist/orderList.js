@@ -131,8 +131,8 @@ fetch('')
     </div>
     <div class="orderList_product_info_text">
         <div class="orderList_product_info_brand">${data[item].ordered_product[0].brand}</div>
-        <div class="orderList_product_info_name">${data[item].ordered_product[0].name} 외 ${
-        Object.keys(data[item].ordered_product).length - 1
+        <div class="orderList_product_info_name">${data[item].ordered_product[0].name} 포함 ${
+        Object.keys(data[item].ordered_product).length
       }종</div>
         <div class="orderList_product_info_desc">${data[item].ordered_product[0].desc}</div>
 </div>
