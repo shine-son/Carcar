@@ -71,11 +71,10 @@ userRouter.put(
       addressDetail 
     } = req.body;
 
-    // 채영님께서 입력값이 없으면 버튼이 눌리지 않게 한다고 하셔서 프론트에서 넘어오지 않을텐데 이 에러처리가 필요할까?
-    // if (!currentPassword) {
-    //   const err = new Error(403, "정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
-    //   throw err;
-    // }
+    if (!currentPassword) {
+      const err = new Error(403, "정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      throw err;
+    }
 
     // 사용자가 수정 요청한 정보
     const infoToUpdate = {
