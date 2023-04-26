@@ -6,6 +6,7 @@ const { orderService } = require("../services/order-service");
 const { asyncHandler } = require("../utils/async-handler");
 const { categoryService } = require("../services/category-service");
 const { productService } = require("../services/product-service");
+const { imageUploader } = require("../utils/aws-uploader");
 
 const adminRouter = Router();
 
@@ -72,18 +73,38 @@ adminRouter.get(
 
 // 상품 생성
 adminRouter.post(
-  "/product",
+  "/product", imageUploader.array('images'),
   asyncHandler(async (req, res, next) => {
+    const fileUrls = [];
+    try {
+      req.files.forEach((file) => {
+        fileUrls.push(file.location)
+      })
+      console.log(`File uploaded successfully. ${fileUrls}`);
+    } catch (err) {
+      console.log('Error uploading file:', err);
+    };
+    req.body.image = fileUrls;
     const newProduct = await productService.addProduct(req.body);
-    res.status(200).json(newProduct); // 생성된 상품 응답으로 전달
+    res.status(200).json(newProduct);
   })
 );
 
 // 상품 수정
 adminRouter.put(
-  "/product/:id",
+  "/product/:id", imageUploader.array('images'),
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+    const fileUrls = [];
+    try {
+      req.files.forEach((file) => {
+        fileUrls.push(file.location)
+      })
+      console.log(`File uploaded successfully. ${fileUrls}`);
+    } catch (err) {
+      console.log('Error uploading file:', err);
+    };
+    req.body.image = fileUrls;
     const updatedProduct = await productService.updateProduct(
       { product_id: id },
       req.body,
