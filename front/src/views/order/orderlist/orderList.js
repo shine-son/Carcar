@@ -3,29 +3,21 @@ import { addCommas } from '../../useful-function.js';
 
 const DATA = [
   {
-    user_id: '정민규',
+    user_name: '정민규',
     ordered_product: [
       {
         product_id: 'jR0LeuKBeRi5qSgkamCUo',
-        amount: 3,
+
         price: 60000,
         image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
+
         name: 'G90',
-        desc: '좋은차',
       },
       {
         product_id: 'jR0LeuKBeRi5qSgkamCUo',
-        amount: 10,
-        price: 40000,
-        image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
-        name: '소나타',
-        desc: '좋은차',
       },
     ],
     shipping_status: '배송 완료',
-    address: '성수동 성수낙낙',
     order_id: '1번',
     total_price: '580000',
     createdAt: '2023-04-25',
@@ -35,26 +27,20 @@ const DATA = [
     ordered_product: [
       {
         product_id: 'jR0LeuKBeRi5qSgkamCUo',
-        amount: 9,
-        price: 500,
         image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
+
         name: 'G80',
-        desc: '좋은차',
       },
       {
         product_id: '3',
-        amount: 1,
-        price: 60000,
+
         image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
+
         name: '아반떼',
-        desc: '좋은차',
-        _id: '64423401a5cdc9fb12ec0042',
       },
     ],
     shipping_status: '배송 전',
-    address: '성수동 성수낙낙',
+
     order_id: '2번',
     createdAt: '2023-04-19',
     total_price: '64500',
@@ -64,35 +50,21 @@ const DATA = [
     ordered_product: [
       {
         product_id: 'jR0LeuKBeRi5qSgkamCUo',
-        amount: 2,
-        price: 500,
         image: 'http://via.placeholder.com/640x360',
-        brand: '기아',
         name: 'K5',
-        desc: '좋은차',
-        _id: '64423401a5cdc9fb12ec0041',
       },
       {
         product_id: 'pR9LaaKNeRl1qIgbasEUz',
-        amount: 10,
-        price: 7000,
         image: 'http://via.placeholder.com/640x360',
-        brand: '기아',
         name: '쏘렌토',
-        desc: '좋은차',
       },
       {
         product_id: 'pR9LaaKNeRl1qIgbasEUz',
-        amount: 10,
-        price: 1000,
         image: 'http://via.placeholder.com/640x360',
-        brand: '기아',
         name: 'K3',
-        desc: '좋은차',
       },
     ],
     shipping_status: '배송 후',
-    address: '성수동 성수낙낙',
     order_id: '3번',
     createdAt: '2023-04-30',
     total_price: '71000',
@@ -120,7 +92,7 @@ fetch('')
     const orderList = function orderList(item, i) {
       return `
       <div class=listBox>
-      <div class="orderList_product_order domain">
+      <div class="orderList_product_order domain ">
       <p class="orderList_category_order_date">${data[item].createdAt}</p>
       <p class="orderList_category_order_number"><a href="#">${data[item].order_id}</a></p>
   </div>
@@ -130,11 +102,11 @@ fetch('')
         <img src=${data[item].ordered_product[0].image}/>
     </div>
     <div class="orderList_product_info_text">
-        <div class="orderList_product_info_brand">${data[item].ordered_product[0].brand}</div>
+        
         <div class="orderList_product_info_name">${data[item].ordered_product[0].name} 포함 ${
         Object.keys(data[item].ordered_product).length
       }종</div>
-        <div class="orderList_product_info_desc">${data[item].ordered_product[0].desc}</div>
+       
 </div>
 
   </div>

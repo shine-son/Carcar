@@ -19,7 +19,7 @@
 
 .banner {
   margin-right: 25px;
-  width: 138px;
+  width: 260px;
   height: 55px;
   text-align: center;
   display: flex;
@@ -41,7 +41,7 @@
 }
 
 .orderList_category_product {
-  width: 540px;
+  width: 400px;
   display: flex;
   text-align: center;
   margin-right: 25px;
@@ -61,7 +61,7 @@
 
 .orderList_product_info {
   display: flex;
-  width: 540px;
+  width: 400px;
   margin-right: 25px;
 }
 
@@ -100,7 +100,7 @@
 }
 .domain {
   margin-right: 25px;
-  width: 138px;
+  width: 270px;
   height: 157px;
   text-align: center;
   display: flex;
