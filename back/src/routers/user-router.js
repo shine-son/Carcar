@@ -34,7 +34,7 @@ userRouter.post(
     // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
     const userToken = await userService.getUserToken({ email, password });
 
-    res.status(200).json({ token: userToken });
+    res.status(200).json(userToken);
   })
 );
 
