@@ -1,4 +1,5 @@
 import { addCommas } from '../../useful-function.js';
+// import * as Api from '../../api.js';
 
 const DATA = [
   {
@@ -98,6 +99,19 @@ const DATA = [
   },
 ];
 
+// fetch('http://34.22.74.213:5000/api/orders', {
+//   headers: {
+//     'Content-Type': 'application/json',
+//     Authorization:
+//       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ3Y2IxYjFhZTZhMDkyNWVkYWJmZjYiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjQ4NjM2MX0.tJYowY4OfoYn-86GEAreez2u0fV5QHU5FhGL6Hbvf7E',
+//     //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+//   },
+// })
+//   .then(response => response.json())
+//   .then(response => {
+//     console.log(response);
+//   });
+
 fetch('')
   .then(res => {
     return DATA;
@@ -110,7 +124,7 @@ fetch('')
       <p class="orderList_category_order_date">${data[item].createdAt}</p>
       <p class="orderList_category_order_number"><a href="#">${data[item].order_id}</a></p>
   </div>
- 
+
   <div class="orderList_product_info">
     <div class="orderList_product_info_image">
         <img src=${data[item].ordered_product[0].image}/>
@@ -123,14 +137,12 @@ fetch('')
         <div class="orderList_product_info_desc">${data[item].ordered_product[0].desc}</div>
 </div>
 
-
   </div>
   <div class="orderList_product_price domain">${addCommas(data[item].total_price)}</div>
   <div class="orderList_product_state domain">${data[item].shipping_status}</div>
- 
+
       </div>
-      
-    
+
   `;
     };
 
@@ -141,58 +153,6 @@ fetch('')
       orderList_product.insertAdjacentHTML('beforeEnd', orderList(item));
     }
     console.log(Object.keys(data[1].ordered_product).length);
-    // const plus = orderList_product.querySelectorAll('.orderList_product_amount_count_plus');
-
-    // for (let i = 0; i < plus.length; i++) {
-    //   plus[i].addEventListener('click', plusAmount);
-
-    //   function plusAmount() {
-    //     const amount = plus[i].parentNode.querySelector('.product_amount');
-    //     amount.innerHTML = Number(amount.innerHTML) + 1;
-    //   }
-
-    //   const minus = document.querySelectorAll('.orderList_product_amount_count_minus');
-    //   minus[i].addEventListener('click', minusAmount);
-
-    //   function minusAmount() {
-    //     const amount = minus[i].parentNode.querySelector('.product_amount');
-    //     if (Number(amount.innerHTML) > 1) {
-    //       amount.innerHTML = Number(amount.innerHTML) - 1;
-    //     }
-    //   }
-
-    //   const cancel = document.querySelectorAll('.orderList_product_delete_box');
-    //   const cancelTarget = cancel[i].parentNode.parentNode;
-
-    //   const state = cancelTarget.querySelector('.orderList_product_state');
-
-    //   cancel[i].addEventListener('click', cancelExecute);
-
-    //   function cancelExecute(e) {
-    //     if (state.innerHTML === '배송 전') cancelTarget.remove();
-    //   }
-    // }
-
-    // const changeBtn = document.querySelectorAll('.orderList_product_amount_change');
-
-    // for (let i = 0; i < changeBtn.length; i++) {
-    //   changeBtn[i].addEventListener('click', changeAmount);
-
-    //   function changeAmount(e) {
-    //     const target = e.target.parentElement.parentElement.querySelector('.orderList_product_price');
-    //     const newAmount = e.target.parentElement.parentElement.querySelector('.product_amount').innerHTML;
-    //     const name = e.target.parentElement.parentElement.querySelector('.orderList_product_info_name').innerHTML;
-    //     console.log(name);
-    //     for (let item = 0; item < data.length; item++) {
-    //       let list = data[item];
-    //       for (let i = 0; i < list.ordered_product.length; i++) {
-    //         if (name === list.ordered_product[i].name) {
-    //           target.innerHTML = newAmount * list.ordered_product[i].price;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   });
 
 // function deleteUser() {

@@ -17,11 +17,21 @@
   border-radius: 7px;
 }
 
+.banner {
+  margin-right: 25px;
+  width: 138px;
+  height: 55px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .orderList_category {
   display: flex;
   border-bottom: 1px solid;
   text-align: center;
-
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -32,10 +42,9 @@
 
 .orderList_category_product {
   width: 540px;
-
-  margin-right: 25px;
-  height: 157px;
   display: flex;
+  text-align: center;
+  margin-right: 25px;
   align-items: center;
   justify-content: center;
 }
