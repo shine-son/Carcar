@@ -1,3 +1,5 @@
+import * as Api from '../../api.js';
+
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector('#fullNameInput');
 const emailInput = document.querySelector('#emailInput');
@@ -81,11 +83,9 @@ function validatePasswordConfirm() {
 
 //빈값 검사
 function validateOthers() {
-    // const phoneNumber = phoneNumberInput.value.trim();
     const postalCode = postalCodeInput.value.trim();
     const mainAdress = mainAddressInput.value.trim();
     const detailAddress = detailAddressInput.value.trim();
-    // if (!phoneNumber || !postalCode || !mainAdress || !detailAddress) {
     if (!postalCode || !mainAdress || !detailAddress) {
         return false;
     }
@@ -170,43 +170,72 @@ async function handleSubmit(e) {
     const addressMain = mainAddressInput.value;
     const addressDetail = detailAddressInput.value;
 
-    //객체 만들기
-    const data = {
-        fullName,
-        email,
-        phoneNumber,
-        postalCode,
-        addressMain,
-        addressDetail,
-        password,
-        address: {
+    try {
+        const data = {
+            fullName,
+            email,
+            phoneNumber,
             postalCode,
             addressMain,
             addressDetail,
-        },
-    };
+            password,
+            address: {
+                postalCode,
+                addressMain,
+                addressDetail,
+            },
+        };
 
-    //JSON 만들기
-    const dataJson = JSON.stringify(data);
+        await Api.post('http://34.22.74.213:5000/api/users/register', data);
+        alert(`정상적으로 회원가입되었습니다.`);
+        // console.log(res);
 
-    const apiUrl = 'http://34.22.74.213:5000/api/users/register';
-
-    const res = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: dataJson,
-    });
-    console.log(res);
-    if (res.status === 201) {
-        alert('회원가입에 성공하였습니다!');
-    } else {
-        alert('회원가입에 실패하였습니다...');
+        //로그인 페이지 이동
+        // window.location.href = '/login';
+    } catch (err) {
+        console.log(err.stack);
+        alert(
+            `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
+        );
     }
 
-    resetFields();
+    // //객체 만들기
+    // const data = {
+    //     fullName,
+    //     email,
+    //     phoneNumber,
+    //     postalCode,
+    //     addressMain,
+    //     addressDetail,
+    //     password,
+    //     address: {
+    //         postalCode,
+    //         addressMain,
+    //         addressDetail,
+    //     },
+    // };
 
-    const result = await res.json();
-    console.log(result);
+    // //JSON 만들기
+    // const dataJson = JSON.stringify(data);
+
+    // const apiUrl = 'http://34.22.74.213:5000/api/users/register';
+
+    // const res = await fetch(apiUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: dataJson,
+    // });
+    // console.log(res);
+    // if (res.status === 201) {
+    //     alert('회원가입에 성공하였습니다!');
+    // } else {
+    //     alert('회원가입에 실패하였습니다...');
+    // }
+
+    // resetFields();
+
+    // const result = await res.json();
+    // console.log(result);
 }
