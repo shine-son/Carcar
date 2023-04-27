@@ -6,7 +6,7 @@ const { userModel } = require("../db/models/user-model");
 class UserService {
   // 회원가입
   async addUser(userInfo) {
-    const { email, fullName, password, phoneNumber, address } = userInfo;
+    const { email, fullName, password, passwordConfirm, phoneNumber, address } = userInfo;
 
     // 이메일 형식 확인(RFC 5322 형식 - 99.99% 검증가능)
     const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
@@ -20,6 +20,13 @@ class UserService {
     const user = await userModel.findByEmail(email);
     if (user) {
       const err = new Error("이 이메일은 현재 사용중입니다.");
+      err.status = 403;
+      throw err;
+    }
+
+    // 비밀번호와 비밀번호확인 입력값이 같은지 확인
+    if (password !== passwordConfirm) {
+      const err = new Error("비밀번호 확인값이 일치하지 않습니다.");
       err.status = 403;
       throw err;
     }

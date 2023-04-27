@@ -10,12 +10,13 @@ const userRouter = Router();
 userRouter.post(
   "/register",
   asyncHandler(async (req, res, next) => {
-    const { email, password, fullName, phoneNumber, address } = req.body;
+    const { email, password, passwordConfirm, fullName, phoneNumber, address } = req.body;
 
     /** 신규사용자 정보 */
     const newUser = await userService.addUser({
       email,
       password,
+      passwordConfirm,
       fullName,
       phoneNumber,
       address,
