@@ -13,6 +13,18 @@ const OrderedProductSchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    maker: {
+      type: String,
+      required: true,
+    },
     amount: {
       type: Number,
       required: true,

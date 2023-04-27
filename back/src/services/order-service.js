@@ -12,9 +12,7 @@ class OrderService {
         const orderedProductId = orderedProduct.productId;
         const product = await productService.getProductById(orderedProductId);
         if (!product) {
-          const err = new Error("상품이 존재하지 않습니다.");
-          err.status = 404;
-          throw err;
+          throw new Error(404, "상품이 존재하지 않습니다.");
         }
         return product;
       })
@@ -24,12 +22,18 @@ class OrderService {
     const newOrderedProduct = products.map((product, idx) => {
       const amount = orderedProducts[idx].amount;
       const productId = product.product_id;
+      const name = product.name;
+      const description = product.description;
+      const maker = product.maker;
       const price = product.price;
       const image = product.image;
-      const totalPrice = product.price * amount;
+      const totalPrice = price * amount;
 
       return new OrderedProduct({
         product_id: productId,
+        name,
+        description,
+        maker,
         amount,
         price,
         image,
@@ -68,10 +72,12 @@ class OrderService {
   async getOrderOneOfUser(userId, orderId) {
     const order = await orderModel.findById(orderId);
 
+    if (!order) {
+      throw new Error(404, "주문을 찾을 수 없습니다.");
+    }
+
     if (userId !== order.user_id) {
-      const err = new Error("권한이 없습니다.");
-      err.status = 403;
-      throw err;
+      throw new Error(403, "권한이 없습니다.");
     }
 
     return order;
@@ -82,28 +88,16 @@ class OrderService {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
-      const err = new Error("주문을 찾을 수 없습니다.");
-      err.status = 404;
-      throw err;
+      throw new Error(404, "주문을 찾을 수 없습니다.");
     }
 
     if (order.shipping_status !== "배송준비중") {
-      const err = new Error("주문을 취소할 수 없습니다.");
-      err.status = 403;
-      throw err;
+      throw new Error(403, "주문을 취소할 수 없습니다.");
     }
 
     if (order.user_id !== userId) {
-      const err = new Error("권한이 없습니다.");
-      err.status = 403;
-      throw err;
+      throw new Error(403, "권한이 없습니다.");
     }
-
-    // 업데이트 값
-    // const updateAddress = {
-    //   address: JSON.stringify(address),
-    //   updatedAt: new Date(), // 업데이트 시간을 갱신
-    // };
 
     // 수정에 사용될 옵션 정의
     const options = {
@@ -121,21 +115,15 @@ class OrderService {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
-      const err = new Error("주문을 찾을 수 없습니다.");
-      err.status = 404;
-      throw err;
+      throw new Error(404, "주문을 찾을 수 없습니다.");
     }
 
     if (order.shipping_status !== "배송준비중") {
-      const err = new Error("주문을 취소할 수 없습니다.");
-      err.status = 403;
-      throw err;
+      throw new Error(403, "주문을 취소할 수 없습니다.");
     }
 
     if (order.user_id !== userId) {
-      const err = new Error("권한이 없습니다.");
-      err.status = 403;
-      throw err;
+      throw new Error(403, "권한이 없습니다.");
     }
 
     await orderModel.delete(orderId);
@@ -155,9 +143,7 @@ class OrderService {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
-      const err = new Error("주문을 찾을 수 없습니다.");
-      err.status = 404;
-      throw err;
+      throw new Error(404, "주문을 찾을 수 없습니다.");
     }
 
     // 업데이트 값
@@ -178,9 +164,7 @@ class OrderService {
     const order = await orderModel.findById(orderId);
 
     if (!order) {
-      const err = new Error("주문을 찾을 수 없습니다.");
-      err.status = 404;
-      throw err;
+      throw new Error(404, "주문을 찾을 수 없습니다.");
     }
 
     await orderModel.delete(orderId);
