@@ -34,8 +34,8 @@ const imageUploader = multer({
         return callback(new Error("잘못된 확장자입니다."));
       }
       callback(null, `${Date.now()}_${file.originalname}`);
-    },
-  }),
+    }
+  })
 });
 
 module.exports = { imageUploader };
