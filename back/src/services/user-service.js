@@ -24,6 +24,13 @@ class UserService {
       throw err;
     }
 
+    // 비밀번호 11자리 이상 확인
+    if (password.length < 11) {
+      const err = new Error("비밀번호가 11자리를 넘지 않습니다. 다시 확인해주세요.")
+      err.status = 403;
+      throw err;
+    }
+
     // 비밀번호와 비밀번호확인 입력값이 같은지 확인
     if (password !== passwordConfirm) {
       const err = new Error("비밀번호 확인값이 일치하지 않습니다.");
