@@ -20,7 +20,6 @@ class OrderService {
 
     // products에 저장된 상품의 정보로 OrderedProdcutSchema의 속성에 일치하도록 작성합니다.
     const newOrderedProduct = products.map((product, idx) => {
-      console.log(product);
       const amount = orderedProducts[idx].amount;
       const productId = product.product_id;
       const name = product.name;
