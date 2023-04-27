@@ -106,6 +106,19 @@ adminRouter.post(
   })
 );
 
+// 수정할 상품 조회
+adminRouter.get(
+  "/product/:id",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    const productId = req.params.id;
+    const product = await productService.getProductById(productId); // 수정할 상품의 정보 전송
+    const category = await categoryService.getAllCategories({}); // 선택 가능한 카테고리 전송
+    res.status(200).json({ product, category });
+  })
+);
+
 // 상품 수정
 adminRouter.put(
   "/product/:id",
