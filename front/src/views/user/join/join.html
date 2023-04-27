@@ -23,6 +23,7 @@
                     </div>
                 </div>
 
+                <!-- 회원가입 입력 칸 -->
                 <div class="join_user_form_container">
                     <form class="join_user_form_box" id="joinUserForm">
                         <div class="field">
@@ -31,9 +32,11 @@
                                     class="input"
                                     id="fullNameInput"
                                     type="text"
+                                    name="name"
                                     placeholder="이름"
-                                    autocomplete="on"
+                                    required
                                 />
+                                <span class="error"></span>
                             </div>
                         </div>
 
@@ -43,9 +46,11 @@
                                     class="input"
                                     id="emailInput"
                                     type="email"
+                                    name="email"
                                     placeholder="ID (E-Mail)"
-                                    autocomplete="on"
+                                    required
                                 />
+                                <span class="error"></span>
                             </div>
                         </div>
 
@@ -56,8 +61,9 @@
                                     id="phoneNumberInput"
                                     type="tel"
                                     placeholder="Phone Number"
-                                    autocomplete="off"
+                                    required
                                 />
+                                <span class="error"></span>
                             </div>
                         </div>
 
@@ -68,7 +74,7 @@
                                     id="postalCodeInput"
                                     type="text"
                                     placeholder="Postal code"
-                                    autocomplete="off"
+                                    required
                                 />
                             </div>
                         </div>
@@ -80,7 +86,7 @@
                                     id="mainAdressInput"
                                     type="text"
                                     placeholder="Main address"
-                                    autocomplete="off"
+                                    required
                                 />
                             </div>
                         </div>
@@ -92,7 +98,7 @@
                                     id="detailAddressInput"
                                     type="text"
                                     placeholder="Detail address"
-                                    autocomplete="off"
+                                    required
                                 />
                             </div>
                         </div>
@@ -103,25 +109,35 @@
                                     class="input"
                                     id="passwordInput"
                                     type="password"
+                                    name="password"
                                     placeholder="Password"
-                                    autocomplete="off"
+                                    required
                                 />
+                                <span class="error"></span>
                             </div>
                         </div>
 
-                        <div class="field mb-5">
+                        <div class="field">
                             <div class="control">
                                 <input
                                     class="input"
                                     id="passwordConfirmInput"
                                     type="password"
+                                    name="confirm_password"
                                     placeholder="Confirm password"
-                                    autocomplete="off"
+                                    required
                                 />
+                                <span class="error"></span>
                             </div>
                         </div>
 
-                        <button class="submit_button" id="submitButton">
+                        <!-- 회원가입 버튼 -->
+                        <button
+                            type="submit"
+                            class="submit_button"
+                            id="submitButton"
+                            disabled
+                        >
                             JOIN US
                         </button>
                     </form>
