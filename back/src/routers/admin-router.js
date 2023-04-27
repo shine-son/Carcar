@@ -21,6 +21,32 @@ adminRouter.get(
   })
 );
 
+// 전체 사용자 목록 조회
+adminRouter.get(
+  "/users",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    const userList = await userService.getUsers();
+    res.status(200).json(userList);
+  })
+);
+
+// 관리자가 사용자 정보 삭제(택 1)
+adminRouter.delete(
+  "/users",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    // 프론트에서 버튼을 누르면 거기에 표시된 email을 req.body 보내야 할듯
+    const { email } = req.body;
+
+    await userService.deleteUserByAdmin(email);
+
+    res.status(200).json({ message: "삭제되었습니다."})
+  })
+);
+
 // 카테고리 조회
 adminRouter.get(
   "/category",

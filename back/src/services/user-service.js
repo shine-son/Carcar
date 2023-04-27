@@ -6,12 +6,34 @@ const { userModel } = require("../db/models/user-model");
 class UserService {
   // 회원가입
   async addUser(userInfo) {
-    const { email, fullName, password, phoneNumber, address } = userInfo;
+    const { email, fullName, password, passwordConfirm, phoneNumber, address } = userInfo;
+
+    // 이메일 형식 확인(RFC 5322 형식 - 99.99% 검증가능)
+    const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    if(!regex.test(email)) {
+      const err = new Error("이메일 형식이 맞지 않습니다.");
+      err.status = 403;
+      throw err;
+    }
 
     // 이메일 중복 확인
     const user = await userModel.findByEmail(email);
     if (user) {
       const err = new Error("이 이메일은 현재 사용중입니다.");
+      err.status = 403;
+      throw err;
+    }
+
+    // 비밀번호 11자리 이상 확인
+    if (password.length < 11) {
+      const err = new Error("비밀번호가 11자리를 넘지 않습니다. 다시 확인해주세요.")
+      err.status = 403;
+      throw err;
+    }
+
+    // 비밀번호와 비밀번호확인 입력값이 같은지 확인
+    if (password !== passwordConfirm) {
+      const err = new Error("비밀번호 확인값이 일치하지 않습니다.");
       err.status = 403;
       throw err;
     }
@@ -43,12 +65,18 @@ class UserService {
     // req.body에서 넘어온 입력값
     const { email, password } = loginInfo;
 
+    // 이메일 형식 확인(RFC 5322 형식 - 99.99% 검증가능)
+    const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    if(!regex.test(email)) {
+      const err = new Error("이메일 형식이 맞지 않습니다.");
+      err.status = 403;
+      throw err;
+    }
+
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await userModel.findByEmail(email);
     if (!user) {
-      const err = new Error(
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
+      const err = new Error("해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
       err.status = 404;
       throw err;
     }
@@ -58,9 +86,7 @@ class UserService {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      const err = new Error(
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
+      const err = new Error("비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
       err.status = 401;
       throw err;
     }
@@ -94,6 +120,13 @@ class UserService {
       addressDetail,
     } = infoToUpdate;
 
+    // 현재 비밀번호가 입력값으로 넘어오지 않았다면 예외처리
+    if (!currentPassword) {
+      const err = new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      err.status = 400;
+      throw err;
+    }
+
     // userId값을 가진 유저가 db에 있는지 확인
     let user = await userModel.findById(userId);
 
@@ -111,9 +144,7 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      const err = new Error(
-        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
+      const err = new Error("현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
       err.status = 401;
       throw err;
     }
@@ -186,6 +217,14 @@ class UserService {
 
     return users;
   }
+
+  // 관리자: 선택한 유저 정보 삭제
+  async deleteUserByAdmin(email) {
+    await userModel.deleteByAdmin(email);
+
+    return;
+  }
+
 }
 
 /** 유저서비스 객체 */

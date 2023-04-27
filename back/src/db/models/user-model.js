@@ -37,10 +37,15 @@ class UserModel {
     return await User.findByIdAndDelete(userId);
   }
 
-  // 관리자 권한을 가진 사용자가 모든 유저를 조회할 때 사용
+  // 관리자가 모든 유저를 조회할 때 사용
   async findAll() {
     const users = await User.find({});
     return users;
+  }
+
+  // 관리자가 선택한 1명의 사용자 정보를 삭제 
+  async deleteByAdmin(email) {
+    return await User.findOneAndDelete({ email });
   }
 }
 
