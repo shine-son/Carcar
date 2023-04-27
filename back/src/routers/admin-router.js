@@ -21,6 +21,17 @@ adminRouter.get(
   })
 );
 
+// 전체 사용자 목록 조회
+adminRouter.get(
+  "/users",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    const userList = await userService.getUsers();
+    res.status(200).json(userList);
+  })
+);
+
 // 카테고리 조회
 adminRouter.get(
   "/category",
