@@ -58,6 +58,14 @@ class UserService {
     // req.body에서 넘어온 입력값
     const { email, password } = loginInfo;
 
+    // 이메일 형식 확인(RFC 5322 형식 - 99.99% 검증가능)
+    const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    if(!regex.test(email)) {
+      const err = new Error("이메일 형식이 맞지 않습니다.");
+      err.status = 403;
+      throw err;
+    }
+
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await userModel.findByEmail(email);
     if (!user) {
