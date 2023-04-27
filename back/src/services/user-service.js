@@ -186,6 +186,14 @@ class UserService {
 
     return users;
   }
+
+  // 관리자: 선택한 유저 정보 삭제
+  async deleteUserByAdmin(email) {
+    await userModel.deleteByAdmin(email);
+
+    return;
+  }
+
 }
 
 /** 유저서비스 객체 */
