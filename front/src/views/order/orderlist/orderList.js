@@ -1,5 +1,6 @@
-import { addCommas } from '../../useful-function.js';
-// import * as Api from '../../api.js';
+const addCommas = n => {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 
 fetch('http://34.22.74.213:5000/api/orders', {
   headers: {
@@ -37,5 +38,16 @@ fetch('http://34.22.74.213:5000/api/orders', {
     for (let item = 0; item < data.length; item++) {
       let list = data[item];
       orderList_product.insertAdjacentHTML('beforeEnd', orderList(item));
+    }
+
+    const link = document.querySelectorAll('.orderList_category_order_number');
+
+    console.log(link);
+    for (let i = 0; i < link.length; i++) {
+      link[i].addEventListener('click', sendlink);
+    }
+
+    function sendlink() {
+      console.log(1);
     }
   });
