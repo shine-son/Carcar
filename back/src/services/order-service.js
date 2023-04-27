@@ -75,6 +75,10 @@ class OrderService {
   async getOrderOneOfUser(userId, orderId) {
     const order = await orderModel.findById(orderId);
 
+    if (!order) {
+      throw new Error(404, "주문을 찾을 수 없습니다.");
+    }
+
     if (userId !== order.user_id) {
       const err = new Error("권한이 없습니다.");
       err.status = 403;
@@ -86,6 +90,9 @@ class OrderService {
 
   // 주문 수정
   async updateOrder(userId, orderId, address) {
+    console.log(userId);
+    console.log(orderId);
+    console.log(address);
     const order = await orderModel.findById(orderId);
 
     if (!order) {
@@ -105,12 +112,6 @@ class OrderService {
       err.status = 403;
       throw err;
     }
-
-    // 업데이트 값
-    // const updateAddress = {
-    //   address: JSON.stringify(address),
-    //   updatedAt: new Date(), // 업데이트 시간을 갱신
-    // };
 
     // 수정에 사용될 옵션 정의
     const options = {
