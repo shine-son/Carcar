@@ -24,7 +24,9 @@ addAllElements();
 addAllEventListeners();
 
 // 요소 삽입 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllElements() {}
+function addAllElements() {
+    insertUserData();
+}
 
 //이름 검사 함수
 function validateName() {
@@ -46,20 +48,6 @@ function validatePasswordConfirm() {
         return true;
     }
 }
-
-//비밀번호 일치여부 검사 함수
-// function validatePasswordConfirm() {
-//     const password = passwordInput.value.trim();
-//     const passwordConfirm = passwordConfirmInput.value.trim();
-//     const error = document.querySelector('#passwordConfirmInput + .error');
-//     if (password !== passwordConfirm) {
-//         error.textContent = errors.confirmPasswordError;
-//         return false;
-//     } else {
-//         error.textContent = '';
-//         return true;
-//     }
-// }
 
 //전화번호 검사 함수
 function validatePhoneNumber() {
@@ -140,109 +128,77 @@ const setUserData = (selector, text) => {
 
 //기존 회원 정보 받아오기
 async function insertUserData() {
-    userData = await Api.get('http://34.22.74.213:5000/api/users/info');
+    const apiUrl = 'http://34.22.74.213:5000/api/users/info';
 
-    userData = {
-        fullName,
-        email,
-        phoneNumber,
-        address: {
-            postalCode,
-            addressMain,
-            addressDetail,
+    const res = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            // Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
         },
-    };
+    });
 
-    setUserData('.user_email', userData.email);
+    // 응답 코드가 4XX 계열일 때 (400, 403 등)
+    if (!res.ok) {
+        const errorContent = await res.json();
+        const { reason } = errorContent;
+
+        throw new Error(reason);
+    }
+
+    const userData = await res.json();
+    const { email } = userData;
+
+    setUserData('.user_email', email);
 }
 
 async function saveUserData(e) {
-    e.prevent.value;
+    e.preventDefault();
 
     const fullName = fullNameInput.value;
     //이전에 입력된 비밀번호 검사는 백엔드 단에서?
     const currentPassword = passwordInput.value;
-    const passwordConfirm = passwordConfirmInput.value;
+    const passwordToChange = passwordConfirmInput.value;
     const phoneNumber = phoneNumberInput.value;
     const postalCode = postalCodeInput.value;
-    const addressMain = addressMain.value;
-    const addressDetail = addressDetail.value;
+    const addressMain = mainAddressInput.value;
+    const addressDetail = detailAddressInput.value;
 
-    const data = { currentPassword };
+    const data = {
+        fullName,
+        currentPassword,
+        passwordToChange,
+        phoneNumber,
+        postalCode,
+        addressMain,
+        addressDetail,
+    };
 
-    if (fullName !== userData.fullName) {
-        data.fullName = fullName;
-    }
-
-    if (passwordConfirm !== userData.password) {
-        data.password = passwordConfirm;
-    }
-
-    if (phoneNumber !== userData.phoneNumber) {
-        data.phoneNumber = phoneNumber;
-    }
-
-    if (postalCode !== userData.address.postalCode) {
-        data.address.postalCode = postalCode;
-    }
-
-    if (addressMain !== userData.address.addressMain) {
-        data.address.addressMain = addressMain;
-    }
-
-    if (addressDetail !== userData.address.addressDetail) {
-        data.address.addressDetail = addressDetail;
-    }
+    console.log(data);
 
     try {
-        const { _id } = userData;
-        //db에 수정된 정보 저장
-        await Api.put('http://34.22.74.213:5000/api/users/info', _id, data);
-
+        const apiUrl = 'http://34.22.74.213:5000/api/users/info';
+        const res = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                // Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+            },
+            body: JSON.stringify(data),
+        });
+        if (!res.ok) {
+            const errorContent = await res.json();
+            const { reason } = errorContent;
+            throw new Error(reason);
+        }
+        console.log(res);
         alert('회원정보가 수정되었습니다.');
         resetFields();
     } catch (err) {
         alert(`회원정보 저장 과정에서 오류가 발생하였습니다: ${err}`);
     }
 }
-
-// //회원가입 수정 진행
-// const getUserData = async () => {
-//     try {
-//         const response = await fetch('./userData.json');
-//         const data = response.json;
-//         return data[0];
-//     } catch (error) {
-//         return console.log(error);
-//     }
-// };
-
-// const updateUserData = (newUserData) => {
-//     getUserData()
-//         .then((userData) => {
-//             //기존 user 데이터와 새로 입력받은 데이터를 비교
-//             const updatedUserData = {
-//                 ...userData,
-//                 ...newUserData,
-//             };
-
-//             //업데이트할 필요가 있는 경우 fetch API를 이용해 서버에 새로운 user 데이터를 보냄
-//             if (JSON.stringify(updatedUserData) !== JSON.stringify(userData)) {
-//                 fetch('/updateUserData', {
-//                     method: 'PUT',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                     body: JSON.stringify(updatedUserData),
-//                 })
-//                     .then((response) => response.json())
-//                     .then((data) => console.log(data))
-//                     .catch((error) => console.log(error));
-//             }
-//         })
-//         .catch((error) => console.log(error));
-// };
-
 saveButton.addEventListener('click', saveUserData);
 
 //------------------------------------------
@@ -263,29 +219,31 @@ deleteUser.addEventListener('keyup', (e) => {
     }
 });
 
-//db에서 회원정보 삭제
+// db에서 회원정보 삭제
 async function deleteUserData(e) {
     e.preventDefault();
 
-    const password = passwordInput.value;
-    const data = { password };
+    const currentPassword = deleteUser.value;
+    const data = { currentPassword };
 
     try {
-        // 우선 입력된 비밀번호가 맞는지 확인 (틀리면 에러 발생함)
-        const userToDelete = await Api.post(
-            'http://34.22.74.213:5000/api/users/info',
-            data
-        );
-        const { _id } = userToDelete;
-
         // 삭제 진행
-        await Api.delete('http://34.22.74.213:5000/api/users/info', _id);
+        await fetch('http://34.22.74.213:5000/api/users/info', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+            },
+            body: JSON.stringify(data),
+        });
 
         // 삭제 성공
         alert('회원 정보가 안전하게 삭제되었습니다.');
 
         // 토큰 삭제
-        sessionStorage.removeItem('token');
+
+        // sessionStorage.removeItem('token');
 
         window.location.href = '/';
     } catch (err) {
