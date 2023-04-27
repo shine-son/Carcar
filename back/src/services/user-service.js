@@ -94,6 +94,13 @@ class UserService {
       addressDetail,
     } = infoToUpdate;
 
+    // 현재 비밀번호가 입력값으로 넘어오지 않았다면 예외처리
+    if (!currentPassword) {
+      const err = new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      err.status = 400;
+      throw err;
+    }
+
     // userId값을 가진 유저가 db에 있는지 확인
     let user = await userModel.findById(userId);
 
