@@ -9,7 +9,6 @@ const { productService } = require("../services/product-service");
 const { imageUploader } = require("../utils/aws-uploader");
 const { userService } = require("../services/user-service");
 
-
 const adminRouter = Router();
 
 // 관리자 루트 페이지
@@ -90,17 +89,17 @@ adminRouter.post(
   "/product",
   loginRequired,
   isAdmin,
-  imageUploader.array('images'),
+  imageUploader.array("images"),
   asyncHandler(async (req, res, next) => {
     const fileUrls = [];
     try {
       req.files.forEach((file) => {
-        fileUrls.push(file.location)
-      })
+        fileUrls.push(file.location);
+      });
       console.log(`File uploaded successfully. ${fileUrls}`);
     } catch (err) {
-      console.log('Error uploading file:', err);
-    };
+      console.log("Error uploading file:", err);
+    }
     req.body.image = fileUrls;
     const newProduct = await productService.addProduct(req.body);
     res.status(200).json(newProduct);
@@ -112,18 +111,18 @@ adminRouter.put(
   "/product/:id",
   loginRequired,
   isAdmin,
-  imageUploader.array('images'),
+  imageUploader.array("images"),
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const fileUrls = [];
     try {
       req.files.forEach((file) => {
-        fileUrls.push(file.location)
-      })
+        fileUrls.push(file.location);
+      });
       console.log(`File uploaded successfully. ${fileUrls}`);
     } catch (err) {
-      console.log('Error uploading file:', err);
-    };
+      console.log("Error uploading file:", err);
+    }
     req.body.image = fileUrls;
     const updatedProduct = await productService.updateProduct(
       { product_id: id },
@@ -185,9 +184,7 @@ adminRouter.delete(
 
     await orderService.deleteOrderByAdmin(orderId);
 
-    res
-      .status(204)
-      .json({ status: "delete success", message: "delete success" });
+    res.status(204).json({ message: "delete success" });
   })
 );
 
