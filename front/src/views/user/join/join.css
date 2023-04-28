@@ -1,3 +1,7 @@
+.error {
+    color: tomato;
+    margin-right: 10px;
+}
 .join_form_container {
     display: flex;
     flex-direction: column;
@@ -21,7 +25,7 @@
 }
 
 .main_logo {
-    width: 390px;
+    width: 330px;
     height: 40px;
 }
 
@@ -35,7 +39,7 @@ a {
 }
 
 .main_desc {
-    width: 633px;
+    width: 500px;
     height: 48px;
     font-family: 'pre_thin';
     font-weight: 200;
@@ -43,7 +47,18 @@ a {
 }
 
 .join_user_form_container {
-    width: 461px;
+    display: flex;
+}
+
+.field {
+    /* width: 600px; */
+    display: flex;
+    justify-content: flex-end;
+}
+.control {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
 }
 
 .input {
@@ -67,6 +82,10 @@ a {
     color: #ffffff;
     border: none;
     border-radius: 2px;
+}
+
+.submit_button:disabled {
+    background-color: #969696;
 }
 
 .copyRight_desc {
