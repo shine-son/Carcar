@@ -12,7 +12,6 @@ body {
 
 .page_name_container {
     width: 1272px;
-    margin-bottom: 35px;
 }
 
 .left_button_box {
@@ -27,7 +26,7 @@ body {
 .page_name {
     font-family: 'hel_exlight';
     font-style: normal;
-    font-weight: 300;
+    /* font-weight: 300; */
     font-size: 24px;
     color: #000000;
 }
@@ -37,7 +36,7 @@ body {
 }
 
 .user_info_container {
-    width: 1596px;
+    width: 1272px;
     /* height: 650px; */
     margin: 0 auto;
     margin-top: 40px;
@@ -51,7 +50,7 @@ body {
 }
 
 .user_info_box_wrap {
-    width: 1596px;
+    width: 1272px;
     display: flex;
     justify-content: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
@@ -82,7 +81,6 @@ body {
 }
 
 .user_info_category_content {
-    height: 67px;
     font-family: 'pre_regular';
     font-weight: 400;
     font-size: 16px;
@@ -97,6 +95,7 @@ body {
     height: 67px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .register_date,
@@ -112,7 +111,7 @@ body {
 .delete_btn {
     width: 200px;
     height: 25px;
-    left: 1387px;
+    /* left: 1387px; */
     top: 238px;
     background: #f5f5f5;
     border: 1px solid #676767;

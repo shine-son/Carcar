@@ -50,14 +50,14 @@ async function insertUserData() {
         <div id="phoneNumber" class="user_phone_number">
             ${phone_number}
         </div>
-        <button id="deleteBtn" class="delete_btn">
+        <button id="deleteBtn-${email}"class="delete_btn">
             회원 정보 삭제
         </button>
     </div>`
         );
     }
 
-    const deleteBtn = document.querySelector('#deleteBtn');
+    const deleteBtn = document.querySelector(`#deleteBtn-${email}`);
 
     async function deleteUserData(e) {
         e.preventDefault();
@@ -80,10 +80,10 @@ async function insertUserData() {
             await alert('회원 정보가 안전하게 삭제되었습니다.');
 
             // 삭제한 아이템 화면에서 지우기
-            // const deletedItem = document.querySelector(
-            //     `#usersContainer-${userIdToDelete}`
-            // );
-            // deletedItem.remove();
+            const deletedItem = document.querySelector(
+                `#usersContainer-${userIdToDelete}`
+            );
+            deletedItem.remove();
 
             // 전역변수 초기화
             userIdToDelete = '';
@@ -91,6 +91,5 @@ async function insertUserData() {
             alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
         }
     }
-
     deleteBtn.addEventListener('click', deleteUserData);
 }
