@@ -1,8 +1,9 @@
+const usersContainerBox = document.querySelector('.user_info_category_content');
+
 addAllElements();
 
 function addAllElements() {
     insertUserData();
-    deleteBtn.addEventListener('click', deleteUserData);
 }
 
 // 페이지 로드 시 실행, 삭제할 회원 id를 전역변수로 관리함
@@ -14,8 +15,7 @@ async function insertUserData() {
     const res = await fetch(apiUrl, {
         method: 'GET',
         headers: {
-            // Authorization: `Bearer ${localStorage.getItem('token')}`,
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
     });
 
@@ -30,13 +30,16 @@ async function insertUserData() {
     const users = await res.json();
     console.log(users);
 
+    // const usersContainer = document.createElement('div'); // 새로운 div 요소 생성
+    // usersContainer.setAttribute('id', 'usersContainer'); // 요소에 id 속성 추가
+
     for (const user of users) {
         const { createdAt, full_name, email, phone_number } = user;
         const date = createdAt.split('T')[0];
 
-        usersContainer.insertAdjacentHTML(
-            'beforeend',
-            `<div class="user_info" id="usersContainer">
+        usersContainerBox.insertAdjacentHTML(
+            'afterbegin',
+            `<div class="user_info" id="usersContainer-${email}">
         <div id="registerDate" class="register_date">
             ${date}
         </div>
@@ -53,36 +56,41 @@ async function insertUserData() {
     </div>`
         );
     }
-}
 
-const deleteBtn = document.querySelector('#deleteBtn');
+    const deleteBtn = document.querySelector('#deleteBtn');
 
-async function deleteUserData(e) {
-    e.preventDefault();
+    async function deleteUserData(e) {
+        e.preventDefault();
 
-    try {
-        // 삭제 진행
-        await fetch('http://34.22.74.213:5000/api/users/info', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                // Authorization: `Bearer ${localStorage.getItem('token')}`,
-                Authorization: `Bearer ${token}`,
-                // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
-            },
-            body: JSON.stringify(userIdToDelete),
-        });
+        const userIdToDelete = email;
 
-        // 삭제 성공
-        alert('회원 정보가 안전하게 삭제되었습니다.');
+        console.log(email);
+        try {
+            // 삭제 진행
+            await fetch('http://34.22.74.213:5000/api/admin/users', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(userIdToDelete),
+            });
 
-        // 삭제한 아이템 화면에서 지우기
-        const deletedItem = document.querySelector(`#user-${userIdToDelete}`);
-        deletedItem.remove();
+            // 삭제 성공
+            await alert('회원 정보가 안전하게 삭제되었습니다.');
 
-        // 전역변수 초기화
-        userIdToDelete = '';
-    } catch (err) {
-        alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
+            // 삭제한 아이템 화면에서 지우기
+            // const deletedItem = document.querySelector(
+            //     `#usersContainer-${userIdToDelete}`
+            // );
+            // deletedItem.remove();
+
+            // 전역변수 초기화
+            userIdToDelete = '';
+        } catch (err) {
+            alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
+        }
     }
+
+    deleteBtn.addEventListener('click', deleteUserData);
 }

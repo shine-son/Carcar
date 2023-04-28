@@ -87,12 +87,14 @@ body {
     font-weight: 400;
     font-size: 16px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 
 .user_info {
     width: 1223px;
+    height: 67px;
     display: flex;
     justify-content: space-between;
 }
