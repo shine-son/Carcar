@@ -243,8 +243,12 @@ class UserService {
 
   // 관리자: 선택한 유저 정보 삭제
   async deleteUserByAdmin(email) {
-    await userModel.deleteByAdmin(email);
-
+    const deleteUser = await userModel.deleteByAdmin(email);
+    if (!deleteUser) {
+      const err = new Error("삭제되지 않았습니다.");
+      err.status = 404;
+      throw err;
+    }
     return;
   }
 
