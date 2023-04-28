@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주문상세</title>
+    <!-- <link rel="stylesheet" href="nav.css" />
+    <link rel="stylesheet" href="reset.css" /> -->
+    <link rel="stylesheet" href="../../common.css" />
+    <link rel="stylesheet" href="orderinfo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/cc4ff2282f.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!-- <div id="headers"></div> -->
+
+    <div class="container">
+      <div class="pageName">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span class="pageName_text">주문상세</span>
+      </div>
+
+      <div class="orderInfo">
+        <div class="orderInfo_list" style="border-bottom: 1px solid rgba(0, 0, 0, 0.3)">
+          <div class="orderInfo_list_Title">주문정보</div>
+        </div>
+
+        <div class="orderInfo_list">
+          <div class="orderInfo_list_type">주문 번호</div>
+          <div class="orderInfo_list_text">123123</div>
+        </div>
+        <div class="orderInfo_list">
+          <div class="orderInfo_list_type">주문 일자</div>
+          <div class="orderInfo_list_text">2023.4.20</div>
+        </div>
+        <div class="orderInfo_list">
+          <div class="orderInfo_list_type">구매자</div>
+          <div class="orderInfo_list_text">정민규</div>
+        </div>
+        <div class="orderInfo_list">
+          <div class="orderInfo_list_type">주문 처리상태</div>
+          <div class="orderInfo_list_text">아직안함</div>
+        </div>
+        <div class="orderInfo_list">
+          <div class="orderInfo_list_type">총 결제금액</div>
+          <div class="orderInfo_list_text">6,000,000</div>
+        </div>
+      </div>
+
+      <div class="deliveryInfo">
+        <div class="deliveryInfo_list" style="border-bottom: 1px solid rgba(0, 0, 0, 0.3)">
+          <div class="deliveryInfo_list_Title">배송지 정보</div>
+        </div>
+
+        <div class="deliveryInfo_list">
+          <div class="deliveryInfo_list_type">주소</div>
+          <div class="deliveryInfo_list_text">서울시 성동구 성수동 성수낙낙</div>
+        </div>
+        <div class="deliveryInfo_list">
+          <div class="deliveryInfo_list_type">연락처</div>
+          <div class="deliveryInfo_list_text">010-1234-5678</div>
+        </div>
+        <div class="deliveryInfo_list">
+          <div class="deliveryInfo_list_type">구매자</div>
+          <div class="deliveryInfo_list_text">정민규</div>
+        </div>
+      </div>
+
+      <div class="orderProduct">
+        <div class="orderProduct_category">
+          <div class="orderProduct_category_column" style="width: 601px">
+            <div>주문 상품정보</div>
+          </div>
+          <div class="orderProduct_category_column" style="width: 397px">
+            <div class="orderProduct_category_column_list">수량</div>
+            <div class="orderProduct_category_column_list">상품 구매금액</div>
+            <div class="orderProduct_category_column_list">주문 처리상태</div>
+          </div>
+        </div>
+
+        <div class="orderProduct_content">
+          <div class="orderProduct_content_column">
+            <div class="orderProduct_content_column_info">
+              <div class="orderProduct_content_column_info_image">
+                <img src="https://bulma.io/images/bulma-logo.png" />
+              </div>
+              <div class="orderProduct_content_column_info_text">
+                <div class="orderProduct_content_column_info_text_brand">벤츠</div>
+                <div class="orderProduct_content_column_info_text_name">지바겐</div>
+                <div class="orderProduct_content_column_info_text_desc">비싼차</div>
+              </div>
+            </div>
+          </div>
+          <div class="orderProduct_content_column">
+            <div class="orderProduct_content_column_statement">
+              <div class="orderProduct_content_column_statement_list product_margin">3</div>
+              <div class="orderProduct_content_column_statement_list product_margin">KRW 6,000,000</div>
+              <div class="orderProduct_content_column_statement_list product_margin">결제완료</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script></script>
+    <!-- <script type="text/javascript">
+      $(document).ready(function () {
+        $('#headers').load('component/nav.html'); // 원하는 파일 경로를 삽입하면 된다
+      });
+    </script> -->
+    <script src="/front/src/views/api.js" type="module" defer></script>
+  </body>
+</html>

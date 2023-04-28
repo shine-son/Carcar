@@ -35,32 +35,15 @@ a {
 }
 
 .main_desc {
-    /* width: 633px; */
+    width: 633px;
     height: 48px;
     font-family: 'pre_thin';
     font-weight: 200;
     font-size: 20px;
 }
 
-.join_user_form_box {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    font-family: 'pre_light';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-}
-
-.control {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-}
-
-.error {
-    color: tomato;
-    margin-right: 5px;
+.join_user_form_container {
+    width: 461px;
 }
 
 .input {
@@ -72,9 +55,8 @@ a {
     font-size: 16px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
-    background: #f9f9f9;
-    border: 1px solid rgba(0, 0, 0, 0.7);
-    border-radius: 3px;
+    border: solid 1px;
+    border-radius: 2px;
 }
 
 .submit_button {
@@ -84,11 +66,7 @@ a {
     background-color: #000000;
     color: #ffffff;
     border: none;
-    border-radius: 3px;
-}
-
-.submit_button:disabled {
-    background-color: #969696;
+    border-radius: 2px;
 }
 
 .copyRight_desc {

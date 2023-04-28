@@ -1,3 +1,4 @@
+import * as Api from '../../api.js';
 // 요소(element), input 혹은 상수
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
@@ -6,21 +7,23 @@ const joinButton = document.querySelector('#joinButton');
 
 addAllElements();
 addAllEvents();
-
+console.log('aaa');
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
+    console.log('aaa', joinButton);
     loginButton.addEventListener('click', handleSubmit);
-    joinButton.addEventListener('click', (e) => {
-        e.preventDefault();
+    joinButton.addEventListener('click', () => {
+        console.log('ok');
         window.location.href = '/join';
     });
 }
 
 // 로그인 진행
 async function handleSubmit(e) {
+    console.log(handleSubmit);
     e.preventDefault();
 
     const email = emailInput.value;
@@ -41,37 +44,33 @@ async function handleSubmit(e) {
     try {
         const data = { email, password };
 
-        //JSON 만들기
-        const dataJson = JSON.stringify(data);
-        const apiUrl = 'http://34.22.74.213:5000/api/users/login';
-
-        const res = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: dataJson,
-        });
-
-        console.log(res);
-
-        const result = await res.json();
+        const result = await Api.post(
+            'http://34.22.74.213:5000/api/users/login',
+            data
+        );
         const token = result.token;
-        console.log(token);
-
         //관리자토큰 구분 필요경우
         // const { token, isAdmin } = result;
 
-        // 로그인 성공, 토큰을 로컬 스토리지에 저장
-        localStorage.setItem('token', token);
+        // 로그인 성공, 토큰을 세션 스토리지에 저장
+        sessionStorage.setItem('token', token);
+
+        alert(`정상적으로 로그인되었습니다.`);
 
         // 로그인 성공
-        // admin(관리자) 일 경우, localStorage 기록함
+        // admin(관리자) 일 경우, sessionStorage에 기록함
         // if (isAdmin) {
-        //     localStorage.setItem('admin', 'admin');
+        //     sessionStorage.setItem('admin', 'admin');
         // }
 
-        alert('로그인에 성공하였습니다!');
+        //기존 다른 페이지에서 이 로그인 페이지로 온 경우, 다시 돌아가도록 해줌
+        const { previouspage } = getUrlParams();
+        if (previouspage) {
+            window.location.href = previouspage;
+
+            return;
+        }
+
         // 기본 페이지로 이동
         window.location.href = '/';
     } catch (err) {
@@ -80,6 +79,30 @@ async function handleSubmit(e) {
             `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
         );
     }
+
+    // const data = { email, password };
+    // //JSON 만들기
+    // const dataJson = JSON.stringify(data);
+
+    // const apiUrl = 'http://34.22.74.213:5000/api/users/login';
+
+    // const res = await fetch(apiUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: dataJson,
+    // });
+    // console.log(res);
+    // if (res.status === 200) {
+    //     alert('로그인에 성공하였습니다!');
+    // } else {
+    //     alert('로그인에 실패하였습니다...');
+    // }
+
+    // const result = await res.json();
+
+    // console.log(result.token);
 }
 
 // 이메일 형식인지 확인 (true 혹은 false 반환)

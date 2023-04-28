@@ -1,0 +1,41 @@
+.pageName {
+  margin-top: 42px;
+  font-size: 34px;
+
+  padding: 20px;
+}
+
+.pageName_text {
+  margin-left: 31px;
+}
+
+.adminBpx {
+  width: 1272px;
+  background-color: #1e1e1e;
+  height: 339px;
+}
+
+.adminBox-category {
+  height: 75px;
+  box-shadow: 0px 5px 30px 1px #9696963d;
+  display: flex;
+  align-items: center;
+  padding-left: 21px;
+  background: #ffffff;
+  border-radius: 5px;
+  margin-top: 13px;
+}
+
+a {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
