@@ -8,7 +8,8 @@ class UserService {
   async addUser(userInfo) {
     const { email, fullName, password, passwordConfirm, phoneNumber, address } = userInfo;
 
-    // 이름 3자 이상
+    // 이름 - 한글,영문,띄어쓰기 가능, 2자 이상
+    const regName = new RegExp();
     if (fullName.length < 3) {
       const err = new Error("이름은 3자 이상이어야 합니다.")
       err.status = 403;
@@ -139,6 +140,13 @@ class UserService {
     if (!currentPassword) {
       const err = new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
       err.status = 400;
+      throw err;
+    }
+
+    // 현재 비밀번호와 변경할 비밀번호가 같으면 예외처리
+    if (currentPassword === passwordToChange) {
+      const err = new Error("현재 비밀번호와 변경할 비밀번호가 같습니다.");
+      err.status = 404;
       throw err;
     }
 
