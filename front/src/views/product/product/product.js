@@ -39,36 +39,29 @@ $('.carousel').slick({
     autoplaySpeed: 5000
 }); 
 
-function count (type) {
-    const productAmountNum = document.querySelector('.product_amount'); // 결과 수량
-    let num = productAmountNum.innerHTML;
-        
-    if(type === 'plus') {
-        num = parseInt(num) + 1;
-    } else if(type === 'minus') {
-        num = parseInt(num) - 1;
-    }
-
-    productAmountNum.innerText = num;
-}
-
 /*--productData--*/
 let productData = [];
+let product_id;
 
-fetch("http://34.22.74.213:5000/api/product?categories=bmw", { credential: false })
+const link = document.location.href.split('/')[4];
+console.log(link);
+
+fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
     .then(res => {
         return res.json();
+        
     })
     .then((json) => {
         productData = json;
-        console.log(productData);
+        product_id = productData.product_id;
+        console.log(json);
 
-        document.querySelector('.product_img1').src = productData[0].image[0];
-        document.querySelector('.product_img2').src = productData[0].image[1];
-        document.querySelector('.product_name').innerHTML = productData[0].name;
-        document.querySelector('.product_price').innerHTML = "KRW " + addCommas(productData[0].price);
-        document.querySelector('.main_description').innerHTML = productData[0].description;
-        document.querySelector('.maker').innerHTML = "제조사 _ " + productData[0].maker;
+        document.querySelector('.product_img1').src = productData.image;
+        document.querySelector('.product_img2').src = productData.image;
+        document.querySelector('.product_name').innerHTML = productData.name;
+        document.querySelector('.product_price').innerHTML = "KRW " + addCommas(productData.price);
+        document.querySelector('.main_description').innerHTML = productData.description;
+        document.querySelector('.maker').innerHTML = "제조사 _ " + productData.maker;
         
     })
     .catch((error) => console.error(error));
@@ -80,5 +73,61 @@ let changeBtn = document.querySelector('.amount_done');
 changeBtn.addEventListener('click', function () {
 let amountNum = document.querySelector('.product_amount').innerHTML;
 
-document.querySelector('.total_price').innerHTML = "KRW " + addCommas(productData[0].price * amountNum);
+document.querySelector('.total_price').innerHTML = "KRW " + addCommas(productData.price * amountNum);
+});
+
+/*--장바구니--*/
+function addToCart(data) {
+  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  cartItems.push(data);
+  localStorage.setItem("cart", JSON.stringify(cartItems));
+
+  //if (data.product_id) {
+  //
+  //}
+}
+
+let addCart = document.querySelector('.add_cart_btn');
+addCart.addEventListener('click', function () {
+  let amountNum = document.querySelector('.product_amount').innerHTML;
+
+  const data = {product_id: product_id, amount: amountNum};
+  addToCart(data);
+
+  // window.location.href = `http://localhost:8080/carts`;
+
+});
+/*--구매하기--*/
+let buy = document.querySelector('.buy_btn');
+buy.addEventListener('click', function () {
+  let amountNum = document.querySelector('.product_amount').innerHTML;
+
+  const data = {product_id: product_id, amount: amountNum};
+  addToCart(data);
+
+  //
+  // const pay = document.querySelector('.total_price').innerHTML;
+  // 
+  //   pay.addEventListener('click', payData);
+  //   function payData() {
+  //     for (let i = 0; i < check.length; i++) {
+  //       let newObj = [];
+  //       let payAmount = convertToNumber(amountNum);
+  //       let payId = convertToNumber(link);
+  //       let obj = {
+  //         수량: payAmount,
+  //         상품번호: payId,
+  //       };
+  // 
+  //       let payProduct = document.querySelector('.product_name').innerHTML;
+  //         if (localStorage.getItem(payProduct)) {
+  //           console.log('이미 장바구니에 담겨있습니다.');
+  //         } else {
+  //           localStorage.setItem(payProduct, JSON.stringify(obj));
+  //         }
+  //     }
+  //   }
+  // 
+  // window.location.href = `http://localhost:8080/ordercheck`;
+
 });

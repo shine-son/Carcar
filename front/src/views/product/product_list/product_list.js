@@ -34,10 +34,7 @@ const productList = document.getElementById("product_list_area");
 
 let productData = [];  // 상품데이터 배열로 받아오기
 
-const link = document.location.href.split('/')[4];
-console.log(link);
-
-fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
+fetch("http://34.22.74.213:5000/api/product?categories=bmw", { credential: false })
     .then(res => {
         return res.json();
     })
@@ -46,10 +43,11 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
         console.log(productData);
 
         document.querySelector('#category_title').innerHTML = productData[0].category;
-        
+
         productData.forEach((product) => {
             const productElement = document.createElement('div');
             productElement.className = 'product_list_item';
+            productElement.setAttribute('data-id', product['product_id']);
             // const productLink = document.createElement('a');
             const productImageArea = document.createElement('div');
             productImageArea.className = 'item_img';
@@ -62,27 +60,24 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
             productDescription.className = 'list_sub';
             const productPrice = document.createElement('p');
             productPrice.className = 'list_price';
-            
-            // productLink.href += '/' + product.product_id;
+
             productImage.src += product.image;
             productName.innerHTML += product.name;
             productDescription.innerHTML += product.description;
             productPrice.innerHTML += "KRW " + addCommas(product.price);
-            
+
             productList.appendChild(productElement);
             productElement.append(productImageArea, productTextArea);
             productImageArea.appendChild(productImage);
             productTextArea.append(productName, productDescription, productPrice);
             
-            const productClick = document.querySelectorAll('.new_product');
-              productClick.forEach((product) => {
-              product.addEventListener('click', () => {
-
-                const url = `http://localhost:8000/product/${product.product_id}`;
-                // Navigate to new URL
-                window.location.href = url;           
-              })
-            })
+            productElement.addEventListener('click', function (e) {
+                e.preventDefault();
+                // 클릭 이벤트가 발생한 요소의 data-id 속성 값을 가져옵니다.
+                const productId = this.getAttribute('data-id');
+                // 해당 ID로 이동합니다.
+                location.href = `http://localhost:8080/product/${productId}`;
+            });
         })
     })
     .catch((error) => console.error(error));

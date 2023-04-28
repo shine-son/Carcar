@@ -45,13 +45,9 @@ fetch("http://34.22.74.213:5000/api/product", { credential: false })
         }
 
         newProductData.forEach((product) => {
-            // if (product === productData[6]) {
-            //     // 강제로 에러를 생성하여 조건에 맞으면 catch로 넘어가도록
-            //     throw new Error('forEach문 중단을 위한 강제 에러 생성');
-            // }
-            
             const productElement = document.createElement("div");
             productElement.className = 'new_product';
+            productElement.setAttribute('data-id', product['product_id']);
             const productImage = document.createElement('img');
             productImage.className = 'new_img';
             const productTextArea = document.createElement('div');
@@ -62,7 +58,7 @@ fetch("http://34.22.74.213:5000/api/product", { credential: false })
             productDescription.className = 'list_sub';
             const productPrice = document.createElement('p');
             productPrice.className = 'list_price';
-
+            
             productImage.src += product.image;
             productName.innerHTML += product.name;
             productDescription.innerHTML += product.description;
@@ -71,17 +67,17 @@ fetch("http://34.22.74.213:5000/api/product", { credential: false })
             productList.appendChild(productElement);
             productElement.append(productImage, productTextArea);
             productTextArea.append(productName, productDescription, productPrice);
-        })
 
-        const productClick = document.querySelectorAll('.new_product');
-        productClick.forEach((product) => {
-          product.addEventListener('click', () => {
+            console.log(productElement);
 
-            const url = `http://localhost:8000/product/${product.product_id}`;
-            // Navigate to new URL
-            window.location.href = url;   
-          })
-        })
+            productElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              // 클릭 이벤트가 발생한 요소의 data-id 속성 값을 가져옵니다.
+              const productId = this.getAttribute('data-id');
+              // 해당 ID로 이동합니다.
+              location.href = `http://localhost:8080/product/${productId}`;
+          });
+        })    
     })
 .catch((error) => console.error(error));
 
