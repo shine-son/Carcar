@@ -1,0 +1,128 @@
+.pageName {
+  margin-top: 42px;
+  font-size: 34px;
+
+  padding: 20px;
+}
+
+.pageName_text {
+  margin-left: 31px;
+}
+
+.orderList {
+  width: 1272px;
+  height: fit-content;
+
+  box-shadow: 0 0 10px gray;
+  border-radius: 7px;
+}
+
+.orderList_product_info {
+  display: flex;
+}
+.orderList_category {
+  display: flex;
+  border-bottom: 1px solid;
+  text-align: center;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.orderList_category_product {
+  width: 370px;
+
+  margin-right: 25px;
+  height: 157px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orderList_product_order {
+  box-sizing: content-box;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.orderList_product {
+  display: flex;
+  flex-direction: column;
+}
+
+.listBox {
+  display: flex;
+  border-bottom: 1px solid;
+}
+.orderList_product_info {
+  width: 210px;
+  height: 157px;
+  margin-right: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.product_amount {
+  width: 31px;
+}
+select {
+  border-radius: 4px;
+  outline: 0 none;
+}
+
+.select option {
+  background: black;
+}
+.orderList_product_amount_count {
+  text-align: center;
+  width: 87px;
+}
+
+.domain {
+  margin-right: 25px;
+  width: 138px;
+  height: 157px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.orderList_product_price,
+.orderList_product_state {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.orderList_product_info_name {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #000000;
+}
+
+a:visited {
+  color: #3f3f3f;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:link {
+  color: #3f3f3f;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.orderList_product_delete_box {
+  margin-bottom: 10px;
+}

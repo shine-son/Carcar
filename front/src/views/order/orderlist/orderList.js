@@ -6,7 +6,7 @@ fetch('http://34.22.74.213:5000/api/orders', {
   headers: {
     'Content-Type': 'application/json',
     Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMDJlM2MyZDFmNzgxYzVlZDIyMTEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3MjAxNX0.agEmrfu5zsTVuak8eHxs4nOF-5w9iLQC2tibDwzZkNE',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMDNhOWMyZDFmNzgxYzVlZDIyMTYiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjY2NDA0MX0.VEQ0UwdMImlquDWiWgGxkxRlUCg7AfobfrO55Cr7Zns',
   },
 })
   .then(response => response.json())
@@ -17,7 +17,7 @@ fetch('http://34.22.74.213:5000/api/orders', {
           <div class=listBox>
           <div class="orderList_product_order domain ">
           <p class="orderList_category_order_date">${data[item].createdAt}</p>
-          <p class="orderList_category_order_number"><a href="#">${data[0].order_id}</a></p>
+          <p class="orderList_category_order_number"><a href="#">${data[item].order_id}</a></p>
       </div>
       <div class="orderList_product_info">
         <div class="orderList_product_info_image">
@@ -42,12 +42,15 @@ fetch('http://34.22.74.213:5000/api/orders', {
 
     const link = document.querySelectorAll('.orderList_category_order_number');
 
-    console.log(link);
     for (let i = 0; i < link.length; i++) {
       link[i].addEventListener('click', sendlink);
     }
 
-    function sendlink() {
-      console.log(1);
+    function sendlink(e) {
+      const orderId = e.target.innerHTML;
+
+      const url = `http://localhost:8000/info/${orderId}`;
+      // Navigate to new URL
+      window.location.href = url;
     }
   });
