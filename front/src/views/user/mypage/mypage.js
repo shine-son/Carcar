@@ -17,8 +17,8 @@ async function insertUserData() {
     const res = await fetch(apiUrl, {
         method: 'GET',
         headers: {
-            // Authorization: `Bearer ${localStorage.getItem('token')}`,
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
         },
     });
 
@@ -62,8 +62,8 @@ async function insertLatestOrder() {
     const res = await fetch(apiUrl, {
         method: 'GET',
         headers: {
-            // Authorization: `Bearer ${localStorage.getItem('token')}`,
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
         },
     });
 

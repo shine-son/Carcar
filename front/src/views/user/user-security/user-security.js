@@ -133,8 +133,7 @@ async function insertUserData() {
     const res = await fetch(apiUrl, {
         method: 'GET',
         headers: {
-            // Authorization: `Bearer ${localStorage.getItem('token')}`,
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
     });
 
@@ -182,8 +181,7 @@ async function saveUserData(e) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                // Authorization: `Bearer ${localStorage.getItem('token')}`,
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(data),
         });
@@ -205,14 +203,6 @@ saveButton.addEventListener('click', saveUserData);
 
 //회원탈퇴 기능 구현
 
-//회원탈퇴란 엔터키 입력시 실행되는 함수
-// const handleEnterkey = (event) => {
-//     if (event.key === 'Enter' && event.target.value === '회원탈퇴') {
-//         console.log('회원탈퇴 실행');
-//     }
-// };
-
-//회원탈퇴란에서 keyup 이벤트 발생시 handleEnterkey 함수 실행
 deleteUser.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         deleteUserData(e);
@@ -232,8 +222,7 @@ async function deleteUserData(e) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                // Authorization: `Bearer ${localStorage.getItem('token')}`,
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMGJkNmMyZDFmNzgxYzVlZDIyNGEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjU3NDMwM30.bgUqu4-l9mveMUFdPxVR4A0CbWVzuuuzQMk1_OF0aFE`,
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(data),
         });
@@ -242,10 +231,9 @@ async function deleteUserData(e) {
         alert('회원 정보가 안전하게 삭제되었습니다.');
 
         // 토큰 삭제
+        localStorage.removeItem('token');
 
-        // sessionStorage.removeItem('token');
-
-        window.location.href = '/';
+        // window.location.href = '/';
     } catch (err) {
         alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
     }

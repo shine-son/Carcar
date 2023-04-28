@@ -63,12 +63,12 @@ async function handleSubmit(e) {
         // const { token, isAdmin } = result;
 
         // 로그인 성공, 토큰을 로컬 스토리지에 저장
-        // localStorage.setItem('token', token);
+        localStorage.setItem('token', token);
 
         // 로그인 성공
-        // admin(관리자) 일 경우, localStorgage 기록함
+        // admin(관리자) 일 경우, localStorage 기록함
         // if (isAdmin) {
-        //     localStorgage.setItem('admin', 'admin');
+        //     localStorage.setItem('admin', 'admin');
         // }
 
         alert('로그인에 성공하였습니다!');
