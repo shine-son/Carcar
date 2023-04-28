@@ -9,9 +9,9 @@ class UserService {
     const { email, fullName, password, passwordConfirm, phoneNumber, address } = userInfo;
 
     // 이름 - 한글,영문,띄어쓰기 가능, 2자 이상
-    const regName = new RegExp();
-    if (fullName.length < 3) {
-      const err = new Error("이름은 3자 이상이어야 합니다.")
+    const regName = /^[가-힣a-zA-Z\s]{2,}$/;
+    if (!regName.test(fullName)) {
+      const err = new Error("올바른 이름을 입력해주세요.")
       err.status = 400;
       throw err;
     }
