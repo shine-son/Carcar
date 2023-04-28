@@ -35,7 +35,7 @@ const OrderedProductSchema = new Schema(
       required: true,
     },
     image: {
-      type: String,
+      type: Array,
       require: true,
     },
     total_price: {
