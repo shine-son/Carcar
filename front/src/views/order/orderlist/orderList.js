@@ -70,3 +70,18 @@ fetch('http://34.22.74.213:5000/api/orders', {
       window.location.href = url;
     }
   });
+
+  const goToMypage = document.querySelector('#goToMypage');
+const currentToken = localStorage.getItem('token');
+
+if (currentToken ===
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
+) {
+    goToMypage.addEventListener('click', () => {
+        window.location.href = '/user-management';
+    });
+} else {
+    goToMypage.addEventListener('click', () => {
+        window.location.href = '/mypage';
+    });
+}

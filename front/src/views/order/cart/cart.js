@@ -1,10 +1,307 @@
+if (
+  currentToken ===
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
+) {
+  goToMypage.addEventListener('click', () => {
+    window.location.href = '/user-management';
+  });
+} else {
+  goToMypage.addEventListener('click', () => {
+    window.location.href = '/mypage';
+  });
+}
+
+// 이메일 형식인지 확인 (true 혹은 false 반환)
+const validateEmail = email => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    );
+};
+
+// 숫자에 쉼표를 추가함. (10000 -> 10,000)
 const addCommas = n => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+// 13,000원, 2개 등의 문자열에서 쉼표, 글자 등 제외 후 숫자만 뺴냄
+// 예시: 13,000원 -> 13000, 20,000개 -> 20000
 const convertToNumber = string => {
   return parseInt(string.replace(/(,|개|원)/g, ''));
 };
+
+// ms만큼 기다리게 함.
+const wait = ms => {
+  return new Promise(r => setTimeout(r, ms));
+};
+
+// 실제 연결할 떈 필요없는 코드(mockdata)
+localStorage.removeItem('cart');
+const data1 = {
+  productId: 'dsgkwn1234',
+  amount: 3,
+  price: 60000,
+  image: 'http://via.placeholder.com/640x360',
+  name: 'G90',
+  brand: '현대',
+  desc: '좋은차',
+};
+const data2 = {
+  productId: 'vgp21nkl3n1',
+  amount: 10,
+  price: 40000,
+  image: 'http://via.placeholder.com/640x360',
+  brand: '현대',
+  name: '소나타',
+  desc: '좋은차',
+};
+const data3 = {
+  productId: 'lkvn1p2n',
+  amount: 9,
+  price: 500,
+  image: 'http://via.placeholder.com/640x360',
+  brand: '현대',
+  name: 'G80',
+  desc: '좋은차',
+};
+const data4 = {
+  productId: '32n1ovn32n',
+  amount: 1,
+  price: 60000,
+  image: 'http://via.placeholder.com/640x360',
+  brand: '현대',
+  name: '싼타페',
+  desc: '좋은차',
+};
+function addToCart(data) {
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  cartItems.push(data);
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+}
+addToCart(data1);
+addToCart(data2);
+addToCart(data3);
+addToCart(data4);
+
+// 처음 페이지가 꾸려질 때 localStorage에 저장된 값을 가져온다.
+const products = JSON.parse(localStorage.getItem('cart')) || [];
+
+// 서버랑 통신할 필요없이 localStorage에 저장된 값을 불러와서 작성
+const carts = data => {
+  let html = '';
+  for (let product of data) {
+    html += `
+<div class=listBox data-id=${product.productId}>
+  <div class="cart_product_order domain">
+    <input type="checkbox" class="cart_category_listCheckbox">
+  </div>
+
+  <div class="cart_product_info">
+    <div class="cart_product_info_image">
+      <img src=${product.image}/>
+    </div>
+    <div class="cart_product_info_text">
+      <div class="cart_product_info_brand">${product.brand}</div>
+      <div class="cart_product_info_name">${product.name}</div>
+    </div>
+  </div>
+
+  <div class="cart_product_price domain">${addCommas(product.price)}</div>
+
+  <div class="cart_product_amount domain">
+    <div class="cart_product_amount_count">
+      <button class="cart_product_amount_count_minus"><p>-</p></button>
+      <div class="product_amount">${product.amount}</div>
+      <button class="cart_product_amount_count_plus"><p>+</p></button>
+    </div>
+    <button class="cart_product_amount_change">변경</button>
+  </div>
+
+  <div class="cart_product_totalPrice domain">${addCommas(product.amount * product.price)}
+  </div>
+</div>`;
+  }
+  return html;
+};
+
+const cart_product = document.querySelector('.cart_product');
+
+cart_product.insertAdjacentHTML('beforeEnd', carts(products));
+
+// 상품 금액 그리기
+const $checkBoxes = document.querySelectorAll('.cart_category_listCheckbox');
+const $checkedPrice = document.getElementById('checked_price');
+const $deliveryPrice = document.getElementById('delivery_price');
+const $totalPrice = document.getElementById('total_price');
+// all check
+const $allCheckBox = document.getElementById('allCheck');
+
+let checkedPrice = 0;
+const DELIVERY_PRICE = 3000;
+let totalPrice = 0;
+
+$checkedPrice.innerText = `${addCommas(checkedPrice)} 원`;
+$deliveryPrice.innerText = `${addCommas(DELIVERY_PRICE)} 원`;
+$totalPrice.innerText = `${addCommas(totalPrice + DELIVERY_PRICE)} 원`;
+
+for (let checkBox of $checkBoxes) {
+  checkBox.addEventListener('click', () => {
+    checkedPrice = 0;
+    totalPrice = 0;
+    $checkBoxes.forEach(checkBox => {
+      if (checkBox.checked) {
+        const productTotalPrice = checkBox.closest('.listBox').querySelector('.cart_product_totalPrice').textContent;
+
+        checkedPrice += Number(convertToNumber(productTotalPrice));
+      } else {
+        $allCheckBox.checked = false;
+      }
+    });
+    $checkedPrice.innerText = `${addCommas(checkedPrice)} 원`;
+    $totalPrice.innerText = `${addCommas(checkedPrice + DELIVERY_PRICE)} 원`;
+  });
+}
+
+// 수량 증가 버튼
+const plus = document.querySelectorAll('.cart_product_amount_count_plus');
+
+for (let i = 0; i < plus.length; i++) {
+  plus[i].addEventListener('click', plusAmount);
+
+  function plusAmount(e) {
+    const amount = plus[i].parentNode.querySelector('.product_amount');
+
+    amount.innerHTML = Number(amount.innerHTML) + 1;
+  }
+}
+
+// 수량 감소 버튼
+const minus = document.querySelectorAll('.cart_product_amount_count_minus');
+
+for (let i = 0; i < minus.length; i++) {
+  minus[i].addEventListener('click', minusAmount);
+
+  function minusAmount(e) {
+    const amount = minus[i].parentNode.querySelector('.product_amount');
+    if (Number(amount.innerHTML) > 1) {
+      amount.innerHTML = Number(amount.innerHTML) - 1;
+    }
+  }
+}
+
+// 수량 변경 버튼
+const changeBtnlist = document.querySelectorAll('.cart_product_amount_change');
+
+// 변경을 누르면 바껴야한다.
+for (let changeBtn of changeBtnlist) {
+  changeBtn.addEventListener('click', e => {
+    const price = changeBtn
+      .closest('.listBox')
+      .querySelector('.cart_product_price')
+      .textContent.replace(/[^0-9]/g, '');
+    const amount = changeBtn
+      .closest('.cart_product_amount')
+      .querySelector('.product_amount')
+      .textContent.replace(/[^0-9]/g, '');
+    const $totalPriceProduct = changeBtn.closest('.listBox').querySelector('.cart_product_totalPrice');
+    $totalPriceProduct.innerText = `${addCommas(Number(amount * price))}`;
+
+    // 위에서 사용된 함수 반복
+    checkedPrice = 0;
+    totalPrice = 0;
+    $checkBoxes.forEach(checkBox => {
+      if (checkBox.checked) {
+        const productTotalPrice = checkBox.closest('.listBox').querySelector('.cart_product_totalPrice').textContent;
+
+        checkedPrice += Number(convertToNumber(productTotalPrice));
+      }
+    });
+    $checkedPrice.innerText = `${addCommas(checkedPrice)} 원`;
+    $totalPrice.innerText = `${addCommas(checkedPrice + DELIVERY_PRICE)} 원`;
+  });
+}
+
+// all check
+$allCheckBox.addEventListener('click', e => {
+  $checkBoxes.forEach(checkBox => {
+    checkBox.checked = e.target.checked;
+  });
+
+  const $newCheckBoxes = e.target.closest('.cart').querySelectorAll('.cart_category_listCheckbox');
+
+  checkedPrice = 0;
+  totalPrice = 0;
+  $newCheckBoxes.forEach(checkBox => {
+    if (checkBox.checked) {
+      const productTotalPrice = checkBox.closest('.listBox').querySelector('.cart_product_totalPrice').textContent;
+
+      checkedPrice += Number(convertToNumber(productTotalPrice));
+    }
+  });
+  $checkedPrice.innerText = `${addCommas(checkedPrice)} 원`;
+  $totalPrice.innerText = `${addCommas(checkedPrice + DELIVERY_PRICE)} 원`;
+});
+
+// delete product
+const $deletBtn = document.querySelector('#deleteBtn');
+
+$deletBtn.addEventListener('click', e => {
+  $checkBoxes.forEach(checkBox => {
+    if (checkBox.checked) {
+      const deleteProduct = checkBox.closest('.listBox').remove();
+      console.log(deleteProduct);
+    }
+  });
+
+  const $newCheckBoxes = e.target.closest('.cart').querySelectorAll('.cart_category_listCheckbox');
+
+  checkedPrice = 0;
+  totalPrice = 0;
+  $newCheckBoxes.forEach(checkBox => {
+    if (checkBox.checked) {
+      const productTotalPrice = checkBox.closest('.listBox').querySelector('.cart_product_totalPrice').textContent;
+
+      checkedPrice += Number(convertToNumber(productTotalPrice));
+    }
+  });
+  $checkedPrice.innerText = `${addCommas(checkedPrice)} 원`;
+  $totalPrice.innerText = `${addCommas(checkedPrice + DELIVERY_PRICE)} 원`;
+});
+
+// fetch
+
+const $paymentBtn = document.getElementById('payment-btn');
+
+$paymentBtn.addEventListener('click', e => {
+  const datas = [];
+
+  const $newCheckBoxes = document.querySelectorAll('.cart_category_listCheckbox');
+  $newCheckBoxes.forEach(checkBox => {
+    if (checkBox.checked) {
+      const productId = checkBox.closest('.listBox').dataset.id;
+      const amount = Number(checkBox.closest('.listBox').querySelector('.product_amount').textContent);
+
+      const data = { productId, amount };
+
+      datas.push(data);
+    }
+  });
+
+  fetch('https://example.com/api/payment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ url: 'https://example.com/payment' }),
+  })
+    .then(response => {
+      // fetch 요청이 성공적으로 처리되었을 때의 코드
+    })
+    .catch(error => {
+      // fetch 요청 처리 중 에러가 발생했을 때의 코드
+    });
+});
 
 const goToMypage = document.querySelector('#goToMypage');
 const currentToken = localStorage.getItem('token');
@@ -21,255 +318,3 @@ if (
     window.location.href = '/mypage';
   });
 }
-
-const DATA = [
-  {
-    user_id: '정민규',
-    ordered_product: [
-      {
-        amount: 3,
-        price: 60000,
-        image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
-        name: 'G90',
-        desc: '좋은차',
-        product_id: '1',
-      },
-      {
-        amount: 10,
-        price: 40000,
-        image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
-        name: '소나타',
-        desc: '좋은차',
-        product_id: '1',
-      },
-      {
-        amount: 9,
-        price: 500,
-        image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
-        name: 'G80',
-        desc: '좋은차',
-        product_id: '1',
-      },
-      {
-        amount: 1,
-        price: 60000,
-        image: 'http://via.placeholder.com/640x360',
-        brand: '현대',
-        name: '싼타페',
-        desc: '좋은차',
-        product_id: '1',
-      },
-    ],
-  },
-];
-
-fetch('')
-  .then(res => {
-    return DATA;
-  })
-  .then(data => {
-    const cart = function cart(i) {
-      return `
-      <div class=listBox>
-      <div class="cart_product_order domain">
-      <input type="checkbox" class="cart_category_listCheckbox">
-      
-  </div>
- 
-  <div class="cart_product_info">
-      <div class="cart_product_info_image">
-          <img src=${data[0].ordered_product[i].image}/>
-      </div>
-      <div class="cart_product_info_text">
-          <div class="cart_product_info_brand">${data[0].ordered_product[i].brand}</div>
-          <div class="cart_product_info_name">${data[0].ordered_product[i].name}</div>
-          <div class="cart_product_info_product_id">${data[0].ordered_product[i].product_id}</div>
-      </div>
-     
-  </div>
-  
-  <div class="cart_product_price domain">${addCommas(data[0].ordered_product[i].price)}
-  </div>
-  <div class="cart_product_amount domain">
-       <div class="cart_product_amount_count">
-          <button class="cart_product_amount_count_plus">+</button>
-          <div class="product_amount">${data[0].ordered_product[i].amount}</div>
-          <button class="cart_product_amount_count_minus">-</button>
-      </div>
-  <button class="cart_product_amount_change">변경</button>
-  </div>
-  
-  <div class="cart_product_totalPrice domain">${addCommas(
-    data[0].ordered_product[i].amount * data[0].ordered_product[i].price,
-  )}
-  </div>
-`;
-    };
-
-    const cart_product = document.querySelector('.cart_product');
-
-    for (let i = 0; i < data[0].ordered_product.length; i++) {
-      cart_product.insertAdjacentHTML('beforeEnd', cart(i));
-    }
-
-    const plus = cart_product.querySelectorAll('.cart_product_amount_count_plus');
-
-    for (let i = 0; i < plus.length; i++) {
-      plus[i].addEventListener('click', plusAmount);
-
-      function plusAmount(e) {
-        const amount = plus[i].parentNode.querySelector('.product_amount');
-
-        amount.innerHTML = Number(amount.innerHTML) + 1;
-      }
-    }
-
-    const deleteBtn = document.querySelector('#deleteBtn');
-    const check = document.querySelectorAll('.cart_category_listCheckbox');
-    const allcheck = document.querySelector('#allCheck');
-    const minus = document.querySelectorAll('.cart_product_amount_count_minus');
-    const changeBtn = document.querySelectorAll('.cart_product_amount_change');
-    const finalAmount = document.querySelector('.priceBox-price_totalPrice');
-    let selectProductPrice = document.querySelector('.priceBox-price_selectPrice');
-
-    let newPrice = 0;
-    let beforePrice = 0;
-    let subPrice = 0;
-    let selectPrice = 0;
-
-    for (let i = 0; i < minus.length; i++) {
-      minus[i].addEventListener('click', minusAmount);
-      function minusAmount(e) {
-        const amount = minus[i].parentNode.querySelector('.product_amount');
-        if (Number(amount.innerHTML) > 1) {
-          amount.innerHTML = Number(amount.innerHTML) - 1;
-        }
-      }
-    }
-
-    for (let i = 0; i < check.length; i++) {
-      check[i].addEventListener('click', function (e) {
-        const selectedPrice = check[i].parentElement.parentElement.querySelector('.cart_product_totalPrice').innerHTML;
-
-        priceCheck(selectedPrice, e);
-      });
-    }
-    let totalPrice;
-    function priceCheck(selectedPrice, e) {
-      if (e.target.checked === true) {
-        selectPrice += convertToNumber(selectedPrice) + subPrice;
-        selectProductPrice.innerHTML = addCommas(selectPrice);
-        totalPrice = addCommas(selectPrice);
-        finalAmount.innerHTML = addCommas(selectPrice + 3000);
-      } else if (e.target.checked === false) {
-        let test = e.target.parentElement.parentElement.querySelector('.cart_product_totalPrice').innerHTML;
-        newPrice = convertToNumber(document.querySelector('.priceBox-price_selectPrice').innerHTML);
-
-        newPrice -= convertToNumber(test);
-
-        selectProductPrice.innerHTML = addCommas(newPrice);
-        finalAmount.innerHTML = newPrice + 3000;
-
-        subPrice = convertToNumber(addCommas(newPrice));
-        selectPrice = 0;
-      }
-    }
-
-    for (let i = 0; i < changeBtn.length; i++) {
-      changeBtn[i].addEventListener('click', changeAmount);
-      function changeAmount(e) {
-        const ischecked = e.target.parentElement.parentElement.querySelector('.cart_category_listCheckbox');
-        if (ischecked.checked === true) {
-          const amount = e.target.parentNode.querySelector('.product_amount');
-          const draftPrice = document.querySelector('.priceBox-price_selectPrice');
-          const targetPrice = e.target.parentElement.parentElement;
-          let totalPrice = targetPrice.querySelector('.cart_product_totalPrice');
-
-          beforePrice = convertToNumber(totalPrice.innerHTML);
-          beforePrice;
-
-          newPrice = data[0].ordered_product[i].price * parseInt(amount.innerHTML);
-          totalPrice.innerHTML = newPrice;
-          subPrice = newPrice - beforePrice;
-          let draft = convertToNumber(draftPrice.innerHTML);
-
-          draftPrice.innerHTML = addCommas(draft + subPrice);
-          finalAmount.innerHTML = addCommas(Number(convertToNumber(draftPrice.innerHTML)) + 3000);
-          selectPrice = 0;
-        }
-      }
-    }
-
-    allcheck.addEventListener('click', allCheckBox);
-
-    function allCheckBox() {
-      check.forEach(items => {
-        items.checked = allcheck.checked;
-      });
-
-      const checkedPrice = document.querySelectorAll('.cart_product_totalPrice');
-      let sum = 0;
-      for (let i = 0; i < checkedPrice.length; i++) {
-        sum += convertToNumber(checkedPrice[i].innerHTML);
-      }
-
-      selectProductPrice.innerHTML = sum;
-      finalAmount.innerHTML = sum + 3000;
-      if (allcheck.checked === false) {
-        selectProductPrice.innerHTML = 0;
-        finalAmount.innerHTML = 0;
-        selectPrice = 0;
-        subPrice = 0;
-      }
-    }
-
-    deleteBtn.addEventListener('click', deleteList);
-
-    function deleteList() {
-      for (let i = 0; i < check.length; i++) {
-        if (check[i].checked === true) {
-          let testselect = convertToNumber(
-            check[i].parentNode.parentNode.querySelector('.cart_product_totalPrice').innerHTML,
-          ); // 체크박스가 된 금액
-          console.log(testselect);
-          selectProductPrice.innerHTML = 0;
-          finalAmount.innerHTML = 0;
-          check[i].parentNode.parentNode.remove();
-          subPrice = 0;
-          selectPrice = 0;
-        }
-      }
-    }
-
-    const pay = document.querySelector('.priceBox-payment');
-
-    pay.addEventListener('click', payData);
-    function payData() {
-      for (let i = 0; i < check.length; i++) {
-        let newObj = [];
-        let payAmount = convertToNumber(
-          check[i].parentElement.parentElement.querySelector('.product_amount').innerHTML,
-        );
-        let payId = convertToNumber(
-          check[i].parentElement.parentElement.querySelector('.cart_product_info_product_id').innerHTML,
-        );
-        let obj = {
-          수량: payAmount,
-          상품번호: payId,
-        };
-
-        let payProduct = check[i].parentElement.parentElement.querySelector('.cart_product_info_name').innerHTML;
-        if (check[i].checked === true) {
-          if (localStorage.getItem(payProduct)) {
-            console.log('이미 장바구니에 담겨있습니다.');
-          } else {
-            newObj.push(obj);
-            localStorage.setItem(payProduct, JSON.stringify(newObj));
-          }
-        }
-      }
-    }
-  });
