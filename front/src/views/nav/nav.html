@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+        />
+        <link rel="stylesheet" href="nav.css" />
+
+        <script
+            src="https://kit.fontawesome.com/cc4ff2282f.js"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            const goToMypage = document.querySelector('#goToMypage');
+            const goToAdminPage = document.querySelector('#goToAdminPage');
+
+            const currentToken = localStorage.getItem('token', token);
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar2">
+                <div class="navbar-logo">
+                    <p id="logo">CARCAR</p>
+                </div>
+
+                <div class="navbar-brands">
+                    <a class="navbar-brands_list" href="#"> lamborghini</a>
+                    <a class="navbar-brands_list" href="#"> benz </a>
+                    <a class="navbar-brands_list" href="#"> rollsroyce </a>
+                    <a class="navbar-brands_list" href="#"> tesla </a>
+                    <a class="navbar-brands_list" href="#"> bmw </a>
+                </div>
+
+                <div class="navbar-user">
+                    <a
+                        class="navbar-user_list navbar-user_inline"
+                        id="login"
+                        href="#"
+                    >
+                        로그인
+                    </a>
+                    <a
+                        class="navbar-user_list navbar-user_inline"
+                        id="join"
+                        href="#"
+                    >
+                        회원가입
+                    </a>
+                    <a class="navbar-user_list" id="cart" href="#">
+                        장바구니
+                    </a>
+                    <a class="navbar-user_list" id="goToMypage" href="#">
+                        마이페이지
+                    </a>
+                    <a class="navbar-user_list" id="goToAdminPage" href="#">
+                        관리자페이지
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script src="nav.js"></script>
+    </body>
+</html>

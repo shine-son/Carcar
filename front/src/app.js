@@ -3,6 +3,7 @@ import path from 'path';
 
 const app = express();
 const viewsRouter = express.Router();
+const __dirname = path.resolve();
 
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
