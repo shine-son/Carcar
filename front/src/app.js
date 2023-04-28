@@ -63,6 +63,7 @@ viewsRouter.use('/orderlist', serveStatic('orderlist', 'order/'));
 viewsRouter.use('/admin', serveStatic('admin-admin', 'order/admin'));
 viewsRouter.use('/ordercheck', serveStatic('admin-ordercheck', 'order/admin'));
 viewsRouter.use('/main', serveStatic('main', 'product/'));
+viewsRouter.use('/cart', serveStatic('cart', 'order/'));
 viewsRouter.use('/product/:id', serveStatic('product', 'product/', 'id'));
 viewsRouter.use('/product_list', serveStatic('product_list', 'product/'));
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,

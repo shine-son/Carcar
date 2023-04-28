@@ -141,39 +141,74 @@ a:link {
   text-decoration: underline;
 }
 
-.navbar2 {
-  width: 1272px;
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+}
+.nav_back {
+  height: 89px;
+  width: 100%;
+  display: flex;
+  align-items: end;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: white;
+  position: fixed;
+  top: 0;
+}
+
+.nav_wrap {
+  width: 1270px;
+  margin: 0 auto;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
 }
 
-.navbar-logo {
+.nav_logo_area {
+  height: fit-content;
   margin-right: 48px;
 }
 
-.navbar-brands {
+.navbar_brands {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 454px;
+  width: 506px;
 }
 
-.navbar-brands_list {
+.navbar_brands_list {
   font-size: 18px;
+  font-family: 'helvetica';
+  text-transform: uppercase;
+  color: black;
+}
+.navbar_brands_list:hover {
+  color: rgb(59, 59, 59);
 }
 
-.navbar-user {
-  width: fit-content;
+.navbar_user {
+  width: 255px;
   display: flex;
   justify-content: space-between;
   margin-left: auto;
 }
 
-.navbar-user_list {
+.navbar_user_list {
   font-size: 15px;
+  font-family: 'pre_medium';
+  color: black;
+}
+.navbar_user_list:hover {
+  font-size: 15px;
+  font-family: 'pre_medium';
+  color: rgb(59, 59, 59);
 }
 
-.navbar-user_inline {
+.navbar_user_inline {
   padding-right: 0.7em;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
   margin-right: 0.7em;
@@ -196,34 +231,29 @@ a:link {
   text-decoration: none;
 }
 
-.navbar-brands a:link {
+.navbar_brands a:link {
   color: black;
   background-color: transparent;
   text-decoration: none;
 }
-.navbar-user a:visited {
+.navbar_user a:visited {
   color: rgba(0, 0, 0, 0.5);
   background-color: transparent;
   text-decoration: none;
 }
 
-.navbar-user a:link {
+.navbar_user a:link {
   color: rgba(0, 0, 0, 0.5);
   background-color: transparent;
   text-decoration: none;
 }
 
 #logo {
+  margin: 0;
   width: 187px;
-  height: 25.2px;
-  left: 325px;
-  top: 52px;
-
-  font-family: 'Helvetica83-ExtendedHeavy';
-  font-style: normal;
-  font-weight: 900;
+  height: fit-content;
   font-size: 34px;
-  line-height: 18px;
-
+  font-family: 'Helvetica83-ExtendedHeavy';
+  /*font-family: 'hel_exheavy';*/
   color: #000000;
 }
