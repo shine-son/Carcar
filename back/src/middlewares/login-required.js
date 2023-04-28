@@ -18,7 +18,7 @@ const loginRequired = (req, res, next) => {
 
   try {
     /** 우리가 발행한 토큰임을 확인하는 열쇠 */
-    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+    const secretKey = process.env.JWT_SECRET_KEY;
     // userToken이 secretKey와 맞는 지 확인하는 작업
     const jwtDecoded = jwt.verify(userToken, secretKey);
 
