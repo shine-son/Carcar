@@ -75,15 +75,15 @@ fetch('http://34.22.74.213:5000/api/product', { credential: false })
             console.log(productElement);
 
             productElement.addEventListener('click', function (e) {
-                e.preventDefault();
-                // 클릭 이벤트가 발생한 요소의 data-id 속성 값을 가져옵니다.
-                const productId = this.getAttribute('data-id');
-                // 해당 ID로 이동합니다.
-                location.href = `/product/:${productId}`;
-            });
-        });
+              e.preventDefault();
+              // 클릭 이벤트가 발생한 요소의 data-id 속성 값을 가져옵니다.
+              const productId = this.getAttribute('data-id');
+              // 해당 ID로 이동합니다.
+              location.href = `http://localhost:8000/product/${productId}`;
+          });
+        })    
     })
-    .catch((error) => console.error(error));
+.catch((error) => console.error(error));
 
 $('.carousel').slick({
     dots: true,
@@ -94,3 +94,18 @@ $('.carousel').slick({
     autoplay: true,
     autoplaySpeed: 3000,
 });
+
+const goToMypage = document.querySelector('#goToMypage');
+const currentToken = localStorage.getItem('token');
+
+if (currentToken ===
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
+) {
+    goToMypage.addEventListener('click', () => {
+        window.location.href = '/user-management';
+    });
+} else {
+    goToMypage.addEventListener('click', () => {
+        window.location.href = '/mypage';
+    });
+}

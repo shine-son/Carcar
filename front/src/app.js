@@ -14,8 +14,6 @@ app.use(viewsRouter);
 // 페이지별로 html, css, js 파일들을 라우팅함
 // 아래와 같이 하면, http://localhost:5000/ 에서는 views/home/home.html 파일을,
 // http://localhost:5000/register 에서는 views/register/register.html 파일을 화면에 띄움
-// viewsRouter.use('/', serveStatic('home'));
-viewsRouter.use('/', serveStatic('main', 'product/'));
 viewsRouter.use('/join', serveStatic('join', 'user/'));
 viewsRouter.use('/login', serveStatic('login', 'user/'));
 viewsRouter.use('/mypage', serveStatic('mypage', 'user/'));
@@ -26,14 +24,16 @@ viewsRouter.use('/info/:id', serveStatic('info', 'order/', 'id'));
 viewsRouter.use('/orderlist', serveStatic('orderlist', 'order/'));
 viewsRouter.use('/admin', serveStatic('admin-admin', 'order/admin'));
 viewsRouter.use('/ordercheck', serveStatic('admin-ordercheck', 'order/admin'));
+viewsRouter.use('/cart', serveStatic('cart', 'order/'));
+viewsRouter.use('/main', serveStatic('main', 'product/'));
 viewsRouter.use('/product/:id', serveStatic('product', 'product/', 'id'));
-viewsRouter.use('/product_list', serveStatic('product_list', 'product/'));
+viewsRouter.use('/product_list/:id', serveStatic('product_list', 'product/', 'id'));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
 // 이 때 ${resource}.html 을 기본 파일로 설정함.
 //temp값이 undefined 일 때 기본적으로 빈 string 값이 들어간다
 function serveStatic(resource, temp = '', pathParam = null) {
-    const resourcePath = path.join(__dirname, `./src/views/${temp}${resource}`);
+    const resourcePath = path.join(__dirname, `./src/views/${temp}/${resource}`);
     const option = { index: `${resource}.html` };
 
     if (pathParam) {

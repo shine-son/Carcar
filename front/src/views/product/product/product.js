@@ -94,7 +94,7 @@ addCart.addEventListener('click', function () {
   const data = {product_id: product_id, amount: amountNum};
   addToCart(data);
 
-  // window.location.href = `http://localhost:8080/carts`;
+  window.location.href = `http://localhost:8000/cart`;
 
 });
 /*--구매하기--*/
@@ -104,6 +104,7 @@ buy.addEventListener('click', function () {
 
   const data = {product_id: product_id, amount: amountNum};
   addToCart(data);
+
 
   //
   // const pay = document.querySelector('.total_price').innerHTML;
@@ -131,3 +132,18 @@ buy.addEventListener('click', function () {
   // window.location.href = `http://localhost:8080/ordercheck`;
 
 });
+
+const goToMypage = document.querySelector('#goToMypage');
+const currentToken = localStorage.getItem('token');
+
+if (currentToken ===
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
+) {
+    goToMypage.addEventListener('click', () => {
+        window.location.href = '/user-management';
+    });
+} else {
+    goToMypage.addEventListener('click', () => {
+        window.location.href = '/mypage';
+    });
+}
