@@ -12,7 +12,7 @@ class UserService {
     const regName = new RegExp();
     if (fullName.length < 3) {
       const err = new Error("이름은 3자 이상이어야 합니다.")
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
 
@@ -20,7 +20,7 @@ class UserService {
     const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
     if(!regex.test(email)) {
       const err = new Error("이메일 형식이 맞지 않습니다.");
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
 
@@ -28,7 +28,7 @@ class UserService {
     const user = await userModel.findByEmail(email);
     if (user) {
       const err = new Error("이 이메일은 현재 사용중입니다.");
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
     
@@ -36,21 +36,21 @@ class UserService {
     const regPhone = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
     if (!regPhone.test(phoneNumber)) {
       const err = new Error(`'-'을 제외한 올바른 전화번호를 입력해주세요.`);
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
 
     // 비밀번호 11자리 이상 확인
     if (password.length < 11) {
       const err = new Error("비밀번호가 11자리를 넘지 않습니다. 다시 확인해주세요.")
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
 
     // 비밀번호와 비밀번호확인 입력값이 같은지 확인
     if (password !== passwordConfirm) {
       const err = new Error("비밀번호 확인값이 일치하지 않습니다.");
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
 
@@ -85,7 +85,7 @@ class UserService {
     const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
     if(!regex.test(email)) {
       const err = new Error("이메일 형식이 맞지 않습니다.");
-      err.status = 403;
+      err.status = 400;
       throw err;
     }
 
@@ -146,7 +146,7 @@ class UserService {
     // 현재 비밀번호와 변경할 비밀번호가 같으면 예외처리
     if (currentPassword === passwordToChange) {
       const err = new Error("현재 비밀번호와 변경할 비밀번호가 같습니다.");
-      err.status = 404;
+      err.status = 400;
       throw err;
     }
 
