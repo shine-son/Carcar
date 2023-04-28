@@ -91,7 +91,7 @@ userRouter.put(
 );
 
 // 사용자 정보 삭제
-userRouter.delete("/info", loginRequired, async (req, res, next) => {
+userRouter.delete("/info", loginRequired, asyncHandler(async (req, res, next) => {
   /** loginRequired 미들웨어에서 저장된 currentUserId 사용(jwt토큰으로 검증된 id) */
   const userId = req.currentUserId;
 
@@ -100,6 +100,7 @@ userRouter.delete("/info", loginRequired, async (req, res, next) => {
   await userService.deleteUser(userId, currentPassword);
 
   res.status(204).json({ message: "탈퇴 완료되었습니다." });
-});
+  })
+);
 
 module.exports = { userRouter };

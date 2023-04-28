@@ -8,6 +8,13 @@ class UserService {
   async addUser(userInfo) {
     const { email, fullName, password, passwordConfirm, phoneNumber, address } = userInfo;
 
+    // 이름 3자 이상
+    if (fullName.length < 3) {
+      const err = new Error("이름은 3자 이상이어야 합니다.")
+      err.status = 403;
+      throw err;
+    }
+
     // 이메일 형식 확인(RFC 5322 형식 - 99.99% 검증가능)
     const regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
     if(!regex.test(email)) {
@@ -20,6 +27,14 @@ class UserService {
     const user = await userModel.findByEmail(email);
     if (user) {
       const err = new Error("이 이메일은 현재 사용중입니다.");
+      err.status = 403;
+      throw err;
+    }
+    
+    // 전화번호 정규식 확인('-' 없이 01X~ (10~11자리 숫자))
+    const regPhone = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
+    if (!regPhone.test(phoneNumber)) {
+      const err = new Error(`'-'을 제외한 올바른 전화번호를 입력해주세요.`);
       err.status = 403;
       throw err;
     }
