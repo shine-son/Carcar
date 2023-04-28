@@ -1,5 +1,18 @@
+// import express from 'express';
+// const app = express();
+// let port = process.env.port || 3000;
+
+// app.get('/', (req, res) => {
+//     res.send('Home page');
+// });
+
+// const server = app.listen(port, () => {
+//     console.log(`server on ${port}`);
+// });
+
 import 'dotenv/config';
-import { app } from './src/app';
+// import { app } from './src/app';
+import { app } from '../front/src/app';
 
 // .env 파일에 예를 들어 PORT="3000" 을 작성하면, process.env.PORT가 3000이 됨
 const PORT = process.env.PORT || 8000;

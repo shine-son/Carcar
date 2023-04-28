@@ -7,20 +7,23 @@ const joinButton = document.querySelector('#joinButton');
 
 addAllElements();
 addAllEvents();
-
+console.log('aaa');
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
+    console.log('aaa', joinButton);
     loginButton.addEventListener('click', handleSubmit);
     joinButton.addEventListener('click', () => {
+        console.log('ok');
         window.location.href = '/join';
     });
 }
 
 // 로그인 진행
 async function handleSubmit(e) {
+    console.log(handleSubmit);
     e.preventDefault();
 
     const email = emailInput.value;
