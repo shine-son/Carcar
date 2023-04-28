@@ -13,7 +13,7 @@ const submitButton = document.querySelector('#submitButton');
 const errors = {
     nameError: '이름은 3자 이상이어야 합니다.',
     emailError: '올바른 이메일 주소를 입력해주세요.',
-    phoneNumberError: '올바른 전화번호를 입력해주세요.',
+    phoneNumberError: ' - 를 제외한 올바른 전화번호를 입력해주세요',
     passwordError: '비밀번호는 11자 이상이어야 합니다.',
     confirmPasswordError: '비밀번호가 일치하지 않습니다.',
 };
@@ -47,7 +47,10 @@ function validateEmail() {
 function validatePhoneNumber() {
     const phoneNumber = phoneNumberInput.value.trim();
     const error = document.querySelector('#phoneNumberInput + .error');
-    const isValidPhoneNumber = /^[0-9]{10,11}$/.test(phoneNumber);
+    // const isValidPhoneNumber = /^[0-9]{10,11}$/.test(phoneNumber);
+    const isValidPhoneNumber = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/.test(
+        phoneNumber
+    );
     error.textContent = isValidPhoneNumber ? '' : errors.phoneNumberError;
     return isValidPhoneNumber;
 }

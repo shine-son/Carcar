@@ -218,14 +218,24 @@ async function deleteUserData(e) {
 
     try {
         // 삭제 진행
-        await fetch('http://34.22.74.213:5000/api/users/info', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify(data),
-        });
+        const response = await fetch(
+            'http://34.22.74.213:5000/api/users/info',
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(data),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result); // DELETE 메서드 결과 로그 출력
 
         // 삭제 성공
         alert('회원 정보가 안전하게 삭제되었습니다.');
