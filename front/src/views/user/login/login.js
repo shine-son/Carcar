@@ -63,7 +63,7 @@ async function handleSubmit(e) {
         // const { token, isAdmin } = result;
 
         // 로그인 성공, 토큰을 로컬 스토리지에 저장
-        // localStorgage.setItem('token', token);
+        // localStorage.setItem('token', token);
 
         // 로그인 성공
         // admin(관리자) 일 경우, localStorgage 기록함
