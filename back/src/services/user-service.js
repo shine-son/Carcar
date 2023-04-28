@@ -31,8 +31,13 @@ class UserService {
       throw err;
     }
     
-    // 전화번호 정규식 확인
-    const err = new Error("올바른 전화번호를 입력해주세요.")
+    // 전화번호 정규식 확인('-' 없이 01X~ (10~11자리 숫자))
+    const regPhone = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
+    if (!regPhone.test(phoneNumber)) {
+      const err = new Error(`'-'을 제외한 올바른 전화번호를 입력해주세요.`);
+      err.status = 403;
+      throw err;
+    }
 
     // 비밀번호 11자리 이상 확인
     if (password.length < 11) {
