@@ -203,18 +203,12 @@ saveButton.addEventListener('click', saveUserData);
 
 //회원탈퇴 기능 구현
 
-deleteUser.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        deleteUserData(e);
-    }
-});
-
 // db에서 회원정보 삭제
 async function deleteUserData(e) {
     e.preventDefault();
 
     const currentPassword = deleteUser.value;
-    const data = { currentPassword };
+    const data = { password: currentPassword };
 
     try {
         // 삭제 진행
@@ -248,3 +242,8 @@ async function deleteUserData(e) {
         alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
     }
 }
+deleteUser.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        deleteUserData(e);
+    }
+});
