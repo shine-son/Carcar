@@ -13,6 +13,18 @@ const OrderedProductSchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    maker: {
+      type: String,
+      required: true,
+    },
     amount: {
       type: Number,
       required: true,
@@ -54,6 +66,10 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
+    user_phone: {
+      type: String,
+      required: true,
+    },
     ordered_product: {
       type: [OrderedProductSchema],
       required: true,
@@ -65,7 +81,7 @@ const OrderSchema = new Schema(
       default: "배송준비중",
     },
     address: {
-      type: String,
+      type: Object,
       required: true,
     },
     total_price: {

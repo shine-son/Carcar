@@ -6,6 +6,7 @@ const { orderService } = require("../services/order-service");
 const { asyncHandler } = require("../utils/async-handler");
 const { categoryService } = require("../services/category-service");
 const { productService } = require("../services/product-service");
+const { imageUploader } = require("../utils/aws-uploader");
 const { userService } = require("../services/user-service");
 
 const adminRouter = Router();
@@ -17,6 +18,32 @@ adminRouter.get(
   isAdmin,
   asyncHandler(async (req, res, next) => {
     res.status(200).json({ message: "관리자페이지입니다." });
+  })
+);
+
+// 전체 사용자 목록 조회
+adminRouter.get(
+  "/users",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    const userList = await userService.getUsers();
+    res.status(200).json(userList);
+  })
+);
+
+// 관리자가 사용자 정보 삭제(택 1)
+adminRouter.delete(
+  "/users",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    // 프론트에서 버튼을 누르면 거기에 표시된 email을 req.body 보내야 할듯
+    const { email } = req.body;
+
+    await userService.deleteUserByAdmin(email);
+
+    res.status(200).json({ message: "삭제되었습니다."})
   })
 );
 
@@ -44,7 +71,7 @@ adminRouter.post(
   })
 );
 
-// 카테리고 상세 조회
+// 카테고리 상세 조회
 adminRouter.put(
   "/category/:name",
   loginRequired,
@@ -88,9 +115,33 @@ adminRouter.post(
   "/product",
   loginRequired,
   isAdmin,
+  imageUploader.array("images"),
   asyncHandler(async (req, res, next) => {
+    const fileUrls = [];
+    try {
+      req.files.forEach((file) => {
+        fileUrls.push(file.location);
+      });
+      console.log(`File uploaded successfully. ${fileUrls}`);
+    } catch (err) {
+      console.log("Error uploading file:", err);
+    }
+    req.body.image = fileUrls;
     const newProduct = await productService.addProduct(req.body);
-    res.status(200).json(newProduct); // 생성된 상품 응답으로 전달
+    res.status(200).json(newProduct);
+  })
+);
+
+// 수정할 상품 조회
+adminRouter.get(
+  "/product/:id",
+  loginRequired,
+  isAdmin,
+  asyncHandler(async (req, res, next) => {
+    const productId = req.params.id;
+    const product = await productService.getProductById(productId); // 수정할 상품의 정보 전송
+    const category = await categoryService.getAllCategories({}); // 선택 가능한 카테고리 전송
+    res.status(200).json({ product, category });
   })
 );
 
@@ -99,8 +150,19 @@ adminRouter.put(
   "/product/:id",
   loginRequired,
   isAdmin,
+  imageUploader.array("images"),
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+    const fileUrls = [];
+    try {
+      req.files.forEach((file) => {
+        fileUrls.push(file.location);
+      });
+      console.log(`File uploaded successfully. ${fileUrls}`);
+    } catch (err) {
+      console.log("Error uploading file:", err);
+    }
+    req.body.image = fileUrls;
     const updatedProduct = await productService.updateProduct(
       { product_id: id },
       req.body,
@@ -161,9 +223,7 @@ adminRouter.delete(
 
     await orderService.deleteOrderByAdmin(orderId);
 
-    res
-      .status(204)
-      .json({ status: "delete success", message: "delete success" });
+    res.status(204).json({ message: "delete success" });
   })
 );
 

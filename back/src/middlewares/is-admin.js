@@ -4,7 +4,8 @@ const isAdmin = async (req, res, next) => {
     const role = req.currentRole;
 
     if (role !== "admin") {
-      const err = new Error(403, "권한이 없습니다.");
+      const err = new Error("권한이 없습니다.");
+      err.status = 403;
       throw err;
     }
 

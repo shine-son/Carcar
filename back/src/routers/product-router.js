@@ -9,13 +9,14 @@ productRouter.get(
     // 상품의 카테고리로 이동
     if (Object.keys(req.query).length > 0) {
       const productsByCategory = await productService.getProductsByCategory(
-        req.query.category
+        req.query.categories
       );
       res.status(200).json(productsByCategory);
+    } else {
+      // 상품 전체페이지로 이동
+      const productList = await productService.getProductsAll();
+      res.status(200).json(productList);
     }
-    // 상품 전체페이지로 이동
-    const productList = await productService.getProductsAll();
-    res.status(200).json(productList);
   })
 );
 
