@@ -34,7 +34,7 @@
 }
 
 .orderList_category_product {
-  width: 370px;
+  width: 400px;
 
   margin-right: 25px;
   height: 157px;
@@ -44,7 +44,7 @@
 }
 .orderList_product_order {
   box-sizing: content-box;
-  padding-left: 10px;
+  padding-left: 20px;
   padding-right: 10px;
 }
 .orderList_product {

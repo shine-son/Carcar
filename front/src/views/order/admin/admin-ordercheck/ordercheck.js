@@ -19,7 +19,7 @@ fetch('http://34.22.74.213:5000/api/admin/orders', {
       <div class=listBox>
       <div class="orderList_product_order domain" style="width:180px">
       <p class="orderList_category_order_date">${data[item].createdAt}</p>
-      <p class="orderList_category_order_number"><a href="#">${data[item].order_id}</a></p>
+      <p class="orderList_category_order_number">${data[item].order_id}</p>
   </div>
   <img src="${data[item].ordered_product[i].image}"class="orderList_product_img domain">
     
@@ -75,8 +75,12 @@ fetch('http://34.22.74.213:5000/api/admin/orders', {
         const select = document.getElementById('delivery-status');
         const selectedOption = select.options[select.selectedIndex];
         const optionValue = selectedOption.innerHTML;
-        console.log(optionValue);
-        fetch(`http://34.22.74.213:5000/api/admin/orders`, {
+        let productId = e.target.parentElement.parentElement.querySelector(
+          '.orderList_category_order_number',
+        ).innerHTML;
+
+        console.log(productId);
+        fetch(`http://34.22.74.213:5000/api/admin/orders/${productId}`, {
           method: 'PUT',
           headers: {
             Authorization:
@@ -94,11 +98,15 @@ fetch('http://34.22.74.213:5000/api/admin/orders', {
 
     for (let i = 0; i < delBtn.length; i++) {
       delBtn[i].addEventListener('click', function (e) {
+        let productId = e.target.parentElement.parentElement.querySelector(
+          '.orderList_category_order_number',
+        ).innerHTML;
+
         const delrow = e.target.parentElement.parentElement;
         console.log(delrow);
         delrow.remove();
 
-        fetch('http://34.22.74.213:5000/api/admin/orders', {
+        fetch(`http://34.22.74.213:5000/api/admin/orders/${productId}`, {
           method: 'DELETE',
           headers: {
             Authorization:
@@ -114,8 +122,6 @@ fetch('http://34.22.74.213:5000/api/admin/orders', {
           .catch(error => {
             console.error('There was a problem with the DELETE request:', error);
           });
-        // 주문 상세 페이지에서 성공한 delete fetch 가지고 와서 경로만 변경
-        // 보내는 데이터는 product_id
       });
     }
   });

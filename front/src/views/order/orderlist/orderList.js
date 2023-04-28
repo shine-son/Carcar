@@ -6,7 +6,7 @@ fetch('http://34.22.74.213:5000/api/orders', {
   headers: {
     'Content-Type': 'application/json',
     Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMDNhOWMyZDFmNzgxYzVlZDIyMTYiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjY2NDA0MX0.VEQ0UwdMImlquDWiWgGxkxRlUCg7AfobfrO55Cr7Zns',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDRhMDNhOWMyZDFmNzgxYzVlZDIyMTYiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY4MjY3NTgxOH0.MkCYC21WvBsGoXgQVSkrW9U1CRltVBVBnwzXjtzt6L0',
   },
 })
   .then(response => response.json())
