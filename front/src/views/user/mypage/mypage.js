@@ -96,3 +96,5 @@ async function insertLatestOrder() {
     setOrderListData('.payment_amount', total_price);
     setOrderListData('.payment_status', shipping_status);
 }
+
+

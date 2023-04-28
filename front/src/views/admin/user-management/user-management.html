@@ -10,14 +10,37 @@
         <script src="user-management.js" type="module" defer></script>
     </head>
     <body>
+        <div class="nav_back">
+            <div class="nav_wrap">
+              <div class="nav_logo_area">
+                <p id="logo"><a href="/main">CARCAR</a></p>
+              </div>
+      
+              <div class="navbar_brands">
+                <a class="navbar_brands_list" id="bmw" href="/product_list/bmw/">bmw</a>
+                <a class="navbar_brands_list" id="benz" href="/product_list/benz/">benz</a>
+                <a class="navbar_brands_list" id="tesla" href="/product_list/tesla/">tesla</a>
+                <a class="navbar_brands_list" id="rollsroyce" href="/product_list/rollsroyce/">rollsroyce</a>
+                <a class="navbar_brands_list" id="lamborghini" href="/product_list/lamborghini/">lamborghini</a>
+              </div>
+      
+              <div class="navbar_user">
+                <a class="navbar_user_list navbar-user_inline" id="login" href="/login"> 로그인 </a>
+                <a class="navbar_user_list navbar-user_inline" id="join" href="/join"> 회원가입 </a>
+                <a class="navbar_user_list" id="cart" href="/cart"> 장바구니 </a>
+                <a class="navbar_user_list" id="goToMypage" href="/mypage">마이페이지</a>
+              </div>
+            </div>
+        </div>
+    
         <section class="page_section">
-            <div class="page_name_container">
-                <div class="left_button_box">
-                    <span>
-                        <a href="#" class="left_button">〈</a>
-                    </span>
-                    <span class="page_name">유저 관리</span>
+            <div class="page_name wrap">
+                <div id="page_name_text">
+                    <img class="previous_btn" src="./img/arrow.svg" alt=""> <!--이전 페이지 돌아가기 기능 구현하기-->
+                    <p id="category_title" class="sub_title">유저 관리</p>
+                    
                 </div>
+                <div class="page_name_border"></div>
             </div>
 
             <div class="user_info_container">
