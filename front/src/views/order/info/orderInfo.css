@@ -32,6 +32,9 @@
   align-items: center;
 }
 
+#address {
+  margin-right: 20px;
+}
 .orderInfo_list,
 .deliveryInfo_list {
   font-family: 'Pretendard';
@@ -39,7 +42,7 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 17px;
-
+  height: 50px;
   display: flex;
   padding-left: 23px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -85,8 +88,8 @@
 .orderProduct {
   margin-top: 20px;
   width: 1272px;
-  height: 425px;
 
+  height: fit-content;
   box-shadow: 0px 5px 30px 1px rgba(150, 150, 150, 0.24);
   border-radius: 7px;
 }
@@ -117,6 +120,7 @@
 }
 
 .orderProduct_content_column_info {
+  margin-top: 15px;
   width: 601px;
   height: 115px;
   display: flex;
@@ -125,6 +129,8 @@
 .orderProduct_content_column_info_image {
   width: 115px;
   margin-right: 25px;
+  display: flex;
+  align-items: center;
 }
 
 .orderProduct_content_column_info_text {
@@ -146,4 +152,45 @@
 .product_margin {
   text-align: center;
   width: 137px;
+}
+
+.orderDelete {
+  width: 1272px;
+  display: flex;
+  height: 48px;
+}
+#orderDelete-btn {
+  width: 299px;
+  margin-left: auto;
+  margin-top: 15px;
+  background-color: black;
+  color: #ffffff;
+  border-radius: 2px;
+}
+
+#changeAddress {
+  margin-left: 30px;
+}
+.priceBox-shadow {
+  margin-top: 15px;
+  width: 1272px;
+  box-shadow: 0 0 10px gray;
+  height: 40px;
+}
+
+.priceBox-category_text {
+  display: flex;
+  margin-left: auto;
+  padding-top: 10px;
+}
+
+.size {
+  width: 400px;
+  display: flex;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
 }

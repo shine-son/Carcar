@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>주문조회</title>
-
     
-    <link rel="stylesheet" href="orderList.css" />
+ 
+    <link rel="stylesheet" href="ordercheck.css" />
     
-
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
@@ -17,7 +16,7 @@
     <script src="https://kit.fontawesome.com/cc4ff2282f.js" crossorigin="anonymous"></script>
   </head>
   <body>
-
+    <div id="headers"></div>
     <div class="container">
       <div class="pageName">
         <i class="fa-solid fa-chevron-left"></i>
@@ -26,32 +25,26 @@
 
       <div class="orderList">
         <div class="orderList_category">
-
-          <div class="orderList_category_order banner">
+          <div class="orderList_category_order domain" style="width:180px">
             <p class="orderList_category_order_date">주문일자</p>
-            <p class="orderList_category_order_number" >[주문번호]</p>
+            <p class="orderList_category_order_number">[주문번호]</p>
           </div>
           
-          <div class="orderList_category_product">상품</div>
-          <div class="orderList_category_price banner">상품 구매금액</div>
-          <div class="orderList_category_state banner">주문 처리상태</div>
-         
-
-  
+          <div class="orderList_category_product  ">상품</div>
+          <div class="orderList_category_amount domain" >수량</div>
+          <div class="orderList_category_price domain">상품 구매금액</div>
+          <div class="orderList_category_state domain">주문 처리상태</div>
+          <div class=" domain"></div>
           
         </div>
 
         <div class="orderList_product">
-
         </div>
     </div>
 
   
-    <script src="orderList.js" type="module" defer></script>
+    <script src="ordercheck.js" type="module"></script>
+    
    
-  
-
-           
-
   </body>
 </html>
