@@ -37,18 +37,17 @@
     <section class="product_text wrap">
         <div class="product_text_top">
             <div class="product_text_left">
-                <p class="product_name">BENZ 123</p>
-                <p class="product_price">KRW <span>60,000</span></p>
+                <p class="product_name"><!--상품이름--></p>
+                <p class="product_price"><!--상품가격--></p>
             </div>
     
             <div class="product_text_right">
                 <p class="main_description">
-                    상품설명상품설명상품설명상품설명상품설명상품설명상품<br>
-                    명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상
+                    <!--상품설명-->
                 </p>
 
                 <div class="sub_description">
-                    <p class="maker">제조사 _ <span>엘리스 트랙 SW4 CARCAR</span></p>
+                    <p class="maker"><!--제조사--></p>
                     <p class="shipping_fee">배송비 _ KRW 3000</p>
                 </div>
             </div>
@@ -59,13 +58,25 @@
 
         <div class="product_text_bottom">
             <div class="product_text_left">
-                <p class="">수량</p> <!--수량 조절 버튼 구현하기-->
+
+                <p>수량</p>
+
+                <!--수량 조절 버튼-->
+                <div class="cart_product_amount">
+                    <div class="cart_product_amount_count">
+                        <button onclick="count('minus')" class="cart_product_amount_count_minus amountBtn"><p>-</p></button>
+                        <p class="product_amount">1</p>
+                        <button onclick="count('plus')" type="submit" class="cart_product_amount_count_plus amountBtn"><p>+</p></button>
+                        <button class="amount_done"><p>변경</p></button>
+                    </div>
+                </div>
+
             </div>
 
             <div class="product_text_right">
                 <div class="price_area">
                     <p>TOTAL PRICE</p>
-                    <p class="total_price">KRW <span>120,000</span></p>
+                    <p class="total_price">KRW 30,000</p>
                 </div>
                 <div class="product_btn">
                     <button>Add to cart</button>
@@ -76,9 +87,26 @@
 
         
     </section>
+
+    <script>
+        function count (type) {
+            const productAmountNum = document.querySelector('.product_amount'); // 결과 수량
+            let num = productAmountNum.innerHTML;
+            
+            if(type === 'plus') {
+                num = parseInt(num) + 1;
+            } else if(type === 'minus') {
+                if(num > 1) {
+                    num = parseInt(num) - 1;
+                }
+            }
+
+            productAmountNum.innerText = num;
+        }
+    </script>
     
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="../slick/slick.min.js"></script>
-    <script type="text/javascript" src="product.js"></script>
+    <script type="text/javascript" src="./slick/slick.min.js"></script>
+    <script type="module" src="product.js"></script>
 </body>
 </html>

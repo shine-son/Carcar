@@ -5,96 +5,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product_list</title>
+    <title>Product list</title>
 
-    <link rel="stylesheet" type="text/css" href="./common.css">
+    <link rel="stylesheet" type="text/css" href="../../common.css">
     <link rel="stylesheet" type="text/css" href="product_list.css">
 </head>
 
 <body>
     <div class="page_name wrap">
-        <div>
+        <div id="page_name_text">
             <img class="previous_btn" src="../../img/arrow.svg" alt=""> <!--이전 페이지 돌아가기 기능 구현하기-->
-            <p class="sub_title">BMW</p>
+            <p id="category_title" class="sub_title"></p>
+            
         </div>
         <div class="page_name_border"></div>
     </div>
 
-    <section class="product_list_area wrap">
+    <section id="product_list_area">
 
+        <!-- js 동적 생성 내용
+        
         <div class="product_list_item">
-            <div class="item_img">
-                <img src="" alt="제품 사진">
-            </div>
-            <div class="item_text">
-                <p class="list_name">BMW 123</p>
-                <p class="list_sub">
-                    자동차 사고 싶다<br>
-                    자동차 멋지다 멋지다 멋지다
-                </p>
-                <p class="list_price">KRW 30,000</p>
-            </div>
-        </div>
-
-        <div class="product_list_item">
-            <div class="item_img">
-                <img src="" alt="제품 사진">
-            </div>
-            <div class="item_text">
-                <p class="list_name">BMW 123</p>
-                <p class="list_sub">
-                    자동차 사고 싶다<br>
-                    자동차 멋지다 멋지다 멋지다
-                </p>
-                <p class="list_price">KRW 30,000</p>
-            </div>
-        </div>
-
-        <div class="product_list_item">
-            <div class="item_img">
-                <img src="" alt="제품 사진">
-            </div>
-            <div class="item_text">
-                <p class="list_name">BMW 123</p>
-                <p class="list_sub">
-                    자동차 사고 싶다<br>
-                    자동차 멋지다 멋지다 멋지다
-                </p>
-                <p class="list_price">KRW 30,000</p>
-            </div>
-        </div>
-
-        <div class="product_list_item">
-            <div class="item_img">
-                <img src="" alt="제품 사진">
-            </div>
-            <div class="item_text">
-                <p class="list_name">BMW 123</p>
-                <p class="list_sub">
-                    자동차 사고 싶다<br>
-                    자동차 멋지다 멋지다 멋지다
-                </p>
-                <p class="list_price">KRW 30,000</p>
-            </div>
-        </div>
-
-        <div class="product_list_item">
-            <div class="item_img">
-                <img src="" alt="제품 사진">
-            </div>
-            <div class="item_text">
-                <p class="list_name">BMW 123</p>
-                <p class="list_sub">
-                    자동차 사고 싶다<br>
-                    자동차 멋지다 멋지다 멋지다
-                </p>
-                <p class="list_price">KRW 30,000</p>
-            </div>
+            <a href="#/product_id">
+                <div class="item_img">
+                    <img src="" alt="제품 사진">
+                </div>
+                <div class="item_text">
+                    <p class="list_name">BMW 123</p>
+                    <p class="list_sub">
+                        자동차 사고 싶다<br>
+                        자동차 멋지다 멋지다 멋지다
+                    </p>
+                    <p class="list_price">KRW 30,000</p>
+                </div>
+            </a>
         </div>
         
+        -->
+
     </section>
 
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="product_list.js"></script>
+    <script type="module" src="product_list.js" defer></script>
+    <script type="module" src="../../useful-function.js" defer></script>
 </body>
 
 </html>
