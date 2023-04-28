@@ -49,12 +49,15 @@ class OrderService {
     }, 0);
 
     const user = await userService.getUserById(userId);
+
     const userAddress = user.address;
     const userName = user.full_name;
+    const userPhoneNumber = user.phone_number;
 
     const newOrder = await orderModel.create({
       user_id: userId,
       user_name: userName,
+      user_phone: userPhoneNumber,
       ordered_product: newOrderedProduct,
       address: userAddress,
       total_price: orderTotalPrice,

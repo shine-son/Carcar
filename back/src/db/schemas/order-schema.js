@@ -66,6 +66,10 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
+    user_phone: {
+      type: String,
+      required: true,
+    },
     ordered_product: {
       type: [OrderedProductSchema],
       required: true,
