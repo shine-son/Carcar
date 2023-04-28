@@ -27,8 +27,7 @@ const wait = ms => {
   return new Promise(r => setTimeout(r, ms));
 };
 
-import { addCommas } from '../../useful-function.js'
-// import { convertToNumber } from '../../useful-function.js';
+/* ------------- */
 
 $('.carousel').slick({
     dots: true,
@@ -40,19 +39,18 @@ $('.carousel').slick({
     autoplaySpeed: 5000
 }); 
 
-// 함수 적용 안 됨
-// function count (type) {
-//     const productAmountNum = document.querySelector('.product_amount'); // 결과 수량
-//     let num = productAmountNum.innerHTML;
-//         
-//     if(type === 'plus') {
-//         num = parseInt(num) + 1;
-//     } else if(type === 'minus') {
-//         num = parseInt(num) - 1;
-//     }
-// 
-//     productAmountNum.innerText = num;
-// }
+function count (type) {
+    const productAmountNum = document.querySelector('.product_amount'); // 결과 수량
+    let num = productAmountNum.innerHTML;
+        
+    if(type === 'plus') {
+        num = parseInt(num) + 1;
+    } else if(type === 'minus') {
+        num = parseInt(num) - 1;
+    }
+
+    productAmountNum.innerText = num;
+}
 
 /*--productData--*/
 let productData = [];

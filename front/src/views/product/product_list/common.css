@@ -54,9 +54,6 @@
 }
 
 /*---border---*/
-.border_red {
-	border: solid 1px red;
-}
 .border_gray {
     border: solid 1px rgba(0, 0, 0, 0.15);
 }
@@ -87,8 +84,8 @@
     font-size: 24px;
     display: inline;
     cursor: default;
+    text-transform: uppercase;
 }
-
 .list_name {
     font-family: 'hel_exmedium';
     font-size: 22px;

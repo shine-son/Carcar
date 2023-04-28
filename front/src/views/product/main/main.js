@@ -27,6 +27,8 @@ const wait = ms => {
   return new Promise(r => setTimeout(r, ms));
 };
 
+/* ------------- */
+
 const productList = document.getElementById("new_product_area");
 let productData = [];  // 상품데이터 배열로 받아오기
 
@@ -73,12 +75,12 @@ fetch("http://34.22.74.213:5000/api/product", { credential: false })
 
         const productClick = document.querySelectorAll('.new_product');
         productClick.forEach((product) => {
-            product.addEventListener('click', () => {
+          product.addEventListener('click', () => {
 
-                const url = `http://localhost:8000/info/${product.product_id}`;
-                // Navigate to new URL
-                window.location.href = url;           
-            })
+            const url = `http://localhost:8000/product/${product.product_id}`;
+            // Navigate to new URL
+            window.location.href = url;   
+          })
         })
     })
 .catch((error) => console.error(error));

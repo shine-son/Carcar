@@ -36,7 +36,6 @@
 #product_list_area .product_list_item .item_img img {
     width: 275px;
     height: 165px;
-    border: solid 1px black;
 }
 
 #product_list_area .product_list_item .item_text {

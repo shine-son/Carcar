@@ -27,12 +27,17 @@ const wait = ms => {
   return new Promise(r => setTimeout(r, ms));
 };
 
+/* ------------- */
+
 const categoryName = document.getElementById("page_name_text");
 const productList = document.getElementById("product_list_area");
 
 let productData = [];  // 상품데이터 배열로 받아오기
 
-fetch("http://34.22.74.213:5000/api/product?categories=bmw", { credential: false })
+const link = document.location.href.split('/')[4];
+console.log(link);
+
+fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
     .then(res => {
         return res.json();
     })
@@ -69,7 +74,15 @@ fetch("http://34.22.74.213:5000/api/product?categories=bmw", { credential: false
             productImageArea.appendChild(productImage);
             productTextArea.append(productName, productDescription, productPrice);
             
-            console.log(productList);
+            const productClick = document.querySelectorAll('.new_product');
+              productClick.forEach((product) => {
+              product.addEventListener('click', () => {
+
+                const url = `http://localhost:8000/product/${product.product_id}`;
+                // Navigate to new URL
+                window.location.href = url;           
+              })
+            })
         })
     })
     .catch((error) => console.error(error));
