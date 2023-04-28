@@ -6,51 +6,52 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>user-management</title>
         <link rel="stylesheet" href="user-management.css" />
-        <link rel="stylesheet" href="../../common.css" />
         <script src="mypage.js" type="module" defer></script>
     </head>
     <body>
-        <div class="page_name wrap">
-            <div id="page_name_text">
-                <img class="previous_btn" src="../../img/arrow.svg" alt="" />
-                <!--이전 페이지 돌아가기 기능 구현하기-->
-                <p id="category_title" class="title">유저 관리</p>
-            </div>
-            <div class="page_name_border"></div>
-        </div>
-
-        <div class="user_info_container">
-            <div class="user_info_box_wrap">
-                <div class="user_info_top">
-                    <div class="user_info_category">
-                        <span>가입날짜</span>
-                        <span>이름</span>
-                        <span>이메일</span>
-                        <span>전화번호</span>
-                        <span>관리</span>
-                    </div>
+        <section class="page_section">
+            <div class="page_name_container">
+                <div class="left_button_box">
+                    <span>
+                        <a href="#" class="left_button">〈</a>
+                    </span>
+                    <span class="page_name">유저 관리</span>
                 </div>
             </div>
 
-            <div class="user_info_wrap">
-                <div class="user_info_category_content">
-                    <div class="user_info">
-                        <span id="registerDate" class="register_date"
-                            >2023-04-29</span
-                        >
-                        <span id="fullName" class="user_name">회원1</span>
-                        <span id="email" class="user_email"
-                            >user1@gmail.com</span
-                        >
-                        <span id="phoneNumber" class="user_phone_number"
-                            >010-1234-5678</span
-                        >
-                        <button id="deleteBtn" class="delete_btn">
-                            회원 정보 삭제
-                        </button>
+            <div class="user_info_container">
+                <div class="user_info_box_wrap">
+                    <div class="user_info_top">
+                        <div class="user_info_category">
+                            <span>가입날짜</span>
+                            <span>이름</span>
+                            <span>이메일</span>
+                            <span>전화번호</span>
+                            <span>관리</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user_info_wrap">
+                    <div class="user_info_category_content">
+                        <div class="user_info" id="usersContainer">
+                            <div id="registerDate" class="register_date">
+                                2023-04-29
+                            </div>
+                            <div id="fullName" class="user_name">회원1</div>
+                            <div id="email" class="user_email">
+                                user1@gmail.com
+                            </div>
+                            <div id="phoneNumber" class="user_phone_number">
+                                010-1234-5678
+                            </div>
+                            <button id="deleteBtn" class="delete_btn">
+                                회원 정보 삭제
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </body>
 </html>
