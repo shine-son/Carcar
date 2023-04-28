@@ -10,15 +10,20 @@ fetch("http://34.22.74.213:5000/api/product", { credential: false })
     .then((json) => {
         productData = json;
         console.log(productData);
+        const newProductData = [];
+        for (let i = 0; i < 6; i++) {
+            newProductData.push(productData[i])
+        }
 
-        productData.forEach((product) => {
-            if (product === productData[6]) {
-                // 강제로 에러를 생성하여 조건에 맞으면 catch로 넘어가도록
-                throw new Error('forEach문 중단을 위한 강제 에러 생성');
-            }
+        newProductData.forEach((product) => {
+            // if (product === productData[6]) {
+            //     // 강제로 에러를 생성하여 조건에 맞으면 catch로 넘어가도록
+            //     throw new Error('forEach문 중단을 위한 강제 에러 생성');
+            // }
             
             const productElement = document.createElement("div");
             productElement.className = 'new_product';
+            productElement.onclick = ''
             const productImage = document.createElement('img');
             productImage.className = 'new_img';
             const productTextArea = document.createElement('div');
