@@ -1,0 +1,60 @@
+[
+    {
+        "_id": "64423401a5cdc9fb12ec0043",
+        "user_id": "6440131acd26489b4a21893e",
+        "ordered_product": [
+            {
+                "product_id": "jR0LeuKBeRi5qSgkamCUo",
+                "amount": 3,
+                "price": 60000,
+                "image": "http://via.placeholder.com/640x360",
+                "total_price": 180000,
+                "_id": "64423401a5cdc9fb12ec0041"
+            },
+            {
+                "product_id": "pR9LaaKNeRl1qIgbasEUz",
+                "amount": 10,
+                "price": 60000,
+                "image": "http://via.placeholder.com/640x360",
+                "total_price": 600000,
+                "_id": "64423401a5cdc9fb12ec0042"
+            }
+        ],
+        "shipping_status": "배송준비중",
+        "address": "바뀐 주소",
+        "total_price": 780000,
+        "order_id": "v95xTmuXPf3fddNSWlsga",
+        "createdAt": "2023-04-21T06:58:09.334Z",
+        "updatedAt": "2023-04-21T07:50:44.928Z",
+        "__v": 0
+    },
+    {
+        "_id": "64423401a5cdc9fb12ec0043",
+        "user_id": "6440131acd26489b4a21893e",
+        "ordered_product": [
+            {
+                "product_id": "jR0LeuKBeRi5qSgkamCUo",
+                "amount": 3,
+                "price": 60000,
+                "image": "http://via.placeholder.com/640x360",
+                "total_price": 180000,
+                "_id": "64423401a5cdc9fb12ec0041"
+            },
+            {
+                "product_id": "pR9LaaKNeRl1qIgbasEUz",
+                "amount": 10,
+                "price": 60000,
+                "image": "http://via.placeholder.com/640x360",
+                "total_price": 600000,
+                "_id": "64423401a5cdc9fb12ec0042"
+            }
+        ],
+        "shipping_status": "배송준비중",
+        "address": "바뀐 주소",
+        "total_price": 780000,
+        "order_id": "v95xTmuXPf3fddNSWlsga",
+        "createdAt": "2023-04-21T06:58:09.334Z",
+        "updatedAt": "2023-04-21T07:50:44.928Z",
+        "__v": 0
+    }
+]

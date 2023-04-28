@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="UTF_8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,7 +7,6 @@
         <title>login-test</title>
         <!-- 커스텀 css, js -->
         <link rel="stylesheet" href="login.css" />
-        <link rel="stylesheet" href="../../common.css" />
         <script src="login.js" type="module" defer></script>
     </head>
     <body>
@@ -29,11 +28,12 @@
                             <div class="control">
                                 <input
                                     class="input"
-                                    id="fullNameInput"
+                                    id="emailInput"
                                     type="text"
                                     placeholder="ID"
                                     autocomplete="on"
                                 />
+                                <p class="error"></p>
                             </div>
                         </div>
 
@@ -41,11 +41,12 @@
                             <div class="control">
                                 <input
                                     class="input"
-                                    id="emailInput"
-                                    type="email"
+                                    id="passwordInput"
+                                    type="password"
                                     placeholder="PASSWORD"
                                     autocomplete="on"
                                 />
+                                <p class="error"></p>
                             </div>
                         </div>
 
