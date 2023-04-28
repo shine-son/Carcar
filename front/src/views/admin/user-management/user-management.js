@@ -6,9 +6,6 @@ function addAllElements() {
     insertUserData();
 }
 
-// 페이지 로드 시 실행, 삭제할 회원 id를 전역변수로 관리함
-let userIdToDelete;
-
 //사용자 정보 받아오기
 async function insertUserData() {
     const apiUrl = 'http://34.22.74.213:5000/api/admin/users';
@@ -60,9 +57,9 @@ async function insertUserData() {
         async function deleteUserData(e) {
             e.preventDefault();
 
-            const userIdToDelete = email;
+            const userIdToDelete = { email: email };
 
-            console.log(userIdToDelete);
+            console.log(JSON.stringify(userIdToDelete));
             try {
                 // 삭제 진행
                 const res = await fetch(
@@ -80,8 +77,8 @@ async function insertUserData() {
                 );
 
                 console.log(res);
-                // 전역변수 초기화
-                userIdToDelete = '';
+
+                location.reload();
             } catch (err) {
                 alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
             }
