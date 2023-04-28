@@ -95,7 +95,7 @@ userRouter.delete("/info", loginRequired, asyncHandler(async (req, res, next) =>
   /** loginRequired 미들웨어에서 저장된 currentUserId 사용(jwt토큰으로 검증된 id) */
   const userId = req.currentUserId;
 
-  const { currentPassword } = req.body;
+  const currentPassword = req.body.password;
 
   await userService.deleteUser(userId, currentPassword);
 
