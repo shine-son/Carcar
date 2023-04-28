@@ -71,7 +71,7 @@ adminRouter.post(
   })
 );
 
-// 카테고리 상세 조회
+// 카테고리 수정
 adminRouter.put(
   "/category/:name",
   loginRequired,
