@@ -49,7 +49,7 @@ app.use("/api/product", productRouter);
 const { asyncHandler } = require("./utils/async-handler");
 const { categoryService } = require("./services/category-service");
 app.get(
-  "/category",
+  "/api/category",
   asyncHandler(async (req, res, next) => {
     console.log("요청도착");
     const categoryList = await categoryService.getAllCategories();

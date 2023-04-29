@@ -5,6 +5,10 @@ class CategoryModel {
     const categoryList = await Category.find({});
     return categoryList;
   }
+  async findCategory(name) {
+    const selectedCategory = await Category.findOne(name);
+    return selectedCategory;
+  }
   async addCategory(newOne) {
     const newCategory = await Category.create(newOne);
     return newCategory;

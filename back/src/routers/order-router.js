@@ -72,9 +72,7 @@ orderRouter.delete(
 
     await orderService.deleteOrder(userId, orderId);
 
-    res
-      .status(204)
-      .json({ status: "delete success", message: "delete success" });
+    res.status(204).json({ message: "delete success" });
   })
 );
 
