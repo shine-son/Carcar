@@ -99,7 +99,7 @@ const carts = data => {
 
   <div class="cart_product_info">
     <div class="cart_product_info_image">
-      <img src=${product.image}/>
+      <img src="./img/Rolls_Royce-Phantom (2).png"/>
     </div>
     <div class="cart_product_info_text">
       <div class="cart_product_info_brand">${product.brand}</div>

@@ -89,7 +89,7 @@ async function insertLatestOrder() {
     console.log(orders[0]);
     setOrderListData('.order_date', createdAt);
     setOrderListData('.order_number', order_id);
-    setOrderListData('.product_img', image);
+    setOrderListData('.product_img', 'image');
     setOrderListData('.product_category', _id);
     setOrderListData('.product_name', product_id);
     setOrderListData('.product_amount', amount);

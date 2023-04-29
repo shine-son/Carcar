@@ -58,7 +58,35 @@
           <p class="cart_category_totalPrice banner">총액</p>
         </div>
 
-        <div class="cart_product"></div>
+        <div class="cart_product"><div class=listBox data-id=${product.productId}>
+          <div class="cart_product_order domain">
+            <input type="checkbox" class="cart_category_listCheckbox">
+          </div>
+        
+          <div class="cart_product_info">
+            <div class="cart_product_info_image">
+              <img src="./img/Rolls_Royce-Phantom (2).png"/>
+            </div>
+            <div class="cart_product_info_text">
+              <div class="cart_product_info_brand">Rolls Royce</div>
+              <div class="cart_product_info_name">Rolls Royce Phantom Navy</div>
+            </div>
+          </div>
+        
+          <div class="cart_product_price domain">60,000</div>
+        
+          <div class="cart_product_amount domain">
+            <div class="cart_product_amount_count">
+              <button class="cart_product_amount_count_minus"><p>-</p></button>
+              <div class="product_amount">1</div>
+              <button class="cart_product_amount_count_plus"><p>+</p></button>
+            </div>
+            <button class="cart_product_amount_change">변경</button>
+          </div>
+        
+          <div class="cart_product_totalPrice domain">60,000
+          </div>
+        </div></div>
 
         <button id="deleteBtn">선택 삭제</button>
       </div>
@@ -77,9 +105,9 @@
           </div>
         
         <div class="priceBox-price">
-          <div id="checked_price" class="priceBox-price_selectPrice size"></div>
+          <div id="checked_price" class="priceBox-price_selectPrice size">60,000</div>
           <div id="delivery_price" class="priceBox-price_deliveryPrice size" style="width: 440px;">3,000원</div>
-          <div id="total_price" class="priceBox-price_totalPrice size"></div>
+          <div id="total_price" class="priceBox-price_totalPrice size">63,000</div>
         </div>
       </div>
 
