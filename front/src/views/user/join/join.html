@@ -7,14 +7,15 @@
         <title>join-test</title>
         <!-- 커스텀 css, js -->
         <link rel="stylesheet" href="join.css" />
-        <link rel="stylesheet" type="text/css" href="../../common.css" />
+        <link rel="stylesheet" href="common.css" />
+
         <script src="join.js" type="module" defer></script>
     </head>
     <body>
         <div class="join_form_container">
             <div class="join_user_container">
                 <div class="logo_desc_container">
-                    <div class="main_logo"><a href="#">CARCAR</a></div>
+                    <div class="main_logo"><a href="/main">CARCAR</a></div>
                     <div class="main_desc">
                         <p>
                             다함께 CARCARCAR 팀 최고<br />
@@ -132,14 +133,16 @@
                         </div>
 
                         <!-- 회원가입 버튼 -->
-                        <button
-                            type="submit"
-                            class="submit_button"
-                            id="submitButton"
-                            disabled
-                        >
-                            JOIN US
-                        </button>
+                        <div class="field">
+                            <button
+                                type="submit"
+                                class="submit_button"
+                                id="submitButton"
+                                disabled
+                            >
+                                JOIN US
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

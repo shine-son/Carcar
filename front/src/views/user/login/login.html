@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
     <head>
         <meta charset="UTF_8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,14 +7,14 @@
         <title>login-test</title>
         <!-- 커스텀 css, js -->
         <link rel="stylesheet" href="login.css" />
-        <link rel="stylesheet" href="../../common.css" />
+        <link rel="stylesheet" href="common.css" />
         <script src="login.js" type="module" defer></script>
     </head>
     <body>
         <div class="login_form_container">
             <div class="login_user_container">
                 <div class="logo_desc_container">
-                    <div class="main_logo"><a href="#">CARCAR</a></div>
+                    <div class="main_logo"><a href="/main">CARCAR</a></div>
                     <div class="main_desc">
                         <p>
                             다함께 CARCARCAR 팀 최고<br />
@@ -34,7 +34,6 @@
                                     placeholder="ID"
                                     autocomplete="on"
                                 />
-                                <p class="error"></p>
                             </div>
                         </div>
 
@@ -47,8 +46,8 @@
                                     placeholder="PASSWORD"
                                     autocomplete="on"
                                 />
-                                <p class="error"></p>
                             </div>
+                            <span class="error"></span>
                         </div>
 
                         <div class="button_container">
