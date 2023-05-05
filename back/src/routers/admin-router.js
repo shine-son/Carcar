@@ -43,7 +43,7 @@ adminRouter.delete(
 
     await userService.deleteUserByAdmin(email);
 
-    res.status(200).json({ message: "삭제되었습니다."})
+    res.status(200).json({ message: "삭제되었습니다." })
   })
 );
 
@@ -117,15 +117,8 @@ adminRouter.post(
   isAdmin,
   imageUploader.array("images"),
   asyncHandler(async (req, res, next) => {
-    const fileUrls = [];
-    try {
-      req.files.forEach((file) => {
-        fileUrls.push(file.location);
-      });
-      console.log(`File uploaded successfully. ${fileUrls}`);
-    } catch (err) {
-      console.log("Error uploading file:", err);
-    }
+    const fileUrls = await Promise.all(req.files.map((file) => file.location));
+    console.log(`Files uploaded successfully. ${fileUrls}`);
     req.body.image = fileUrls;
     const newProduct = await productService.addProduct(req.body);
     res.status(200).json(newProduct);
@@ -160,7 +153,7 @@ adminRouter.put(
       });
       console.log(`File uploaded successfully. ${fileUrls}`);
     } catch (err) {
-      console.log("Error uploading file:", err);
+      console.error("Error uploading file:", err);
     }
     req.body.image = fileUrls;
     const updatedProduct = await productService.updateProduct(
@@ -168,7 +161,7 @@ adminRouter.put(
       req.body,
       { new: true }
     );
-    res.status(200).json(updatedProduct); // 수정된 상품 응답으로 전달
+    res.status(200).json(updatedProduct);
   })
 );
 
