@@ -75,7 +75,7 @@
 | User info Edit | ![회원정보수정](/uploads/de2d3a463c228b1725ad921eb9f21bf2/회원정보수정.gif) | ・ 회원정보수정 및 저장 구현 |
 | Category | ![카테고리조회](/uploads/13e0f27de5c0cf05895f0ba05b3135d4/카테고리조회.gif) | ・ Category 이동 구현 |
 | Product Detail | ![제품상세](/uploads/4947fed060705deb5b1e0989b0451a9b/제품상세.gif) | ・ 제품 상세페이지 구현|
-| Cart delete |![장바구니](/uploads/87c1a32b0bf764265f3ba1673a5023ef/장바구니.gif) | ・ 로컬스토리지 활용 기능 구현 |
+| Cart |![장바구니](/uploads/87c1a32b0bf764265f3ba1673a5023ef/장바구니.gif) | ・ 로컬스토리지 활용 기능 구현 |
 | Admin-User | ![유저관리](/uploads/0dacdab8c7e7beb6237b6e969a9ff999/유저관리.gif) | ・ 관리자 권한 유저 정보 조회/삭제 구현 |
 
 
