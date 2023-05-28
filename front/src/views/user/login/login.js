@@ -29,7 +29,7 @@ async function handleSubmit(e) {
     // 잘 입력했는지 확인
     const isEmailValid = validateEmail(email);
     const isPasswordValid = password.length >= 11;
-    const error = document.querySelector('#passwordInput + .error');
+    const error = document.querySelector('.error');
 
     if (!isEmailValid || !isPasswordValid) {
         error.textContent =
@@ -53,7 +53,10 @@ async function handleSubmit(e) {
             body: dataJson,
         });
 
-        console.log(res);
+        if (!res.ok) {
+            // 응답이 실패한 경우
+            throw new Error('로그인에 실패하였습니다.');
+        }
 
         const result = await res.json();
         const token = result.token;
@@ -71,7 +74,7 @@ async function handleSubmit(e) {
         //     localStorage.setItem('admin', 'admin');
         // }
 
-        alert('로그인에 성공하였습니다!');
+        await alert('로그인에 성공하였습니다!');
         // 기본 페이지로 이동
         window.location.href = '/';
     } catch (err) {

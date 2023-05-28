@@ -1,6 +1,6 @@
 const { orderModel } = require("../db/models/order-model");
-const { productModel } = require("../db/models/product-model");
-const { userModel } = require("../db/models/user-model");
+const { productService } = require("../services/product-service");
+const { userService } = require("../services/user-service");
 const { OrderedProduct } = require("../db/schemas/order-schema");
 
 class OrderService {
@@ -10,7 +10,7 @@ class OrderService {
     const products = await Promise.all(
       orderedProducts.map(async (orderedProduct) => {
         const orderedProductId = orderedProduct.productId;
-        const product = await productModel.getOrderById(orderedProductId);
+        const product = await productService.getProductById(orderedProductId);
         if (!product) {
           const err = new Error("상품이 존재하지 않습니다.");
           err.status = 404;
@@ -24,12 +24,18 @@ class OrderService {
     const newOrderedProduct = products.map((product, idx) => {
       const amount = orderedProducts[idx].amount;
       const productId = product.product_id;
+      const name = product.name;
+      const description = product.description;
+      const maker = product.maker;
       const price = product.price;
       const image = product.image;
-      const totalPrice = product.price * amount;
+      const totalPrice = price * amount;
 
       return new OrderedProduct({
         product_id: productId,
+        name,
+        description,
+        maker,
         amount,
         price,
         image,
@@ -42,13 +48,16 @@ class OrderService {
       return acc + cur.total_price;
     }, 0);
 
-    const user = await userModel.findById(userId);
+    const user = await userService.getUserById(userId);
+
     const userAddress = user.address;
     const userName = user.full_name;
+    const userPhoneNumber = user.phone_number;
 
     const newOrder = await orderModel.create({
       user_id: userId,
       user_name: userName,
+      user_phone: userPhoneNumber,
       ordered_product: newOrderedProduct,
       address: userAddress,
       total_price: orderTotalPrice,
@@ -67,6 +76,12 @@ class OrderService {
   // 사용자가 주문한 주문 중 order_id와 일치하는 주문 하나만 조회하는 서비스 로직
   async getOrderOneOfUser(userId, orderId) {
     const order = await orderModel.findById(orderId);
+
+    if (!order) {
+      const err = new Error("주문을 찾을 수 없습니다.");
+      err.status = 404;
+      throw err;
+    }
 
     if (userId !== order.user_id) {
       const err = new Error("권한이 없습니다.");
@@ -88,7 +103,7 @@ class OrderService {
     }
 
     if (order.shipping_status !== "배송준비중") {
-      const err = new Error("주문을 취소할 수 없습니다.");
+      const err = new Error("주문을 수정할 수 없습니다.");
       err.status = 403;
       throw err;
     }
@@ -99,7 +114,13 @@ class OrderService {
       throw err;
     }
 
-    const update_order = await orderModel.update(orderId, address);
+    // 수정에 사용될 옵션 정의
+    const options = {
+      new: true, // 새로운 문서 반환
+      fields: { _id: 0 }, // _id 필드를 반환하지 않고, createdAt 필드를 반환
+    };
+
+    const update_order = await orderModel.update(orderId, address, options);
 
     return update_order;
   }
@@ -148,9 +169,14 @@ class OrderService {
       throw err;
     }
 
+    // 업데이트 값
+    const updateShippingStatus = {
+      shipping_status: shippingStatus,
+    };
+
     const updateOrder = await orderModel.updateShippingStatus(
       orderId,
-      shippingStatus
+      updateShippingStatus
     );
 
     return updateOrder;
